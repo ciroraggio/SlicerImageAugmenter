@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SlicerAugmentator</class>
+ <widget class="qMRMLWidget" name="SlicerAugmentator">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>783</width>
+    <height>718</height>
+   </rect>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="ctkCollapsibleButton" name="inputsCollapsibleButton">
+     <property name="maximumSize">
+      <size>
+       <width>765</width>
+       <height>196</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Inputs</string>
+     </property>
+     <layout class="QFormLayout" name="formLayout_2">
+      <item row="1" column="0">
+       <widget class="QLabel" name="label">
+        <property name="maximumSize">
+         <size>
+          <width>129</width>
+          <height>23</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Input images path (*)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="ctkPathLineEdit" name="imagesInputPath">
+        <property name="maximumSize">
+         <size>
+          <width>524</width>
+          <height>23</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLineEdit" name="imgPrefix">
+        <property name="maximumSize">
+         <size>
+          <width>524</width>
+          <height>23</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_3">
+        <property name="maximumSize">
+         <size>
+          <width>217</width>
+          <height>23</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Image filename (i.e. CT.nrrd) (*) </string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0">
+       <widget class="QLabel" name="label_4">
+        <property name="maximumSize">
+         <size>
+          <width>183</width>
+          <height>23</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Mask filename (i.e. mask.nrrd)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QLineEdit" name="maskPrefix">
+        <property name="maximumSize">
+         <size>
+          <width>524</width>
+          <height>23</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="0">
+       <widget class="QLabel" name="label_5">
+        <property name="maximumSize">
+         <size>
+          <width>101</width>
+          <height>15</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>(*) - mandatory  </string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="ctkCollapsibleButton" name="outputsCollapsibleButton">
+     <property name="maximumSize">
+      <size>
+       <width>765</width>
+       <height>64</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Outputs</string>
+     </property>
+     <layout class="QFormLayout" name="formLayout_4">
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="maximumSize">
+         <size>
+          <width>88</width>
+          <height>23</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Ouput path (*)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="ctkPathLineEdit" name="ouputPath">
+        <property name="maximumSize">
+         <size>
+          <width>653</width>
+          <height>23</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QTabWidget" name="transformsTabWidget">
+     <property name="maximumSize">
+      <size>
+       <width>765</width>
+       <height>197</height>
+      </size>
+     </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="SpatialTab">
+      <attribute name="title">
+       <string>Spatial</string>
+      </attribute>
+      <widget class="ctkCollapsibleGroupBox" name="CollapsibleGroupBox_2">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>0</y>
+         <width>271</width>
+         <height>101</height>
+        </rect>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>271</width>
+         <height>101</height>
+        </size>
+       </property>
+       <property name="title">
+        <string>Rotate</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+       <property name="collapsed">
+        <bool>false</bool>
+       </property>
+       <property name="collapsedHeight">
+        <number>14</number>
+       </property>
+       <widget class="QCheckBox" name="rotateEnabled">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>30</y>
+          <width>85</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>85</width>
+          <height>21</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Enabled</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="rotateAngle">
+        <property name="geometry">
+         <rect>
+          <x>100</x>
+          <y>30</y>
+          <width>51</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>51</width>
+          <height>23</height>
+         </size>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="placeholderText">
+         <string>Angle</string>
+        </property>
+       </widget>
+       <widget class="QComboBox" name="rotateInterpolationMode">
+        <property name="geometry">
+         <rect>
+          <x>130</x>
+          <y>60</y>
+          <width>79</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>79</width>
+          <height>23</height>
+         </size>
+        </property>
+        <property name="editable">
+         <bool>false</bool>
+        </property>
+        <property name="currentText">
+         <string>nearest</string>
+        </property>
+        <property name="placeholderText">
+         <string/>
+        </property>
+        <item>
+         <property name="text">
+          <string>nearest</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>bilinear</string>
+         </property>
+        </item>
+       </widget>
+       <widget class="QLabel" name="label_7">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>60</y>
+          <width>121</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>121</width>
+          <height>16</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Interpolation mode</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="ctkCollapsibleGroupBox" name="CollapsibleGroupBox">
+       <property name="geometry">
+        <rect>
+         <x>290</x>
+         <y>0</y>
+         <width>271</width>
+         <height>101</height>
+        </rect>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>271</width>
+         <height>101</height>
+        </size>
+       </property>
+       <property name="title">
+        <string>Resize</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+       <property name="collapsed">
+        <bool>false</bool>
+       </property>
+       <property name="collapsedHeight">
+        <number>14</number>
+       </property>
+       <widget class="QCheckBox" name="resizeEnabled">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>30</y>
+          <width>85</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>85</width>
+          <height>21</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Enabled</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="resizeC">
+        <property name="geometry">
+         <rect>
+          <x>90</x>
+          <y>30</y>
+          <width>51</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>51</width>
+          <height>23</height>
+         </size>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="placeholderText">
+         <string>C</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="resizeH">
+        <property name="geometry">
+         <rect>
+          <x>150</x>
+          <y>30</y>
+          <width>51</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>51</width>
+          <height>23</height>
+         </size>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="placeholderText">
+         <string>H</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="resizeW">
+        <property name="geometry">
+         <rect>
+          <x>210</x>
+          <y>30</y>
+          <width>51</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>51</width>
+          <height>23</height>
+         </size>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="placeholderText">
+         <string>W</string>
+        </property>
+       </widget>
+       <widget class="QComboBox" name="resizeInterpolationMode">
+        <property name="geometry">
+         <rect>
+          <x>130</x>
+          <y>60</y>
+          <width>79</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>79</width>
+          <height>23</height>
+         </size>
+        </property>
+        <property name="editable">
+         <bool>false</bool>
+        </property>
+        <property name="currentText">
+         <string>nearest</string>
+        </property>
+        <property name="placeholderText">
+         <string/>
+        </property>
+        <item>
+         <property name="text">
+          <string>nearest</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>nearest-exact</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>linear</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>bilinear</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>bicubic</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>trilinear</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>area</string>
+         </property>
+        </item>
+       </widget>
+       <widget class="QLabel" name="label_6">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>60</y>
+          <width>121</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>121</width>
+          <height>16</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Interpolation mode</string>
+        </property>
+       </widget>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="CropTab">
+      <attribute name="title">
+       <string>Crop</string>
+      </attribute>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="applyButton">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>765</width>
+       <height>23</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>Run the augmentation.</string>
+     </property>
+     <property name="text">
+      <string>Run</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ctkCollapsibleButton</class>
+   <extends>QWidget</extends>
+   <header>ctkCollapsibleButton.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ctkCollapsibleGroupBox</class>
+   <extends>QGroupBox</extends>
+   <header>ctkCollapsibleGroupBox.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ctkPathLineEdit</class>
+   <extends>QWidget</extends>
+   <header>ctkPathLineEdit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>qMRMLWidget</class>
+   <extends>QWidget</extends>
+   <header>qMRMLWidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
