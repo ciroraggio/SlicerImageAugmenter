@@ -1,9 +1,6 @@
 import logging
 import os
-from typing import Annotated, Optional
 import time
-
-import vtk
 
 import slicer
 from slicer.i18n import tr as _
@@ -13,9 +10,9 @@ from slicer.util import VTKObservationMixin
 
 from SlicerAugmentatorLib.SlicerAugmentatorDataset import SlicerAugmentatorDataset
 from SlicerAugmentatorLib.TransformationParser import mapTransformations
+from SlicerAugmentatorLib.SlicerAugmentatorUtils import collectImagesAndMasksList
+
 import SimpleITK as sitk
-
-
 
 #
 # SlicerAugmentator
@@ -23,15 +20,12 @@ import SimpleITK as sitk
 
 # If needed install dependencies
 try:
-  import monai
-  import torch
-  from PyQt5.QtWidgets import QVBoxLayout, QFormLayout, QGroupBox, QPushButton
+    import monai
+    import torch
 except ModuleNotFoundError:
-  slicer.util.pip_install("monai")
-  slicer.util.pip_install("PyQt5")
-  import monai
-  import torch
-  from PyQt5.QtWidgets import QVBoxLayout, QFormLayout, QGroupBox, QPushButton
+    slicer.util.pip_install("monai[all]")  
+    import monai
+    import torch
 
 
 
@@ -128,45 +122,7 @@ class SlicerAugmentatorWidget(ScriptedLoadableModuleWidget, VTKObservationMixin)
         self.logic = None
         self._parameterNode = None
         self._parameterNodeGuiTag = None
-    #     self.transformations_dict = {
-    #         'spatial': {
-    #             'Resize': {'param1': 'value1', 'param2': 'value2'},
-    #             'Rotate': {'param1': 'value1', 'param2': 'value2'}
-    #         },
-    #         'crop': {
-    #             'CropType1': {'param1': 'value1', 'param2': 'value2'},
-    #             'CropType2': {'param1': 'value1', 'param2': 'value2'}
-    #         }
-    #     }
-    # def init_transformations(self):
-    #     layout = QVBoxLayout(self)
-    #     tab_widget = self.ui.transformsTabWidget
-
-    #     # Itera attraverso le categorie (spatial, crop, ecc.)
-    #     for category, transformations in self.transformations_dict.items():
-    #         # Crea un QGroupBox per ogni categoria
-    #         category_group_box = QGroupBox(category)
-    #         category_layout = QFormLayout()
-
-    #         # Itera attraverso le trasformazioni all'interno di ogni categoria
-    #         for transform_name, params in transformations.items():
-    #             # Crea un QPushButton per ogni trasformazione
-    #             transform_button = QPushButton(transform_name)
-
-    #             # Collega la funzione di gestione degli eventi per aprire/cambiare i parametri
-    #             transform_button.clicked.connect(lambda _, name=transform_name, p=params: self.show_parameters(name, p))
-
-    #             # Aggiungi il pulsante al layout
-    #             category_layout.addRow(transform_button)
-
-    #         # Imposta il layout per il QGroupBox e aggiungi al tab
-    #         category_group_box.setLayout(category_layout)
-    #         tab_widget.addTab(category_group_box, category)
-
-    #     # Aggiungi il layout principale alla finestra
-    #     layout.addWidget(tab_widget)
-    #     self.setLayout(layout)
-
+    
     def setup(self) -> None:
         """Called when the user opens the module the first time and the widget is initialized."""
         ScriptedLoadableModuleWidget.setup(self)
@@ -254,20 +210,19 @@ class SlicerAugmentatorWidget(ScriptedLoadableModuleWidget, VTKObservationMixin)
     def onApplyButton(self) -> None:
         """Run processing when user clicks "Apply" button."""
         with slicer.util.tryWithErrorDisplay(_("Failed to compute results."), waitCursor=True):
-            
             if(not any([self.ui.rotateEnabled, self.ui.resizeEnabled])):
                 raise ValueError("Choose at least one transformation to apply")
             
             transformationList = mapTransformations(self.ui)
-            
-            self.logic.process(imagesInputPath=self.ui.imagesInputPath,
-                               imgsPrefix=self.ui.imgsPrefix,
-                               masksPrefix=self.ui.masksPrefix,
-                               outputPath=self.ui.outputPath,
+            print(self.ui.imagesInputPath.directory, self.ui.outputPath.directory)
+            self.logic.process(imagesInputPath=self.ui.imagesInputPath.directory,
+                               imgPrefix=self.ui.imgPrefix.text,
+                               maskPrefix=self.ui.maskPrefix.text,
+                               outputPath=self.ui.outputPath.directory,
                                transformations=transformationList,
                                shuffle=self.ui.shuffleFlag)
 
-#
+# 
 # SlicerAugmentatorLogic
 #
 
@@ -287,8 +242,8 @@ class SlicerAugmentatorLogic(ScriptedLoadableModuleLogic):
 
     def process(self,
                 imagesInputPath: str,
-                imgsPrefix: str,
-                masksPrefix: str,
+                imgPrefix: str,
+                maskPrefix: str,
                 outputPath: float,
                 transformations: list = [],
                 shuffle: bool = False
@@ -298,47 +253,51 @@ class SlicerAugmentatorLogic(ScriptedLoadableModuleLogic):
         Can be used without GUI widget
         """
         
-        OUTPUT_IMG_DIR = "SlicerAugmentator/augmented_images"
-        OUTPUT_MSK_DIR = "SlicerAugmentator/augmented_masks"
+        OUTPUT_IMG_DIR = "SlicerAugmentator/AugmentedDataset"
 
-        if not imagesInputPath or not imgsPrefix or not masksPrefix or not outputPath:
-            raise ValueError("Input or output volume is invalid")
+        if not imagesInputPath:
+            raise ValueError("Input path is invalid")
+        
+        if not outputPath:
+            raise ValueError("Output path is invalid")
+        
+        if not imgPrefix:
+            raise ValueError("Indicate the image prefix")
         
         if len(transformations) == 0:
             raise ValueError("Choose at least one transformation")
 
+        if(not os.path.isdir(imagesInputPath)):
+            raise ValueError("Images path is not a directory")
 
         startTime = time.time()
         logging.info("Processing started")
         
-        imgs, masks = [], []
-        for path in sorted(os.listdir(imagesInputPath)):
-            if(imgsPrefix in path):
-                imgs.extend(path)
-            elif(masksPrefix in path):
-                masks.extend(path)
+        imgs, masks = collectImagesAndMasksList(imagesInputPath=imagesInputPath, 
+                                                imgPrefix=imgPrefix,
+                                                maskPrefix=maskPrefix)
         
-        if len(masks)>0 and (len(masks) != len(imgs)):
-            raise ValueError("Images and masks must have same length")
+        if len(masks) > 0 and (len(masks) != len(imgs)):
+            raise ValueError(f"Images and masks must have same length. Found:\n{len(imgs)} images\n{len(masks)} masks.")
 
-        
-        dataset = SlicerAugmentatorDataset(img_paths=imgs, 
-                                           mask_paths=masks,
-                                           transforms=transformations,
+        dataset = SlicerAugmentatorDataset(imgPaths=imgs, 
+                                           maskPaths=masks,
+                                           transformations=transformations,
                                            shuffle=shuffle)
         
         os.makedirs(f"{outputPath}/{OUTPUT_IMG_DIR}", exist_ok=True)
-        if(len(mask_paths) > 0):
-            os.makedirs(f"{outputPath}/{OUTPUT_MSK_DIR}", exist_ok=True)
         
-        for img_filename, transformed_images, mask_filename, transformed_masks in dataset:
-            if(len(transformed_masks) > 0):
-                for idx, (img, msk) in enumerate(zip(transformed_images, transformed_masks)):
-                    self.save(img, f"{outputPath}/{OUTPUT_IMG_DIR}", img_filename, idx)
-                    self.save(msk, f"{outputPath}/{OUTPUT_MSK_DIR}", mask_filename, idx)
+        
+        for dirIdx,(transformedImages, transformedMasks) in enumerate(dataset):
+            currentDir = f"{outputPath}/{OUTPUT_IMG_DIR}/{dirIdx}"
+            os.makedirs(currentDir, exist_ok=True)
+            if(len(transformedMasks) > 0):
+                for idx, (img, msk) in enumerate(zip(transformedImages, transformedMasks)):
+                    self.save(img, currentDir, imgPrefix.split(".")[0], idx)
+                    self.save(msk, currentDir, maskPrefix.split(".")[0], idx)
             else:
-                for img in transformed_images:
-                    self.save(img, f"{outputPath}/{OUTPUT_IMG_DIR}", img_filename, idx)
+                for img in transformedImages:
+                    self.save(img, currentDir, imgPrefix, idx)
 
         stopTime = time.time()
         logging.info(f"Processing completed in {stopTime-startTime:.2f} seconds")

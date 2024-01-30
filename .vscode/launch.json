@@ -1,0 +1,26 @@
+{
+    "launch": {
+        "configurations": [
+                  {
+                    "name": "Slicer debug",
+                    "type": "cppdbg",
+                    "request": "launch",
+                    "program": "/home/cr762/Slicer-5.6.1-linux-amd64/Slicer",
+                    "args": [],
+                    "stopAtEntry": false,
+                    "cwd": ".",
+                    "environment": [],
+                    "externalConsole": false,
+                    "MIMode": "gdb",
+                    "setupCommands": [
+                      {
+                        "description": "Enable pretty-printing for gdb",
+                        "text": "-enable-pretty-printing",
+                        "ignoreFailures": true
+                      }
+                    ],
+                    "miDebuggerPath": "/usr/bin/gdb"
+                  }
+        ]
+    }
+}

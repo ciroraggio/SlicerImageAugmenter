@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>783</width>
+    <width>664</width>
     <height>718</height>
    </rect>
   </property>
@@ -37,24 +37,7 @@
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="ctkPathLineEdit" name="imagesInputPath">
-        <property name="maximumSize">
-         <size>
-          <width>524</width>
-          <height>23</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1">
-       <widget class="QLineEdit" name="imgPrefix">
-        <property name="maximumSize">
-         <size>
-          <width>524</width>
-          <height>23</height>
-         </size>
-        </property>
-       </widget>
+       <widget class="ctkDirectoryButton" name="imagesInputPath"/>
       </item>
       <item row="3" column="0">
        <widget class="QLabel" name="label_3">
@@ -66,6 +49,16 @@
         </property>
         <property name="text">
          <string>Image filename (i.e. CT.nrrd) (*) </string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLineEdit" name="imgPrefix">
+        <property name="maximumSize">
+         <size>
+          <width>524</width>
+          <height>23</height>
+         </size>
         </property>
        </widget>
       </item>
@@ -134,14 +127,7 @@
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="ctkPathLineEdit" name="ouputPath">
-        <property name="maximumSize">
-         <size>
-          <width>653</width>
-          <height>23</height>
-         </size>
-        </property>
-       </widget>
+       <widget class="ctkDirectoryButton" name="outputPath"/>
       </item>
      </layout>
     </widget>
@@ -485,6 +471,32 @@
     </widget>
    </item>
    <item>
+    <widget class="ctkCollapsibleGroupBox" name="CollapsibleGroupBox_3">
+     <property name="minimumSize">
+      <size>
+       <width>646</width>
+       <height>100</height>
+      </size>
+     </property>
+     <property name="title">
+      <string>Settings</string>
+     </property>
+     <widget class="QCheckBox" name="shuffleFlag">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>30</y>
+        <width>101</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Shuffle data</string>
+      </property>
+     </widget>
+    </widget>
+   </item>
+   <item>
     <widget class="QPushButton" name="applyButton">
      <property name="enabled">
       <bool>true</bool>
@@ -532,9 +544,9 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>ctkPathLineEdit</class>
+   <class>ctkDirectoryButton</class>
    <extends>QWidget</extends>
-   <header>ctkPathLineEdit.h</header>
+   <header>ctkDirectoryButton.h</header>
   </customwidget>
   <customwidget>
    <class>qMRMLWidget</class>
