@@ -23,7 +23,7 @@ try:
     import monai
     import torch
 except ModuleNotFoundError:
-    slicer.util.pip_install("monai[all]")  
+    slicer.util.pip_install("monai[itk]")  
     import monai
     import torch
 
@@ -214,7 +214,6 @@ class SlicerAugmentatorWidget(ScriptedLoadableModuleWidget, VTKObservationMixin)
                 raise ValueError("Choose at least one transformation to apply")
             
             transformationList = mapTransformations(self.ui)
-            print(self.ui.imagesInputPath.directory, self.ui.outputPath.directory)
             self.logic.process(imagesInputPath=self.ui.imagesInputPath.directory,
                                imgPrefix=self.ui.imgPrefix.text,
                                maskPrefix=self.ui.maskPrefix.text,
@@ -235,10 +234,10 @@ class SlicerAugmentatorLogic(ScriptedLoadableModuleLogic):
     def getParameterNode(self):
         return SlicerAugmentatorParameterNode(super().getParameterNode())
     
-    def save(self, img, path, filename, idx):
+    def save(self, img, path, filename, extension, idx):
         # extract name and extension
-        name, extension = filename.split(".")[0], filename.split(".")[0] # TODO too weak
-        sitk.WriteImage(img, f"{path}/{name}_{idx}.{extension}")
+        img = sitk.GetImageFromArray(img)
+        sitk.WriteImage(img, f"{path}/{filename}_{idx}.{extension}")
 
     def process(self,
                 imagesInputPath: str,
@@ -293,8 +292,8 @@ class SlicerAugmentatorLogic(ScriptedLoadableModuleLogic):
             os.makedirs(currentDir, exist_ok=True)
             if(len(transformedMasks) > 0):
                 for idx, (img, msk) in enumerate(zip(transformedImages, transformedMasks)):
-                    self.save(img, currentDir, imgPrefix.split(".")[0], idx)
-                    self.save(msk, currentDir, maskPrefix.split(".")[0], idx)
+                    self.save(img, currentDir, imgPrefix.split(".")[0], imgPrefix.split(".")[1], idx)
+                    self.save(msk, currentDir, maskPrefix.split(".")[0], imgPrefix.split(".")[1], idx)
             else:
                 for img in transformedImages:
                     self.save(img, currentDir, imgPrefix, idx)
