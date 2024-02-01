@@ -9,10 +9,12 @@ from slicer.ScriptedLoadableModule import *
 from slicer.util import VTKObservationMixin
 
 from SlicerAugmentatorLib.SlicerAugmentatorDataset import SlicerAugmentatorDataset
-from SlicerAugmentatorLib.TransformationParser import mapTransformations
+from SlicerAugmentatorLib.SlicerAugmentatorTransformationParser import mapTransformations
 from SlicerAugmentatorLib.SlicerAugmentatorUtils import collectImagesAndMasksList
+from SlicerAugmentatorLib.SlicerAugmentatorValidator import validateTransforms, validateForms
 
 import SimpleITK as sitk
+import threading
 
 #
 # SlicerAugmentator
@@ -210,16 +212,15 @@ class SlicerAugmentatorWidget(ScriptedLoadableModuleWidget, VTKObservationMixin)
     def onApplyButton(self) -> None:
         """Run processing when user clicks "Apply" button."""
         with slicer.util.tryWithErrorDisplay(_("Failed to compute results."), waitCursor=True):
-            if(not any([self.ui.rotateEnabled, self.ui.resizeEnabled])):
-                raise ValueError("Choose at least one transformation to apply")
-            
+            validateForms(self.ui)
+        
             transformationList = mapTransformations(self.ui)
+            
             self.logic.process(imagesInputPath=self.ui.imagesInputPath.directory,
                                imgPrefix=self.ui.imgPrefix.text,
                                maskPrefix=self.ui.maskPrefix.text,
                                outputPath=self.ui.outputPath.directory,
-                               transformations=transformationList,
-                               shuffle=self.ui.shuffleFlag)
+                               transformations=transformationList)
 
 # 
 # SlicerAugmentatorLogic
@@ -234,10 +235,11 @@ class SlicerAugmentatorLogic(ScriptedLoadableModuleLogic):
     def getParameterNode(self):
         return SlicerAugmentatorParameterNode(super().getParameterNode())
     
-    def save(self, img, path, filename, extension, idx):
+    def save(self, img, path, filename, originalCase, extension):
         # extract name and extension
         img = sitk.GetImageFromArray(img)
-        sitk.WriteImage(img, f"{path}/{filename}_{idx}.{extension}")
+        img.CopyInformation(originalCase)
+        sitk.WriteImage(img, f"{path}/{filename}.{extension}")
 
     def process(self,
                 imagesInputPath: str,
@@ -245,7 +247,6 @@ class SlicerAugmentatorLogic(ScriptedLoadableModuleLogic):
                 maskPrefix: str,
                 outputPath: float,
                 transformations: list = [],
-                shuffle: bool = False
                 ) -> None:
         """
         Run the processing algorithm.
@@ -253,21 +254,6 @@ class SlicerAugmentatorLogic(ScriptedLoadableModuleLogic):
         """
         
         OUTPUT_IMG_DIR = "SlicerAugmentator/AugmentedDataset"
-
-        if not imagesInputPath:
-            raise ValueError("Input path is invalid")
-        
-        if not outputPath:
-            raise ValueError("Output path is invalid")
-        
-        if not imgPrefix:
-            raise ValueError("Indicate the image prefix")
-        
-        if len(transformations) == 0:
-            raise ValueError("Choose at least one transformation")
-
-        if(not os.path.isdir(imagesInputPath)):
-            raise ValueError("Images path is not a directory")
 
         startTime = time.time()
         logging.info("Processing started")
@@ -281,23 +267,46 @@ class SlicerAugmentatorLogic(ScriptedLoadableModuleLogic):
 
         dataset = SlicerAugmentatorDataset(imgPaths=imgs, 
                                            maskPaths=masks,
-                                           transformations=transformations,
-                                           shuffle=shuffle)
-        
-        os.makedirs(f"{outputPath}/{OUTPUT_IMG_DIR}", exist_ok=True)
-        
-        
+                                           transformations=transformations)
+            
         for dirIdx,(transformedImages, transformedMasks) in enumerate(dataset):
-            currentDir = f"{outputPath}/{OUTPUT_IMG_DIR}/{dirIdx}"
-            os.makedirs(currentDir, exist_ok=True)
+            """
+                What is caseName?
+                    imgs[dirIdx].split('/')[-1] -> imgPrefix
+                    imgs[dirIdx].split('/')[-2] -> folder name (i.e PAZ_1, PAZ_2)
+            """
+            caseName, originalCaseImg = imgs[dirIdx].split('/')[-2], sitk.ReadImage(imgs[dirIdx])
+            originalCaseMask = sitk.ReadImage(masks[dirIdx])
             if(len(transformedMasks) > 0):
-                for idx, (img, msk) in enumerate(zip(transformedImages, transformedMasks)):
-                    self.save(img, currentDir, imgPrefix.split(".")[0], imgPrefix.split(".")[1], idx)
-                    self.save(msk, currentDir, maskPrefix.split(".")[0], imgPrefix.split(".")[1], idx)
+                for (img_pack, msk_pack) in zip(transformedImages, transformedMasks):
+                    """
+                        transformedImgs | transformedMasks  =  [
+                                                                ["rotate", torch.Tensor[[...]] ],
+                                                                ["rotate", torch.Tensor[[...]] ],
+                                                                ["flip", torch.Tensor[[...]] ],
+                                                                ["flip", torch.Tensor[[...]] ],
+                                                                ...
+                                                                ]
+                    """
+                    transformName, img = img_pack
+                    _, msk = msk_pack
+                    currentDir = f"{outputPath}/{OUTPUT_IMG_DIR}/{caseName}_{transformName}"
+                    os.makedirs(currentDir, exist_ok=True)
+                  
+                    imgThread = threading.Thread(target=self.save, args=(img, currentDir, imgPrefix.split(".")[0], originalCaseImg, imgPrefix.split(".")[1]))
+                    mskThread = threading.Thread(target=self.save, args=(msk, currentDir, maskPrefix.split(".")[0], originalCaseMask, imgPrefix.split(".")[1]))
+                    
+                    imgThread.start()
+                    mskThread.start()
+            
             else:
-                for img in transformedImages:
-                    self.save(img, currentDir, imgPrefix, idx)
-
+                for img_pack in transformedImages:
+                    transformName, img = img_pack
+                    currentDir = f"{outputPath}/{OUTPUT_IMG_DIR}/{caseName}_{transformName}"
+                    os.makedirs(currentDir, exist_ok=True)
+                    imgThread = threading.Thread(target=self.save, args=(img, currentDir, imgPrefix.split(".")[0], originalCaseImg, imgPrefix.split(".")[1]))
+                    imgThread.start()
+                    
         stopTime = time.time()
         logging.info(f"Processing completed in {stopTime-startTime:.2f} seconds")
 

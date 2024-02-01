@@ -5,8 +5,9 @@ set(MODULE_NAME SlicerAugmentator)
 set(MODULE_PYTHON_SCRIPTS
   ${MODULE_NAME}.py
   ${MODULE_NAME}Lib/SlicerAugmentatorDataset.py
-  ${MODULE_NAME}Lib/TransformationParser.py
+  ${MODULE_NAME}Lib/SlicerAugmentatorValidator.py
   ${MODULE_NAME}Lib/SlicerAugmentatorUtils.py
+  ${MODULE_NAME}Lib/SlicerAugmentatorTransformationParser.py
   )
 
 set(MODULE_PYTHON_RESOURCES
