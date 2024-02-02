@@ -7,6 +7,7 @@ from slicer.i18n import tr as _
 from slicer.i18n import translate
 from slicer.ScriptedLoadableModule import *
 from slicer.util import VTKObservationMixin
+from slicer.util import setSliceViewerLayers
 
 from SlicerAugmentatorLib.SlicerAugmentatorDataset import SlicerAugmentatorDataset
 from SlicerAugmentatorLib.SlicerAugmentatorTransformationParser import mapTransformations
@@ -14,6 +15,9 @@ from SlicerAugmentatorLib.SlicerAugmentatorUtils import collectImagesAndMasksLis
 from SlicerAugmentatorLib.SlicerAugmentatorValidator import validateTransforms, validateForms
 
 import SimpleITK as sitk
+import sitkUtils
+
+
 import threading
 
 #
@@ -41,19 +45,12 @@ class SlicerAugmentator(ScriptedLoadableModule):
         self.parent.title = _("SlicerAugmentator")  # TODO: make this more human readable by adding spaces
         self.parent.categories = [translate("qSlicerAbstractCoreModule", "Utilities")]
         self.parent.dependencies = []  # TODO: add here list of module names that this module requires
-        self.parent.contributors = ["Ciro Benito Raggio (Karlsruhe Institute of Technology), Paolo Zaffino (), Maria Francesca Spadea (Karlsruhe Institute of Technology)"]
+        self.parent.contributors = ["Ciro Benito Raggio (Karlsruhe Institute of Technology, Germany), Paolo Zaffino (Magna Graecia University of Catanzaro, Italy), Maria Francesca Spadea (Karlsruhe Institute of Technology, Germany)"]
         # TODO: update with short description of the module and a link to online module documentation
         # _() function marks text as translatable to other languages
         self.parent.helpText = _("""
-This is an example of scripted loadable module bundled in an extension.
-See more information in <a href="https://github.com/organization/projectname#SlicerAugmentator">module documentation</a>.
+MONAI and PyTorch based medical image augmentation tool. It's designed to operate on a dataset of medical images and apply a series of specific transformations to each image. This process augments the original dataset, providing a greater variety of samples for training deep learning models.
 """)
-        # TODO: replace with organization, grant and thanks
-        self.parent.acknowledgementText = _("""
-This file was originally developed by Jean-Christophe Fillion-Robin, Kitware Inc., Andras Lasso, PerkLab,
-and Steve Pieper, Isomics, Inc. and was partially funded by NIH grant 3P41RR013218-12S1.
-""")
-
         # Additional initialization step after application startup is complete
         slicer.app.connect("startupCompleted()", registerSampleData)
 
@@ -153,6 +150,7 @@ class SlicerAugmentatorWidget(ScriptedLoadableModuleWidget, VTKObservationMixin)
 
         # Buttons
         self.ui.applyButton.connect("clicked(bool)", self.onApplyButton)
+        self.ui.previewButton.connect("clicked(bool)", self.onPreviewButton)
 
     # def cleanup(self) -> None:
     #     """Called when the application closes and the module widget is destroyed."""
@@ -203,11 +201,11 @@ class SlicerAugmentatorWidget(ScriptedLoadableModuleWidget, VTKObservationMixin)
     def _checkCanApply(self, caller=None, event=None) -> None:
         print(self.ui._parameterNode)
         if self._parameterNode and self._parameterNode.imagesInputPath and self._parameterNode.ouputPath:
-            # self.ui.applyButton.toolTip = _("Compute output volume")
             self.ui.applyButton.enabled = True
+            self.ui.previewButton.enabled = True
         else:
-            # self.ui.applyButton.toolTip = _("Select input and output volume nodes")
             self.ui.applyButton.enabled = False
+            self.ui.previewButton.enabled = False
 
     def onApplyButton(self) -> None:
         """Run processing when user clicks "Apply" button."""
@@ -220,6 +218,17 @@ class SlicerAugmentatorWidget(ScriptedLoadableModuleWidget, VTKObservationMixin)
                                imgPrefix=self.ui.imgPrefix.text,
                                maskPrefix=self.ui.maskPrefix.text,
                                outputPath=self.ui.outputPath.directory,
+                               transformations=transformationList)
+            
+    def onPreviewButton(self) -> None:
+        """Run processing when user clicks "Preview" button."""
+        with slicer.util.tryWithErrorDisplay(_("Failed to compute results."), waitCursor=True):
+            validateForms(self.ui)
+        
+            transformationList = mapTransformations(self.ui)
+            
+            self.logic.preview(imagesInputPath=self.ui.imagesInputPath.directory,
+                               imgPrefix=self.ui.imgPrefix.text,
                                transformations=transformationList)
 
 # 
@@ -307,6 +316,44 @@ class SlicerAugmentatorLogic(ScriptedLoadableModuleLogic):
                     imgThread = threading.Thread(target=self.save, args=(img, currentDir, imgPrefix.split(".")[0], originalCaseImg, imgPrefix.split(".")[1]))
                     imgThread.start()
                     
+        stopTime = time.time()
+        logging.info(f"Processing completed in {stopTime-startTime:.2f} seconds")
+        
+    def preview(self,
+                imagesInputPath: str,
+                imgPrefix: str,
+                transformations: list = [],
+                ) -> None:
+                
+        startTime = time.time()
+        logging.info("Processing started")
+        
+        imgs, masks = collectImagesAndMasksList(imagesInputPath=imagesInputPath, 
+                                                imgPrefix=imgPrefix,
+                                                maskPrefix=None)
+        
+        if len(masks) > 0 and (len(masks) != len(imgs)):
+            raise ValueError(f"Images and masks must have same length. Found:\n{len(imgs)} images\n{len(masks)} masks.")
+        dataset = SlicerAugmentatorDataset(imgPaths=imgs, 
+                                           maskPaths=masks,
+                                           transformations=transformations)
+
+        for dirIdx,(transformedImages, _) in enumerate(dataset):
+            """
+                What is caseName?
+                    imgs[dirIdx].split('/')[-1] -> imgPrefix
+                    imgs[dirIdx].split('/')[-2] -> folder name (i.e PAZ_1, PAZ_2)
+            """
+            caseName, originalCaseImg = imgs[dirIdx].split('/')[-2], sitk.ReadImage(imgs[dirIdx])
+            for img_pack in transformedImages:
+                    transformName, img = img_pack
+                    img = sitk.GetImageFromArray(img)
+                    img.CopyInformation(originalCaseImg)
+                    outputVolume = sitkUtils.PushVolumeToSlicer(img, outputVolume, name=f"{caseName}_{transformName}")
+                    setSliceViewerLayers(background=outputVolume)
+                    displayNode = outputVolume.GetDisplayNode()
+                    displayNode.SetAndObserveColorNodeID('vtkMRMLColorTableNodeRainbow')
+
         stopTime = time.time()
         logging.info(f"Processing completed in {stopTime-startTime:.2f} seconds")
 

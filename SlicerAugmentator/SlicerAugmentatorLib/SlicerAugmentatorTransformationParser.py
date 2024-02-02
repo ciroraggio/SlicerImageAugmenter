@@ -39,7 +39,7 @@ def mapTransformations(ui) -> list:
                                 range_z=rangeZ, 
                                 padding_mode=transformations.randRotate.paddingMode, 
                                 mode=transformations.randRotate.interpolationMode, 
-                                keep_size=transformations.randRotate.keepSize, 
+                                keep_size=True, 
                                 align_corners=transformations.randRotate.alignCorners))
       except Exception as e:
         raise ValueError(e)      
@@ -87,7 +87,6 @@ def getTransformations(ui) -> dict:
                     "rangeToZ":ui.randomRotateToZ.text,
                     "paddingMode": ui.randomRotatePaddingMode.currentText,
                     "interpolationMode": ui.randomRotateInterpolationMode.currentText,
-                    "keepSize": ui.randomRotateKeepSize.isChecked(),
                     "alignCorners": ui.randomRotateAlignCorners.isChecked(),
                 },
                 "resize": {
