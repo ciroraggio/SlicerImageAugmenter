@@ -327,32 +327,31 @@ class SlicerAugmentatorLogic(ScriptedLoadableModuleLogic):
                 
         startTime = time.time()
         logging.info("Processing started")
-        
-        imgs, masks = collectImagesAndMasksList(imagesInputPath=imagesInputPath, 
+        imgs, _ = collectImagesAndMasksList(imagesInputPath=imagesInputPath, 
                                                 imgPrefix=imgPrefix,
                                                 maskPrefix=None)
         
-        if len(masks) > 0 and (len(masks) != len(imgs)):
-            raise ValueError(f"Images and masks must have same length. Found:\n{len(imgs)} images\n{len(masks)} masks.")
+        # if len(masks) > 0 and (len(masks) != len(imgs)):
+        #     raise ValueError(f"Images and masks must have same length. Found:\n{len(imgs)} images\n{len(masks)} masks.")
+        
         dataset = SlicerAugmentatorDataset(imgPaths=imgs, 
-                                           maskPaths=masks,
+                                           maskPaths=[],
                                            transformations=transformations)
-
-        for dirIdx,(transformedImages, _) in enumerate(dataset):
+        
+        for dirIdx,(transformedImages, transformedMasks) in enumerate(dataset):
             """
                 What is caseName?
                     imgs[dirIdx].split('/')[-1] -> imgPrefix
                     imgs[dirIdx].split('/')[-2] -> folder name (i.e PAZ_1, PAZ_2)
             """
             caseName, originalCaseImg = imgs[dirIdx].split('/')[-2], sitk.ReadImage(imgs[dirIdx])
+            
             for img_pack in transformedImages:
-                    transformName, img = img_pack
-                    img = sitk.GetImageFromArray(img)
-                    img.CopyInformation(originalCaseImg)
-                    outputVolume = sitkUtils.PushVolumeToSlicer(img, outputVolume, name=f"{caseName}_{transformName}")
-                    setSliceViewerLayers(background=outputVolume)
-                    displayNode = outputVolume.GetDisplayNode()
-                    displayNode.SetAndObserveColorNodeID('vtkMRMLColorTableNodeRainbow')
+                transformName, img = img_pack
+                img = sitk.GetImageFromArray(img)
+                img.CopyInformation(originalCaseImg)
+                outputVolume = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLLabelMapVolumeNode")
+                outputVolume = sitkUtils.PushVolumeToSlicer(img, outputVolume)
 
         stopTime = time.time()
         logging.info(f"Processing completed in {stopTime-startTime:.2f} seconds")

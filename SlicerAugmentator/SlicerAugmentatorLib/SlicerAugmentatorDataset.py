@@ -23,6 +23,7 @@ class SlicerAugmentatorDataset(Dataset):
         return len(self.imgPaths)
     
     def load(self, path: str):
+        print(path)
         if(path):
             try:
                 img = sitk.ReadImage(path)
@@ -46,16 +47,15 @@ class SlicerAugmentatorDataset(Dataset):
                     """
         transformedImages = []
         transformedSegmentations = []
-
         img = self.load(self.imgPaths[idx])   
         if self.maskPaths is not None:
             mask = self.load(self.maskPaths[idx])
-
+            
         for transform in self.transformations:
             if(img.any()):
                 transformedImg = transform(img)
                 transformedImages.append([transform.get_transform_info()["class"], transformedImg]) # adding ["rotate", torch.Tensor[[...]] ]
-            if(mask.any()):
+            if(mask != None and mask.any()):
                 transformedMask = transform(mask)
                 transformedSegmentations.append([transform.get_transform_info()["class"], transformedMask])
             
