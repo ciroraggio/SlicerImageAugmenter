@@ -13,7 +13,7 @@ It's designed to operate on a dataset of medical images and apply a series of sp
     3.  Partially implemented input validation and MONAI intensity transformations, it will be completed in the future.
     4.  Partially implemented "Preview" feature, which allows the output of transformations to be viewed directly in the scene before saving them in the OS, will be completed in the future.
 
-# Illustrations
+# Illustrations [<ins>beta</ins>]
 ![main](https://github.com/NA-MIC/ProjectWeek/assets/96300975/4f8e8daf-88e2-483b-9849-e19899fb9260)
 ![filled](https://github.com/NA-MIC/ProjectWeek/assets/96300975/cc595232-fb44-4ff3-84eb-4a5ef52ec10c)
 
