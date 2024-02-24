@@ -64,14 +64,17 @@ def mapTransformations(ui) -> list:
         
         mappedTransformations.append(RandAdjustContrast(prob=1, 
                                                         gamma=[float(transformations.randomAdjustContrast.gammaFrom), float(transformations.randomAdjustContrast.gammaTo)],
-                                                        invert_image=transformations.randomAdjustContrast.invertImage))    
+                                                        invert_image=transformations.randomAdjustContrast.invertImage,
+                                                        retain_stats=True
+                                                        )
+                                     )    
         
     return mappedTransformations
 
 
 def getTransformations(ui) -> dict:
       transformations = {
-                # Spatial
+                # ----------------- Spatial -----------------           
                 "rotate": {
                     "enabled": ui.rotateEnabled.isChecked(),
                     "angle": ui.rotateAngle.text,
@@ -98,7 +101,8 @@ def getTransformations(ui) -> dict:
                     "enabled": ui.flipEnabled.isChecked(),
                     "axes": ui.flipAxes.text,
                 },
-                # Intensity
+                
+                # ----------------- Intensity -----------------                 
                 "randomScaleIntensity": {
                     "enabled": ui.randomScaleIntensityEnabled.isChecked(),
                     "factor": ui.randomScaleIntensityFactor.text,
@@ -107,7 +111,7 @@ def getTransformations(ui) -> dict:
                     "enabled": ui.randomAdjustContrastEnabled.isChecked(),
                     "gammaFrom": ui.randomAdjustContrastGammaFrom.text,
                     "gammaTo": ui.randomAdjustContrastGammaTo.text,
-                    "invertImage":ui.randomAdjustContrastInvertImage.isChecked()
+                    "invertImage":ui.randomAdjustContrastInvertImage.isChecked(),
                 }
             }
       

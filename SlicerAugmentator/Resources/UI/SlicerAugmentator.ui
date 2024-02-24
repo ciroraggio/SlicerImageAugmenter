@@ -6,12 +6,99 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>678</width>
-    <height>780</height>
+    <width>677</width>
+    <height>959</height>
    </rect>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
-   <item row="7" column="0">
+   <item row="4" column="0">
+    <widget class="Line" name="line_5">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="ctkCollapsibleButton" name="outputsCollapsibleButton">
+     <property name="maximumSize">
+      <size>
+       <width>765</width>
+       <height>168</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Outputs</string>
+     </property>
+     <layout class="QFormLayout" name="formLayout">
+      <item row="0" column="0">
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QLabel" name="label_2">
+          <property name="maximumSize">
+           <size>
+            <width>88</width>
+            <height>23</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Ouput path (*)</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="ctkDirectoryButton" name="outputPath">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_15">
+          <property name="toolTipDuration">
+           <number>5000000</number>
+          </property>
+          <property name="text">
+           <string>FIles structure (*)</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="filesStructureList">
+          <item>
+           <property name="text">
+            <string>your/path/CaseID/img.extension</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>your/path/CaseID.extension</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_16">
+          <property name="font">
+           <font>
+            <weight>75</weight>
+            <bold>true</bold>
+            <kerning>true</kerning>
+           </font>
+          </property>
+          <property name="text">
+           <string>CaseID will be the name of the folder that will contain the augmented images for each patient</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="5" column="0">
     <widget class="QPushButton" name="previewButton">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -478,7 +565,7 @@
      </property>
     </widget>
    </item>
-   <item row="8" column="0">
+   <item row="6" column="0">
     <widget class="QPushButton" name="applyButton">
      <property name="enabled">
       <bool>true</bool>
@@ -948,83 +1035,7 @@
      </property>
     </widget>
    </item>
-   <item row="6" column="0">
-    <widget class="Line" name="line_5">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0">
-    <widget class="Line" name="line">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
    <item row="0" column="0">
-    <widget class="Line" name="line_2">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="0">
-    <widget class="ctkCollapsibleButton" name="outputsCollapsibleButton">
-     <property name="maximumSize">
-      <size>
-       <width>765</width>
-       <height>64</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>Outputs</string>
-     </property>
-     <layout class="QFormLayout" name="formLayout_4">
-      <item row="0" column="0">
-       <widget class="QLabel" name="label_2">
-        <property name="maximumSize">
-         <size>
-          <width>88</width>
-          <height>23</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Ouput path (*)</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="ctkDirectoryButton" name="outputPath"/>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="1" column="0" alignment="Qt::AlignHCenter">
-    <widget class="QLabel" name="label_14">
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>60</height>
-      </size>
-     </property>
-     <property name="font">
-      <font>
-       <family>Chandas</family>
-       <pointsize>14</pointsize>
-       <weight>50</weight>
-       <bold>false</bold>
-      </font>
-     </property>
-     <property name="autoFillBackground">
-      <bool>true</bool>
-     </property>
-     <property name="text">
-      <string>Slicer Augmentator</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0">
     <widget class="ctkCollapsibleButton" name="inputsCollapsibleButton">
      <property name="maximumSize">
       <size>
@@ -1107,7 +1118,7 @@
          </size>
         </property>
         <property name="text">
-         <string>(*) - mandatory  </string>
+         <string>(*) - required</string>
         </property>
         <property name="wordWrap">
          <bool>false</bool>
@@ -1117,7 +1128,7 @@
      </layout>
     </widget>
    </item>
-   <item row="5" column="0">
+   <item row="3" column="0">
     <widget class="QTabWidget" name="transformsTabWidget">
      <property name="enabled">
       <bool>true</bool>
@@ -1125,7 +1136,7 @@
      <property name="maximumSize">
       <size>
        <width>765</width>
-       <height>400</height>
+       <height>351</height>
       </size>
      </property>
      <property name="autoFillBackground">
@@ -1151,8 +1162,8 @@
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>-163</y>
-            <width>622</width>
+            <y>0</y>
+            <width>621</width>
             <height>499</height>
            </rect>
           </property>
@@ -1187,6 +1198,64 @@
               <number>0</number>
              </property>
              <layout class="QGridLayout" name="gridLayout_9">
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="resizeEnabled">
+                <property name="maximumSize">
+                 <size>
+                  <width>85</width>
+                  <height>21</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Enabled</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="3">
+               <widget class="QLineEdit" name="resizeH">
+                <property name="maximumSize">
+                 <size>
+                  <width>51</width>
+                  <height>23</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="placeholderText">
+                 <string>H</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="4">
+               <widget class="QLineEdit" name="resizeW">
+                <property name="maximumSize">
+                 <size>
+                  <width>51</width>
+                  <height>23</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="placeholderText">
+                 <string>W</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QLabel" name="label_6">
+                <property name="maximumSize">
+                 <size>
+                  <width>121</width>
+                  <height>16</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Interpolation mode</string>
+                </property>
+               </widget>
+              </item>
               <item row="1" column="2">
                <widget class="QComboBox" name="resizeInterpolationMode">
                 <property name="maximumSize">
@@ -1241,64 +1310,6 @@
                 </item>
                </widget>
               </item>
-              <item row="0" column="3">
-               <widget class="QLineEdit" name="resizeH">
-                <property name="maximumSize">
-                 <size>
-                  <width>51</width>
-                  <height>23</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="placeholderText">
-                 <string>H</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="4">
-               <widget class="QLineEdit" name="resizeW">
-                <property name="maximumSize">
-                 <size>
-                  <width>51</width>
-                  <height>23</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="placeholderText">
-                 <string>W</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QLabel" name="label_8">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="text">
-                 <string>Spatial size</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="QLabel" name="label_6">
-                <property name="maximumSize">
-                 <size>
-                  <width>121</width>
-                  <height>16</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Interpolation mode</string>
-                </property>
-               </widget>
-              </item>
               <item row="0" column="2">
                <widget class="QLineEdit" name="resizeC">
                 <property name="maximumSize">
@@ -1315,16 +1326,16 @@
                 </property>
                </widget>
               </item>
-              <item row="0" column="0">
-               <widget class="QCheckBox" name="resizeEnabled">
-                <property name="maximumSize">
-                 <size>
-                  <width>85</width>
-                  <height>21</height>
-                 </size>
+              <item row="0" column="1">
+               <widget class="QLabel" name="label_8">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
                 </property>
                 <property name="text">
-                 <string>Enabled</string>
+                 <string>Spatial size</string>
                 </property>
                </widget>
               </item>
@@ -1367,51 +1378,6 @@
               <number>0</number>
              </property>
              <layout class="QGridLayout" name="gridLayout_5">
-              <item row="1" column="1">
-               <widget class="QLabel" name="label_7">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>121</width>
-                  <height>16</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Interpolation mode</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QLineEdit" name="rotateAngle">
-                <property name="placeholderText">
-                 <string>Angle (rad)</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="QCheckBox" name="rotateEnabled">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>85</width>
-                  <height>21</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Enabled</string>
-                </property>
-               </widget>
-              </item>
               <item row="1" column="2">
                <widget class="QComboBox" name="rotateInterpolationMode">
                 <property name="sizePolicy">
@@ -1447,6 +1413,51 @@
                 </item>
                </widget>
               </item>
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="rotateEnabled">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>85</width>
+                  <height>21</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Enabled</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QLabel" name="label_7">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>121</width>
+                  <height>16</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Interpolation mode</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLineEdit" name="rotateAngle">
+                <property name="placeholderText">
+                 <string>Angle (rad)</string>
+                </property>
+               </widget>
+              </item>
              </layout>
             </widget>
            </item>
@@ -1474,78 +1485,6 @@
               <number>0</number>
              </property>
              <layout class="QGridLayout" name="gridLayout_3">
-              <item row="2" column="1">
-               <widget class="QLabel" name="label_11">
-                <property name="text">
-                 <string>Range Z (rad)</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="2">
-               <widget class="QLineEdit" name="randomRotateFromY">
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="placeholderText">
-                 <string>From</string>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="1">
-               <widget class="QLabel" name="label_12">
-                <property name="text">
-                 <string>Interpolation mode</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="3">
-               <widget class="QLineEdit" name="randomRotateToY">
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="placeholderText">
-                 <string>To</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="QCheckBox" name="randomRotateEnabled">
-                <property name="text">
-                 <string>Enabled</string>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="2">
-               <widget class="QComboBox" name="randomRotateInterpolationMode">
-                <item>
-                 <property name="text">
-                  <string>bilinear</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>nearest</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item row="2" column="2">
-               <widget class="QLineEdit" name="randomRotateFromZ">
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="placeholderText">
-                 <string>From</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="2">
-               <widget class="QLineEdit" name="randomRotateFromX">
-                <property name="placeholderText">
-                 <string>From</string>
-                </property>
-               </widget>
-              </item>
               <item row="4" column="2">
                <widget class="QComboBox" name="randomRotatePaddingMode">
                 <item>
@@ -1600,17 +1539,10 @@
                 </item>
                </widget>
               </item>
-              <item row="0" column="3">
-               <widget class="QLineEdit" name="randomRotateToX">
-                <property name="placeholderText">
-                 <string>To</string>
-                </property>
-               </widget>
-              </item>
-              <item row="4" column="1">
-               <widget class="QLabel" name="label_13">
+              <item row="5" column="1">
+               <widget class="QCheckBox" name="randomRotateAlignCorners">
                 <property name="text">
-                 <string>Padding mode</string>
+                 <string>Align corners</string>
                 </property>
                </widget>
               </item>
@@ -1624,10 +1556,37 @@
                 </property>
                </widget>
               </item>
-              <item row="0" column="1">
-               <widget class="QLabel" name="label_9">
+              <item row="1" column="2">
+               <widget class="QLineEdit" name="randomRotateFromY">
                 <property name="text">
-                 <string>Range X (rad)</string>
+                 <string/>
+                </property>
+                <property name="placeholderText">
+                 <string>From</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QLabel" name="label_12">
+                <property name="text">
+                 <string>Interpolation mode</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="2">
+               <widget class="QLineEdit" name="randomRotateFromX">
+                <property name="placeholderText">
+                 <string>From</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="3">
+               <widget class="QLineEdit" name="randomRotateToY">
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="placeholderText">
+                 <string>To</string>
                 </property>
                </widget>
               </item>
@@ -1638,10 +1597,62 @@
                 </property>
                </widget>
               </item>
-              <item row="5" column="1">
-               <widget class="QCheckBox" name="randomRotateAlignCorners">
+              <item row="2" column="1">
+               <widget class="QLabel" name="label_11">
                 <property name="text">
-                 <string>Align corners</string>
+                 <string>Range Z (rad)</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="2">
+               <widget class="QLineEdit" name="randomRotateFromZ">
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="placeholderText">
+                 <string>From</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="3">
+               <widget class="QLineEdit" name="randomRotateToX">
+                <property name="placeholderText">
+                 <string>To</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="randomRotateEnabled">
+                <property name="text">
+                 <string>Enabled</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLabel" name="label_9">
+                <property name="text">
+                 <string>Range X (rad)</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="2">
+               <widget class="QComboBox" name="randomRotateInterpolationMode">
+                <item>
+                 <property name="text">
+                  <string>bilinear</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>nearest</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="4" column="1">
+               <widget class="QLabel" name="label_13">
+                <property name="text">
+                 <string>Padding mode</string>
                 </property>
                </widget>
               </item>
@@ -1726,14 +1737,14 @@
             <x>0</x>
             <y>0</y>
             <width>636</width>
-            <height>336</height>
+            <height>302</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
            <item>
             <widget class="QGroupBox" name="groupBox">
              <property name="enabled">
-              <bool>false</bool>
+              <bool>true</bool>
              </property>
              <property name="autoFillBackground">
               <bool>true</bool>
@@ -1762,7 +1773,7 @@
            <item>
             <widget class="QGroupBox" name="groupBox_2">
              <property name="enabled">
-              <bool>false</bool>
+              <bool>true</bool>
              </property>
              <property name="autoFillBackground">
               <bool>true</bool>

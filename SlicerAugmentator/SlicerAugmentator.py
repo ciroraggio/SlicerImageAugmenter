@@ -11,8 +11,8 @@ from slicer.util import setSliceViewerLayers
 
 from SlicerAugmentatorLib.SlicerAugmentatorDataset import SlicerAugmentatorDataset
 from SlicerAugmentatorLib.SlicerAugmentatorTransformationParser import mapTransformations
-from SlicerAugmentatorLib.SlicerAugmentatorUtils import collectImagesAndMasksList
-from SlicerAugmentatorLib.SlicerAugmentatorValidator import validateTransforms, validateForms
+from SlicerAugmentatorLib.SlicerAugmentatorUtils import collectImagesAndMasksList, getOriginalCase, getFilesStructure, save, showPreview
+from SlicerAugmentatorLib.SlicerAugmentatorValidator import validateCollectedImagesAndMasks, validateForms
 
 import SimpleITK as sitk
 import sitkUtils
@@ -29,10 +29,9 @@ try:
     import monai
     import torch
 except ModuleNotFoundError:
-    slicer.util.pip_install("monai[itk]")  
+    slicer.util.pip_install("monai[itk]")
     import monai
     import torch
-
 
 
 class SlicerAugmentator(ScriptedLoadableModule):
@@ -42,10 +41,14 @@ class SlicerAugmentator(ScriptedLoadableModule):
 
     def __init__(self, parent):
         ScriptedLoadableModule.__init__(self, parent)
-        self.parent.title = _("SlicerAugmentator")  # TODO: make this more human readable by adding spaces
-        self.parent.categories = [translate("qSlicerAbstractCoreModule", "Utilities")]
-        self.parent.dependencies = []  # TODO: add here list of module names that this module requires
-        self.parent.contributors = ["Ciro Benito Raggio (Karlsruhe Institute of Technology, Germany), Paolo Zaffino (Magna Graecia University of Catanzaro, Italy), Maria Francesca Spadea (Karlsruhe Institute of Technology, Germany)"]
+        # TODO: make this more human readable by adding spaces
+        self.parent.title = _("SlicerAugmentator")
+        self.parent.categories = [
+            translate("qSlicerAbstractCoreModule", "Utilities")]
+        # TODO: add here list of module names that this module requires
+        self.parent.dependencies = []
+        self.parent.contributors = [
+            "Ciro Benito Raggio (Karlsruhe Institute of Technology, Germany), Paolo Zaffino (Magna Graecia University of Catanzaro, Italy), Maria Francesca Spadea (Karlsruhe Institute of Technology, Germany)"]
         # TODO: update with short description of the module and a link to online module documentation
         # _() function marks text as translatable to other languages
         self.parent.helpText = _("""
@@ -121,14 +124,15 @@ class SlicerAugmentatorWidget(ScriptedLoadableModuleWidget, VTKObservationMixin)
         self.logic = None
         self._parameterNode = None
         self._parameterNodeGuiTag = None
-    
+
     def setup(self) -> None:
         """Called when the user opens the module the first time and the widget is initialized."""
         ScriptedLoadableModuleWidget.setup(self)
 
         # Load widget from .ui file (created by Qt Designer).
         # Additional widgets can be instantiated manually and added to self.layout.
-        uiWidget = slicer.util.loadUI(self.resourcePath("UI/SlicerAugmentator.ui"))
+        uiWidget = slicer.util.loadUI(
+            self.resourcePath("UI/SlicerAugmentator.ui"))
         self.layout.addWidget(uiWidget)
         self.ui = slicer.util.childWidgetVariables(uiWidget)
         # self.init_transformations()
@@ -145,8 +149,10 @@ class SlicerAugmentatorWidget(ScriptedLoadableModuleWidget, VTKObservationMixin)
         # Connections
 
         # These connections ensure that we update parameter node when scene is closed
-        self.addObserver(slicer.mrmlScene, slicer.mrmlScene.StartCloseEvent, self.onSceneStartClose)
-        self.addObserver(slicer.mrmlScene, slicer.mrmlScene.EndCloseEvent, self.onSceneEndClose)
+        self.addObserver(
+            slicer.mrmlScene, slicer.mrmlScene.StartCloseEvent, self.onSceneStartClose)
+        self.addObserver(slicer.mrmlScene,
+                         slicer.mrmlScene.EndCloseEvent, self.onSceneEndClose)
 
         # Buttons
         self.ui.applyButton.connect("clicked(bool)", self.onApplyButton)
@@ -155,7 +161,6 @@ class SlicerAugmentatorWidget(ScriptedLoadableModuleWidget, VTKObservationMixin)
     # def cleanup(self) -> None:
     #     """Called when the application closes and the module widget is destroyed."""
     #     self.removeObservers()
-
 
     def onSceneStartClose(self, caller, event) -> None:
         """Called just before the scene is closed."""
@@ -211,27 +216,31 @@ class SlicerAugmentatorWidget(ScriptedLoadableModuleWidget, VTKObservationMixin)
         """Run processing when user clicks "Apply" button."""
         with slicer.util.tryWithErrorDisplay(_("Failed to compute results."), waitCursor=True):
             validateForms(self.ui)
-        
+
             transformationList = mapTransformations(self.ui)
-            
+            filesStructure = getFilesStructure(self.ui.filesStructureList)
             self.logic.process(imagesInputPath=self.ui.imagesInputPath.directory,
                                imgPrefix=self.ui.imgPrefix.text,
                                maskPrefix=self.ui.maskPrefix.text,
                                outputPath=self.ui.outputPath.directory,
-                               transformations=transformationList)
-            
+                               transformations=transformationList,
+                               filesStructure=filesStructure)
+
     def onPreviewButton(self) -> None:
         """Run processing when user clicks "Preview" button."""
         with slicer.util.tryWithErrorDisplay(_("Failed to compute results."), waitCursor=True):
             validateForms(self.ui)
-        
+
             transformationList = mapTransformations(self.ui)
-            
+            filesStructure = getFilesStructure(self.ui.filesStructureList)
+
             self.logic.preview(imagesInputPath=self.ui.imagesInputPath.directory,
                                imgPrefix=self.ui.imgPrefix.text,
-                               transformations=transformationList)
+                               maskPrefix=self.ui.maskPrefix.text,
+                               transformations=transformationList,
+                               filesStructure=filesStructure)
 
-# 
+#
 # SlicerAugmentatorLogic
 #
 
@@ -243,118 +252,134 @@ class SlicerAugmentatorLogic(ScriptedLoadableModuleLogic):
 
     def getParameterNode(self):
         return SlicerAugmentatorParameterNode(super().getParameterNode())
-    
-    def save(self, img, path, filename, originalCase, extension):
-        # extract name and extension
-        img = sitk.GetImageFromArray(img)
-        img.CopyInformation(originalCase)
-        sitk.WriteImage(img, f"{path}/{filename}.{extension}")
 
     def process(self,
                 imagesInputPath: str,
                 imgPrefix: str,
                 maskPrefix: str,
                 outputPath: float,
+                filesStructure: str,
                 transformations: list = [],
                 ) -> None:
         """
         Run the processing algorithm.
         Can be used without GUI widget
         """
-        
+
         OUTPUT_IMG_DIR = "SlicerAugmentator/AugmentedDataset"
 
         startTime = time.time()
         logging.info("Processing started")
-        
-        imgs, masks = collectImagesAndMasksList(imagesInputPath=imagesInputPath, 
+
+        imgs, masks = collectImagesAndMasksList(imagesInputPath=imagesInputPath,
                                                 imgPrefix=imgPrefix,
                                                 maskPrefix=maskPrefix)
-        
-        if len(masks) > 0 and (len(masks) != len(imgs)):
-            raise ValueError(f"Images and masks must have same length. Found:\n{len(imgs)} images\n{len(masks)} masks.")
+        validateCollectedImagesAndMasks(imgs, masks)
 
-        dataset = SlicerAugmentatorDataset(imgPaths=imgs, 
-                                           maskPaths=masks,
-                                           transformations=transformations)
-            
-        for dirIdx,(transformedImages, transformedMasks) in enumerate(dataset):
+        dataset = SlicerAugmentatorDataset(
+            imgPaths=imgs, maskPaths=masks, transformations=transformations)
+
+        for dirIdx in range(len(dataset)):
+            transformedImages, transformedMasks = dataset[dirIdx]
             """
-                What is caseName?
-                    imgs[dirIdx].split('/')[-1] -> imgPrefix
-                    imgs[dirIdx].split('/')[-2] -> folder name (i.e PAZ_1, PAZ_2)
+            transformedImgs | transformedMasks  =  
+            [
+                ["rotate", torch.Tensor[[...]] ],
+                ["rotate", torch.Tensor[[...]] ],
+                ["flip", torch.Tensor[[...]] ],
+                ...
+            ]
             """
-            caseName, originalCaseImg = imgs[dirIdx].split('/')[-2], sitk.ReadImage(imgs[dirIdx])
-            originalCaseMask = sitk.ReadImage(masks[dirIdx])
-            if(len(transformedMasks) > 0):
-                for (img_pack, msk_pack) in zip(transformedImages, transformedMasks):
-                    """
-                        transformedImgs | transformedMasks  =  [
-                                                                ["rotate", torch.Tensor[[...]] ],
-                                                                ["rotate", torch.Tensor[[...]] ],
-                                                                ["flip", torch.Tensor[[...]] ],
-                                                                ["flip", torch.Tensor[[...]] ],
-                                                                ...
-                                                                ]
-                    """
-                    transformName, img = img_pack
-                    _, msk = msk_pack
-                    currentDir = f"{outputPath}/{OUTPUT_IMG_DIR}/{caseName}_{transformName}"
-                    os.makedirs(currentDir, exist_ok=True)
-                  
-                    imgThread = threading.Thread(target=self.save, args=(img, currentDir, imgPrefix.split(".")[0], originalCaseImg, imgPrefix.split(".")[1]))
-                    mskThread = threading.Thread(target=self.save, args=(msk, currentDir, maskPrefix.split(".")[0], originalCaseMask, imgPrefix.split(".")[1]))
-                    
-                    imgThread.start()
-                    mskThread.start()
-            
-            else:
-                for img_pack in transformedImages:
-                    transformName, img = img_pack
-                    currentDir = f"{outputPath}/{OUTPUT_IMG_DIR}/{caseName}_{transformName}"
-                    os.makedirs(currentDir, exist_ok=True)
-                    imgThread = threading.Thread(target=self.save, args=(img, currentDir, imgPrefix.split(".")[0], originalCaseImg, imgPrefix.split(".")[1]))
-                    imgThread.start()
-                    
+            try:
+                caseName, originalCaseImg = getOriginalCase(
+                    imgs[dirIdx], filesStructure)
+                if (len(transformedMasks) > 0):
+                    originalCaseMask = sitk.ReadImage(masks[dirIdx])
+                    for (img_pack, msk_pack) in zip(transformedImages, transformedMasks):
+                        transformName, img = img_pack
+                        _, msk = msk_pack
+                        currentDir = f"{outputPath}/{OUTPUT_IMG_DIR}/{caseName}_{transformName}"
+                        os.makedirs(currentDir, exist_ok=True)
+                        if (len(imgPrefix.split(".")) >= 2):
+                            save(img, currentDir, imgPrefix.split(".")[
+                                 0], originalCaseImg, imgPrefix.split(".")[1])
+                            save(msk, currentDir, maskPrefix.split(".")[
+                                 0], originalCaseMask, imgPrefix.split(".")[1])
+                        else:
+                            save(img, currentDir, imgPrefix,
+                                 originalCaseImg, "tif")
+                            save(msk, currentDir, maskPrefix,
+                                 originalCaseMask, "tif")
+
+                else:
+                    for img_pack in transformedImages:
+                        transformName, img = img_pack
+                        currentDir = f"{outputPath}/{OUTPUT_IMG_DIR}/{caseName}_{transformName}"
+                        os.makedirs(currentDir, exist_ok=True)
+                        if (len(imgPrefix.split(".")) > 2):
+                            save(img, currentDir, imgPrefix.split(".")[
+                                 0], originalCaseImg, imgPrefix.split(".")[1])
+                        else:
+                            save(img, currentDir, caseName.split(".")[
+                                 0], originalCaseImg, caseName.split(".")[1])
+            except Exception as e:
+                print(e)
+
         stopTime = time.time()
-        logging.info(f"Processing completed in {stopTime-startTime:.2f} seconds")
-        
+        logging.info(
+            f"Processing completed in {stopTime-startTime:.2f} seconds")
+
     def preview(self,
                 imagesInputPath: str,
                 imgPrefix: str,
+                maskPrefix: str,
                 transformations: list = [],
+                filesStructure: str = ""
                 ) -> None:
-                
+
         startTime = time.time()
         logging.info("Processing started")
-        imgs, _ = collectImagesAndMasksList(imagesInputPath=imagesInputPath, 
+        imgs, masks = collectImagesAndMasksList(imagesInputPath=imagesInputPath,
                                                 imgPrefix=imgPrefix,
-                                                maskPrefix=None)
-        
-        # if len(masks) > 0 and (len(masks) != len(imgs)):
-        #     raise ValueError(f"Images and masks must have same length. Found:\n{len(imgs)} images\n{len(masks)} masks.")
-        
-        dataset = SlicerAugmentatorDataset(imgPaths=imgs, 
-                                           maskPaths=[],
-                                           transformations=transformations)
-        
-        for dirIdx,(transformedImages, transformedMasks) in enumerate(dataset):
+                                                maskPrefix=maskPrefix)
+        validateCollectedImagesAndMasks(imgs, masks)
+
+        dataset = SlicerAugmentatorDataset(
+            imgPaths=imgs, maskPaths=masks, transformations=transformations)
+
+        for dirIdx in range(len(dataset)):
+            transformedImages, transformedMasks = dataset[dirIdx]
             """
-                What is caseName?
-                    imgs[dirIdx].split('/')[-1] -> imgPrefix
-                    imgs[dirIdx].split('/')[-2] -> folder name (i.e PAZ_1, PAZ_2)
+            transformedImgs | transformedMasks  =  
+            [
+                ["rotate", torch.Tensor[[...]] ],
+                ["rotate", torch.Tensor[[...]] ],
+                ["flip", torch.Tensor[[...]] ],
+                ...
+            ]
             """
-            caseName, originalCaseImg = imgs[dirIdx].split('/')[-2], sitk.ReadImage(imgs[dirIdx])
-            
-            for img_pack in transformedImages:
-                transformName, img = img_pack
-                img = sitk.GetImageFromArray(img)
-                img.CopyInformation(originalCaseImg)
-                outputVolume = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLLabelMapVolumeNode")
-                outputVolume = sitkUtils.PushVolumeToSlicer(img, outputVolume)
+            try:
+                caseName, originalCaseImg = getOriginalCase(
+                    imgs[dirIdx], filesStructure)
+                if (len(transformedMasks) > 0):
+                    originalCaseMask = sitk.ReadImage(masks[dirIdx])
+                    for (img_pack, msk_pack) in zip(transformedImages, transformedMasks):
+                        transformName, img = img_pack
+                        _, msk = msk_pack
+                        showPreview(img=img, originalCaseImg=originalCaseImg, originalCaseMask=originalCaseMask, mask=msk,
+                                    imgNodeName=f"{caseName}_{transformName}_img", maskNodeName=f"{caseName}_{transformName}_mask")
+                else:
+                    for img_pack in transformedImages:
+                        transformName, img = img_pack
+                        showPreview(img, originalCaseImg,
+                                    imgNodeName=f"{caseName}_{transformName}_img")
+
+            except Exception as e:
+                print(e)
 
         stopTime = time.time()
-        logging.info(f"Processing completed in {stopTime-startTime:.2f} seconds")
+        logging.info(
+            f"Processing completed in {stopTime-startTime:.2f} seconds")
 
 
 #
@@ -404,7 +429,8 @@ class SlicerAugmentatorTest(ScriptedLoadableModuleTest):
         self.assertEqual(inputScalarRange[0], 0)
         self.assertEqual(inputScalarRange[1], 695)
 
-        outputVolume = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLScalarVolumeNode")
+        outputVolume = slicer.mrmlScene.AddNewNodeByClass(
+            "vtkMRMLScalarVolumeNode")
         threshold = 100
 
         # Test the module logic
