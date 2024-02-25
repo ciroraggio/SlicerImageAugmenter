@@ -1,8 +1,10 @@
 import os
 import re
 import SimpleITK as sitk
+import sitkUtils
 import threading
 import slicer
+from PyQt5.QtWidgets import QMessageBox
 
 IS_FILE_ID = "isFileID"  # .../path/CaseID.extension
 IS_FOLDER_ID = "isFolderID"  # .../path/CaseID/img.extension
@@ -42,6 +44,10 @@ def getFilesStructure(filesStructureList):
 
     return structureType.get(filesStructureList.currentIndex)
 
+def makeDir(outputPath, OUTPUT_IMG_DIR, caseName, transformName):
+    currentDir = f"{outputPath}/{OUTPUT_IMG_DIR}/{caseName}_{transformName}"
+    os.makedirs(currentDir, exist_ok=True)
+    return currentDir
 
 def sanitizeTransformName(transform) -> str:
     """
@@ -80,25 +86,25 @@ def save(img, path, filename, originalCase, extension):
 
 
 def showPreview(img, originalCaseImg, originalCaseMask=None, mask=None, imgNodeName="imgNode", maskNodeName="maskNode"):
-    img = sitk.GetImageFromArray(img)
-
+    sitkAugmentedImg = sitk.GetImageFromArray(img)
     if (originalCaseImg.GetDepth() > 0):
-        img.CopyInformation(originalCaseImg)
-
-    outputImgVolume = slicer.mrmlScene.AddNewNodeByClass(
-        "vtkMRMLScalarVolumeNode", imgNodeName)
-    outputImgVolume.SetAndObserveImageData(img)
+        sitkAugmentedImg.CopyInformation(originalCaseImg)
+    
+    outputImgNode = sitkUtils.PushVolumeToSlicer(sitkAugmentedImg, name=imgNodeName, className="vtkMRMLScalarVolumeNode")
 
     if (mask != None):
-        mask = sitk.GetImageFromArray(mask)
+        sitkAugmentedMask = sitk.GetImageFromArray(mask)
         if (originalCaseMask.GetDepth() > 0):
-            img.CopyInformation(originalCaseImg)
-        outputMaskVolume = slicer.mrmlScene.AddNewNodeByClass(
-            "vtkMRMLScalarVolumeNode", maskNodeName)
-        outputMaskVolume.SetAndObserveImageData(mask)
+            sitkAugmentedMask.CopyInformation(originalCaseMask)
+        
+        outputMaskNode = sitkUtils.PushVolumeToSlicer(sitkAugmentedMask, name=maskNodeName, className="vtkMRMLScalarVolumeNode")
 
-        slicer.util.setSliceViewerLayers(
-            background=outputImgVolume, foreground=outputMaskVolume, foregroundOpacity=0.4)
+        slicer.util.setSliceViewerLayers(background=outputImgNode, label=outputMaskNode, labelOpacity=0.4)
 
     else:
-        slicer.util.setSliceViewerLayers(background=outputImgVolume)
+        slicer.util.setSliceViewerLayers(background=outputImgNode)
+
+def clearScene():
+    scene = slicer.mrmlScene
+    scene.Clear()
+
