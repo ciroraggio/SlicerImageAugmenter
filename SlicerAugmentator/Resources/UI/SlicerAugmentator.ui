@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1022</width>
+    <width>868</width>
     <height>959</height>
    </rect>
   </property>
@@ -134,7 +134,7 @@
       <bool>true</bool>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="SpatialTab">
       <attribute name="title">
@@ -143,6 +143,9 @@
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
         <widget class="QScrollArea" name="scrollArea">
+         <property name="layoutDirection">
+          <enum>Qt::LeftToRight</enum>
+         </property>
          <property name="autoFillBackground">
           <bool>true</bool>
          </property>
@@ -153,8 +156,8 @@
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>-94</y>
-            <width>852</width>
+            <y>0</y>
+            <width>812</width>
             <height>413</height>
            </rect>
           </property>
@@ -399,7 +402,7 @@
                <string>Enabled</string>
               </property>
              </widget>
-             <widget class="QWidget" name="">
+             <widget class="QWidget" name="layoutWidget">
               <property name="geometry">
                <rect>
                 <x>110</x>
@@ -891,6 +894,12 @@
          <property name="autoFillBackground">
           <bool>true</bool>
          </property>
+         <property name="verticalScrollBarPolicy">
+          <enum>Qt::ScrollBarAlwaysOn</enum>
+         </property>
+         <property name="horizontalScrollBarPolicy">
+          <enum>Qt::ScrollBarAlwaysOff</enum>
+         </property>
          <property name="widgetResizable">
           <bool>true</bool>
          </property>
@@ -898,10 +907,13 @@
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>0</y>
-            <width>866</width>
-            <height>302</height>
+            <y>-92</y>
+            <width>812</width>
+            <height>394</height>
            </rect>
+          </property>
+          <property name="layoutDirection">
+           <enum>Qt::LeftToRight</enum>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
            <item>
@@ -945,10 +957,10 @@
               <string>Random Adjust Contrast</string>
              </property>
              <layout class="QGridLayout" name="gridLayout_8">
-              <item row="0" column="1">
-               <widget class="QLabel" name="label_10">
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="randomAdjustContrastEnabled">
                 <property name="text">
-                 <string>Gamma</string>
+                 <string>Enabled</string>
                 </property>
                </widget>
               </item>
@@ -959,10 +971,17 @@
                 </property>
                </widget>
               </item>
-              <item row="0" column="0">
-               <widget class="QCheckBox" name="randomAdjustContrastEnabled">
+              <item row="1" column="1">
+               <widget class="QCheckBox" name="randomAdjustContrastInvertImage">
                 <property name="text">
-                 <string>Enabled</string>
+                 <string>Invert image</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLabel" name="label_10">
+                <property name="text">
+                 <string>Gamma</string>
                 </property>
                </widget>
               </item>
@@ -973,10 +992,99 @@
                 </property>
                </widget>
               </item>
-              <item row="1" column="1">
-               <widget class="QCheckBox" name="randomAdjustContrastInvertImage">
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="groupBox_3">
+             <property name="autoFillBackground">
+              <bool>true</bool>
+             </property>
+             <property name="title">
+              <string>Random Gaussian Noise</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_4">
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="randomGaussianNoiseEnabled">
                 <property name="text">
-                 <string>Invert image</string>
+                 <string>Enabled</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLineEdit" name="randomGaussianNoiseMean">
+                <property name="placeholderText">
+                 <string>Mean [Default 0.0]</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="2">
+               <widget class="QLineEdit" name="randomGaussianNoiseStd">
+                <property name="placeholderText">
+                 <string>Std [Default 0.1]</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="groupBox_4">
+             <property name="autoFillBackground">
+              <bool>true</bool>
+             </property>
+             <property name="title">
+              <string>Shift Intensity</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_5">
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="shiftIntensityEnabled">
+                <property name="text">
+                 <string>Enabled</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLineEdit" name="shiftIntensityOffset">
+                <property name="placeholderText">
+                 <string>Offset</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="groupBox_5">
+             <property name="title">
+              <string>Random Shift Intensity</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_9">
+              <item row="0" column="2">
+               <widget class="QLineEdit" name="randomShiftIntensityFrom">
+                <property name="placeholderText">
+                 <string>From</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="3">
+               <widget class="QLineEdit" name="randomShiftIntensityTo">
+                <property name="placeholderText">
+                 <string>To</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="randomShiftIntensityEnabled">
+                <property name="text">
+                 <string>Enabled</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLabel" name="label_14">
+                <property name="text">
+                 <string>Offset</string>
                 </property>
                </widget>
               </item>
@@ -1471,7 +1579,7 @@
          <number>5000</number>
         </property>
         <property name="text">
-         <string>Preview</string>
+         <string>Slicer Preview </string>
         </property>
        </widget>
        <widget class="QPushButton" name="applyButton">
@@ -1939,7 +2047,7 @@
          <number>5000</number>
         </property>
         <property name="text">
-         <string>Run</string>
+         <string>Run (Save to OS)</string>
         </property>
        </widget>
       </widget>

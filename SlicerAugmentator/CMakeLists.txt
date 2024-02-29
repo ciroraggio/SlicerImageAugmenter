@@ -8,6 +8,8 @@ set(MODULE_PYTHON_SCRIPTS
   ${MODULE_NAME}Lib/SlicerAugmentatorValidator.py
   ${MODULE_NAME}Lib/SlicerAugmentatorUtils.py
   ${MODULE_NAME}Lib/SlicerAugmentatorTransformationParser.py
+  ${MODULE_NAME}Lib/SlicerAugmentatorIntensity.py
+  ${MODULE_NAME}Lib/SlicerAugmentatorSpatial.py
   )
 
 set(MODULE_PYTHON_RESOURCES

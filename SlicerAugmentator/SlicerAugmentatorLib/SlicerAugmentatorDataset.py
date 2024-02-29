@@ -34,7 +34,7 @@ class SlicerAugmentatorDataset(Dataset):
         
     def apply_transform(self, transform, img, transformedList: list) -> list:
         if (img.any()):
-            transformedImg = transform(img)
+            transformedImg = transform(img.float())
             try:
                 transform_name = transform.get_transform_info()["class"]
             except AttributeError:
