@@ -40,7 +40,7 @@ def mapSpatialTransformations(transformations, mappedTransformations: list) -> l
     if(transformations.flip.enabled):
         mappedTransformations.append(Flip(spatial_axis=int(transformations.flip.axis)))
      
-    if(transformations.randomFip.enabled):
+    if(transformations.randomFlip.enabled):
         mappedTransformations.append(RandAxisFlip(prob=1))
      
         
