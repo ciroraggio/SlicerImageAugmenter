@@ -1,9 +1,9 @@
 import slicer
 try:
-  from monai.transforms import Rotate, Flip, Resize, RandRotate
+  from monai.transforms import Rotate, Flip, RandAxisFlip, Resize, RandRotate
 except ModuleNotFoundError:
   slicer.util.pip_install("monai[itk]")
-  from monai.transforms import Rotate, Flip, Resize, RandRotate
+  from monai.transforms import Rotate, Flip, RandAxisFlip, Resize, RandRotate
 
 
 def mapSpatialTransformations(transformations, mappedTransformations: list) -> list:    
@@ -38,7 +38,10 @@ def mapSpatialTransformations(transformations, mappedTransformations: list) -> l
                                             mode=transformations.resize.interpolationMode 
                                             ))
     if(transformations.flip.enabled):
-        mappedTransformations.append(Flip(spatial_axis=int(transformations.flip.axes)))
+        mappedTransformations.append(Flip(spatial_axis=int(transformations.flip.axis)))
+     
+    if(transformations.randomFip.enabled):
+        mappedTransformations.append(RandAxisFlip(prob=1))
      
         
     return mappedTransformations
