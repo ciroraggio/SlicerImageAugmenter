@@ -84,6 +84,9 @@
           <height>32</height>
          </size>
         </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(0, 85, 255);</string>
+        </property>
         <item>
          <property name="text">
           <string>your/path/CaseID/img.extension</string>
@@ -111,1000 +114,6 @@
        </widget>
       </item>
      </layout>
-    </widget>
-   </item>
-   <item row="4" column="0">
-    <widget class="QTabWidget" name="transformsTabWidget">
-     <property name="enabled">
-      <bool>true</bool>
-     </property>
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>890</width>
-       <height>351</height>
-      </size>
-     </property>
-     <property name="autoFillBackground">
-      <bool>true</bool>
-     </property>
-     <property name="currentIndex">
-      <number>1</number>
-     </property>
-     <widget class="QWidget" name="SpatialTab">
-      <attribute name="title">
-       <string>Spatial</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
-        <widget class="QScrollArea" name="scrollArea">
-         <property name="layoutDirection">
-          <enum>Qt::LeftToRight</enum>
-         </property>
-         <property name="autoFillBackground">
-          <bool>true</bool>
-         </property>
-         <property name="widgetResizable">
-          <bool>true</bool>
-         </property>
-         <widget class="QWidget" name="scrollAreaWidgetContents">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>812</width>
-            <height>413</height>
-           </rect>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout_2">
-           <item>
-            <widget class="ctkCollapsibleGroupBox" name="CollapsibleGroupBox">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>100000</width>
-               <height>101</height>
-              </size>
-             </property>
-             <property name="autoFillBackground">
-              <bool>true</bool>
-             </property>
-             <property name="title">
-              <string>Resize</string>
-             </property>
-             <property name="checked">
-              <bool>true</bool>
-             </property>
-             <property name="collapsed">
-              <bool>false</bool>
-             </property>
-             <property name="collapsedHeight">
-              <number>0</number>
-             </property>
-             <layout class="QHBoxLayout" name="horizontalLayout_2">
-              <item>
-               <widget class="QCheckBox" name="resizeEnabled">
-                <property name="maximumSize">
-                 <size>
-                  <width>85</width>
-                  <height>21</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Enabled</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="label_6">
-                <property name="maximumSize">
-                 <size>
-                  <width>121</width>
-                  <height>16</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Interpolation mode</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QComboBox" name="resizeInterpolationMode">
-                <property name="maximumSize">
-                 <size>
-                  <width>79</width>
-                  <height>23</height>
-                 </size>
-                </property>
-                <property name="editable">
-                 <bool>false</bool>
-                </property>
-                <property name="currentText">
-                 <string>nearest</string>
-                </property>
-                <property name="placeholderText">
-                 <string/>
-                </property>
-                <item>
-                 <property name="text">
-                  <string>nearest</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>nearest-exact</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>linear</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>bilinear</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>bicubic</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>trilinear</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>area</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="label_8">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>121</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Spatial size</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLineEdit" name="resizeC">
-                <property name="maximumSize">
-                 <size>
-                  <width>51</width>
-                  <height>23</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="placeholderText">
-                 <string>C</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLineEdit" name="resizeH">
-                <property name="maximumSize">
-                 <size>
-                  <width>51</width>
-                  <height>23</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="placeholderText">
-                 <string>H</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLineEdit" name="resizeW">
-                <property name="maximumSize">
-                 <size>
-                  <width>51</width>
-                  <height>23</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="placeholderText">
-                 <string>W</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="ctkCollapsibleGroupBox" name="CollapsibleGroupBox_2">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>84</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="autoFillBackground">
-              <bool>true</bool>
-             </property>
-             <property name="title">
-              <string>Rotate</string>
-             </property>
-             <property name="checked">
-              <bool>true</bool>
-             </property>
-             <property name="collapsed">
-              <bool>false</bool>
-             </property>
-             <property name="collapsedHeight">
-              <number>0</number>
-             </property>
-             <widget class="QCheckBox" name="rotateEnabled">
-              <property name="geometry">
-               <rect>
-                <x>20</x>
-                <y>46</y>
-                <width>74</width>
-                <height>21</height>
-               </rect>
-              </property>
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>220</width>
-                <height>21</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>Enabled</string>
-              </property>
-             </widget>
-             <widget class="QWidget" name="layoutWidget">
-              <property name="geometry">
-               <rect>
-                <x>110</x>
-                <y>31</y>
-                <width>501</width>
-                <height>51</height>
-               </rect>
-              </property>
-              <layout class="QHBoxLayout" name="horizontalLayout_8">
-               <item>
-                <widget class="QLineEdit" name="rotateAngle">
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>23</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>91</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="placeholderText">
-                  <string>Angle (rad)</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <layout class="QHBoxLayout" name="horizontalLayout">
-                 <item>
-                  <widget class="QLabel" name="label_7">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>Interpolation mode</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QComboBox" name="rotateInterpolationMode">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>23</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="editable">
-                    <bool>false</bool>
-                   </property>
-                   <property name="currentText">
-                    <string>nearest</string>
-                   </property>
-                   <property name="placeholderText">
-                    <string/>
-                   </property>
-                   <item>
-                    <property name="text">
-                     <string>nearest</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>bilinear</string>
-                    </property>
-                   </item>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-              </layout>
-             </widget>
-            </widget>
-           </item>
-           <item>
-            <widget class="ctkCollapsibleGroupBox" name="CollapsibleGroupBox_3">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>163</height>
-              </size>
-             </property>
-             <property name="autoFillBackground">
-              <bool>true</bool>
-             </property>
-             <property name="title">
-              <string>Random Rotate</string>
-             </property>
-             <property name="collapsedHeight">
-              <number>0</number>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_3">
-              <item row="0" column="0">
-               <widget class="QCheckBox" name="randomRotateEnabled">
-                <property name="text">
-                 <string>Enabled</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <layout class="QHBoxLayout" name="horizontalLayout_3">
-                <item>
-                 <widget class="QLabel" name="label_9">
-                  <property name="text">
-                   <string>Range X (rad)</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLineEdit" name="randomRotateFromX">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>23</height>
-                   </size>
-                  </property>
-                  <property name="placeholderText">
-                   <string>From</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLineEdit" name="randomRotateToX">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>23</height>
-                   </size>
-                  </property>
-                  <property name="placeholderText">
-                   <string>To</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item row="0" column="2">
-               <layout class="QHBoxLayout" name="horizontalLayout_7">
-                <item>
-                 <widget class="QLabel" name="label_13">
-                  <property name="text">
-                   <string>Padding mode</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QComboBox" name="randomRotatePaddingMode">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>23</height>
-                   </size>
-                  </property>
-                  <item>
-                   <property name="text">
-                    <string>reflection</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>constant</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>zeros</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>border</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>grid-constant</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>wrap</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>reflect</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>nearest</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>grid-mirror</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>grid-wrap</string>
-                   </property>
-                  </item>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item row="1" column="1">
-               <layout class="QHBoxLayout" name="horizontalLayout_4">
-                <item>
-                 <widget class="QLabel" name="labelY">
-                  <property name="text">
-                   <string>Range Y (rad)</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLineEdit" name="randomRotateFromY">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>23</height>
-                   </size>
-                  </property>
-                  <property name="text">
-                   <string/>
-                  </property>
-                  <property name="placeholderText">
-                   <string>From</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLineEdit" name="randomRotateToY">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>23</height>
-                   </size>
-                  </property>
-                  <property name="text">
-                   <string/>
-                  </property>
-                  <property name="placeholderText">
-                   <string>To</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item row="1" column="2">
-               <layout class="QHBoxLayout" name="horizontalLayout_6">
-                <item>
-                 <widget class="QLabel" name="label_12">
-                  <property name="text">
-                   <string>Interpolation mode</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QComboBox" name="randomRotateInterpolationMode">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>23</height>
-                   </size>
-                  </property>
-                  <item>
-                   <property name="text">
-                    <string>bilinear</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>nearest</string>
-                   </property>
-                  </item>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item row="2" column="1">
-               <layout class="QHBoxLayout" name="horizontalLayout_5">
-                <item>
-                 <widget class="QLabel" name="label_11">
-                  <property name="text">
-                   <string>Range Z (rad)</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLineEdit" name="randomRotateFromZ">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>23</height>
-                   </size>
-                  </property>
-                  <property name="text">
-                   <string/>
-                  </property>
-                  <property name="placeholderText">
-                   <string>From</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLineEdit" name="randomRotateToZ">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>23</height>
-                   </size>
-                  </property>
-                  <property name="text">
-                   <string/>
-                  </property>
-                  <property name="placeholderText">
-                   <string>To</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item row="2" column="2">
-               <widget class="QCheckBox" name="randomRotateAlignCorners">
-                <property name="text">
-                 <string>Align corners</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="ctkCollapsibleGroupBox" name="CollapsibleGroupBox_4">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="autoFillBackground">
-              <bool>true</bool>
-             </property>
-             <property name="title">
-              <string>Flip</string>
-             </property>
-             <property name="collapsedHeight">
-              <number>0</number>
-             </property>
-             <layout class="QGridLayout" name="gridLayout">
-              <item row="0" column="0">
-               <widget class="QCheckBox" name="flipEnabled">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>100</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Enabled</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QLineEdit" name="flipAxes">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>100</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="placeholderText">
-                 <string>Axes [-1,1]</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="IntensityTab">
-      <attribute name="title">
-       <string>Intensity</string>
-      </attribute>
-      <layout class="QGridLayout" name="gridLayout_6">
-       <item row="0" column="0">
-        <widget class="QScrollArea" name="scrollArea_2">
-         <property name="autoFillBackground">
-          <bool>true</bool>
-         </property>
-         <property name="verticalScrollBarPolicy">
-          <enum>Qt::ScrollBarAlwaysOn</enum>
-         </property>
-         <property name="horizontalScrollBarPolicy">
-          <enum>Qt::ScrollBarAlwaysOff</enum>
-         </property>
-         <property name="widgetResizable">
-          <bool>true</bool>
-         </property>
-         <widget class="QWidget" name="scrollAreaWidgetContents_2">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>-92</y>
-            <width>812</width>
-            <height>394</height>
-           </rect>
-          </property>
-          <property name="layoutDirection">
-           <enum>Qt::LeftToRight</enum>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout_3">
-           <item>
-            <widget class="QGroupBox" name="groupBox">
-             <property name="enabled">
-              <bool>true</bool>
-             </property>
-             <property name="autoFillBackground">
-              <bool>true</bool>
-             </property>
-             <property name="title">
-              <string>Random Scale Intensity</string>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_7">
-              <item row="0" column="0">
-               <widget class="QCheckBox" name="randomScaleIntensityEnabled">
-                <property name="text">
-                 <string>Enabled</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QLineEdit" name="randomScaleIntensityFactor">
-                <property name="placeholderText">
-                 <string>Factor</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="QGroupBox" name="groupBox_2">
-             <property name="enabled">
-              <bool>true</bool>
-             </property>
-             <property name="autoFillBackground">
-              <bool>true</bool>
-             </property>
-             <property name="title">
-              <string>Random Adjust Contrast</string>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_8">
-              <item row="0" column="0">
-               <widget class="QCheckBox" name="randomAdjustContrastEnabled">
-                <property name="text">
-                 <string>Enabled</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="2">
-               <widget class="QLineEdit" name="randomAdjustContrastGammaFrom">
-                <property name="placeholderText">
-                 <string>From</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="QCheckBox" name="randomAdjustContrastInvertImage">
-                <property name="text">
-                 <string>Invert image</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QLabel" name="label_10">
-                <property name="text">
-                 <string>Gamma</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="3">
-               <widget class="QLineEdit" name="randomAdjustContrastGammaTo">
-                <property name="placeholderText">
-                 <string>To</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="QGroupBox" name="groupBox_3">
-             <property name="autoFillBackground">
-              <bool>true</bool>
-             </property>
-             <property name="title">
-              <string>Random Gaussian Noise</string>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_4">
-              <item row="0" column="0">
-               <widget class="QCheckBox" name="randomGaussianNoiseEnabled">
-                <property name="text">
-                 <string>Enabled</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QLineEdit" name="randomGaussianNoiseMean">
-                <property name="placeholderText">
-                 <string>Mean [Default 0.0]</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="2">
-               <widget class="QLineEdit" name="randomGaussianNoiseStd">
-                <property name="placeholderText">
-                 <string>Std [Default 0.1]</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="QGroupBox" name="groupBox_4">
-             <property name="autoFillBackground">
-              <bool>true</bool>
-             </property>
-             <property name="title">
-              <string>Shift Intensity</string>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_5">
-              <item row="0" column="0">
-               <widget class="QCheckBox" name="shiftIntensityEnabled">
-                <property name="text">
-                 <string>Enabled</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QLineEdit" name="shiftIntensityOffset">
-                <property name="placeholderText">
-                 <string>Offset</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="QGroupBox" name="groupBox_5">
-             <property name="title">
-              <string>Random Shift Intensity</string>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_9">
-              <item row="0" column="2">
-               <widget class="QLineEdit" name="randomShiftIntensityFrom">
-                <property name="placeholderText">
-                 <string>From</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="3">
-               <widget class="QLineEdit" name="randomShiftIntensityTo">
-                <property name="placeholderText">
-                 <string>To</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="QCheckBox" name="randomShiftIntensityEnabled">
-                <property name="text">
-                 <string>Enabled</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QLabel" name="label_14">
-                <property name="text">
-                 <string>Offset</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="cropTab">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
-      <attribute name="title">
-       <string>Crop</string>
-      </attribute>
-     </widget>
     </widget>
    </item>
    <item row="6" column="0">
@@ -1613,8 +622,8 @@
            <colorrole role="Button">
             <brush brushstyle="SolidPattern">
              <color alpha="255">
-              <red>85</red>
-              <green>255</green>
+              <red>0</red>
+              <green>170</green>
               <blue>127</blue>
              </color>
             </brush>
@@ -1685,17 +694,17 @@
            <colorrole role="Base">
             <brush brushstyle="SolidPattern">
              <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
+              <red>0</red>
+              <green>170</green>
+              <blue>127</blue>
              </color>
             </brush>
            </colorrole>
            <colorrole role="Window">
             <brush brushstyle="SolidPattern">
              <color alpha="255">
-              <red>85</red>
-              <green>255</green>
+              <red>0</red>
+              <green>170</green>
               <blue>127</blue>
              </color>
             </brush>
@@ -1759,8 +768,8 @@
            <colorrole role="Button">
             <brush brushstyle="SolidPattern">
              <color alpha="255">
-              <red>85</red>
-              <green>255</green>
+              <red>0</red>
+              <green>170</green>
               <blue>127</blue>
              </color>
             </brush>
@@ -1831,17 +840,17 @@
            <colorrole role="Base">
             <brush brushstyle="SolidPattern">
              <color alpha="255">
-              <red>255</red>
-              <green>255</green>
-              <blue>255</blue>
+              <red>0</red>
+              <green>170</green>
+              <blue>127</blue>
              </color>
             </brush>
            </colorrole>
            <colorrole role="Window">
             <brush brushstyle="SolidPattern">
              <color alpha="255">
-              <red>85</red>
-              <green>255</green>
+              <red>0</red>
+              <green>170</green>
               <blue>127</blue>
              </color>
             </brush>
@@ -1905,8 +914,8 @@
            <colorrole role="Button">
             <brush brushstyle="SolidPattern">
              <color alpha="255">
-              <red>85</red>
-              <green>255</green>
+              <red>0</red>
+              <green>170</green>
               <blue>127</blue>
              </color>
             </brush>
@@ -1977,8 +986,8 @@
            <colorrole role="Base">
             <brush brushstyle="SolidPattern">
              <color alpha="255">
-              <red>85</red>
-              <green>255</green>
+              <red>0</red>
+              <green>170</green>
               <blue>127</blue>
              </color>
             </brush>
@@ -1986,8 +995,8 @@
            <colorrole role="Window">
             <brush brushstyle="SolidPattern">
              <color alpha="255">
-              <red>85</red>
-              <green>255</green>
+              <red>0</red>
+              <green>170</green>
               <blue>127</blue>
              </color>
             </brush>
@@ -2045,6 +1054,9 @@
         </property>
         <property name="toolTipDuration">
          <number>5000</number>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(0, 170, 127);</string>
         </property>
         <property name="text">
          <string>Run (Save to OS)</string>
@@ -2186,6 +1198,1534 @@
      </layout>
     </widget>
    </item>
+   <item row="4" column="0">
+    <widget class="QTabWidget" name="transformsTabWidget">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>890</width>
+       <height>351</height>
+      </size>
+     </property>
+     <property name="autoFillBackground">
+      <bool>true</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="SpatialTab">
+      <attribute name="title">
+       <string>Spatial</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QScrollArea" name="scrollArea">
+         <property name="layoutDirection">
+          <enum>Qt::LeftToRight</enum>
+         </property>
+         <property name="autoFillBackground">
+          <bool>true</bool>
+         </property>
+         <property name="widgetResizable">
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="scrollAreaWidgetContents">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>-127</y>
+            <width>812</width>
+            <height>429</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <widget class="QGroupBox" name="groupBox_16">
+             <property name="autoFillBackground">
+              <bool>true</bool>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: rgb(0, 85, 255);</string>
+             </property>
+             <property name="title">
+              <string>Rotate</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_3">
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="rotateEnabled">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>220</width>
+                  <height>21</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0, 0);</string>
+                </property>
+                <property name="text">
+                 <string>Enabled</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLineEdit" name="rotateAngle">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>23</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>91</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 85, 255);</string>
+                </property>
+                <property name="placeholderText">
+                 <string>Angle (rad)</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="2">
+               <widget class="QLabel" name="label_7">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0, 0);</string>
+                </property>
+                <property name="text">
+                 <string>Interpolation mode</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="3">
+               <widget class="QComboBox" name="rotateInterpolationMode">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>23</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 85, 255);</string>
+                </property>
+                <property name="editable">
+                 <bool>false</bool>
+                </property>
+                <property name="currentText">
+                 <string>nearest</string>
+                </property>
+                <property name="placeholderText">
+                 <string/>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>nearest</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>bilinear</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="groupBox_15">
+             <property name="autoFillBackground">
+              <bool>true</bool>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: rgb(0, 85, 255);</string>
+             </property>
+             <property name="title">
+              <string>Random Rotate</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout">
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="randomRotateEnabled">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0,0);</string>
+                </property>
+                <property name="text">
+                 <string>Enabled</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="2">
+               <layout class="QHBoxLayout" name="horizontalLayout_6">
+                <item>
+                 <widget class="QLabel" name="label_12">
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(0, 0, 0);</string>
+                  </property>
+                  <property name="text">
+                   <string>Interpolation mode</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QComboBox" name="randomRotateInterpolationMode">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>23</height>
+                   </size>
+                  </property>
+                  <item>
+                   <property name="text">
+                    <string>bilinear</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>nearest</string>
+                   </property>
+                  </item>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item row="0" column="1">
+               <layout class="QHBoxLayout" name="horizontalLayout_3">
+                <item>
+                 <widget class="QLabel" name="label_9">
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(0, 0,0);</string>
+                  </property>
+                  <property name="text">
+                   <string>Range X (rad)</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="randomRotateFromX">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>23</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(0, 85, 255);ù</string>
+                  </property>
+                  <property name="placeholderText">
+                   <string>From</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="randomRotateToX">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>23</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true"/>
+                  </property>
+                  <property name="placeholderText">
+                   <string>To</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item row="1" column="1">
+               <layout class="QHBoxLayout" name="horizontalLayout_4">
+                <item>
+                 <widget class="QLabel" name="labelY">
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(0, 0,0);</string>
+                  </property>
+                  <property name="text">
+                   <string>Range Y (rad)</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="randomRotateFromY">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>23</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(0, 85, 255);</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="placeholderText">
+                   <string>From</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="randomRotateToY">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>23</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(0, 85, 255);</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="placeholderText">
+                   <string>To</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item row="0" column="2">
+               <layout class="QHBoxLayout" name="horizontalLayout_7">
+                <item>
+                 <widget class="QLabel" name="label_13">
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(0, 0,0);</string>
+                  </property>
+                  <property name="text">
+                   <string>Padding mode</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QComboBox" name="randomRotatePaddingMode">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>23</height>
+                   </size>
+                  </property>
+                  <item>
+                   <property name="text">
+                    <string>reflection</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>constant</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>zeros</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>border</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>grid-constant</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>wrap</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>reflect</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>nearest</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>grid-mirror</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>grid-wrap</string>
+                   </property>
+                  </item>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item row="2" column="1">
+               <layout class="QHBoxLayout" name="horizontalLayout_5">
+                <item>
+                 <widget class="QLabel" name="label_11">
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(0, 0, 0);</string>
+                  </property>
+                  <property name="text">
+                   <string>Range Z (rad)</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="randomRotateFromZ">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>23</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(0, 85, 255);</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="placeholderText">
+                   <string>From</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="randomRotateToZ">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>23</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(0, 85, 255);</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="placeholderText">
+                   <string>To</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item row="2" column="2">
+               <widget class="QCheckBox" name="randomRotateAlignCorners">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0, 0);</string>
+                </property>
+                <property name="text">
+                 <string>Align corners</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="groupBox_17">
+             <property name="autoFillBackground">
+              <bool>true</bool>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: rgb(0, 85, 255);</string>
+             </property>
+             <property name="title">
+              <string>Resize</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_18">
+              <item row="0" column="3">
+               <widget class="QLabel" name="label_8">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>121</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0,0);</string>
+                </property>
+                <property name="text">
+                 <string>Spatial size</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLabel" name="label_6">
+                <property name="maximumSize">
+                 <size>
+                  <width>121</width>
+                  <height>16</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0,0);</string>
+                </property>
+                <property name="text">
+                 <string>Interpolation mode</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="2">
+               <widget class="QComboBox" name="resizeInterpolationMode">
+                <property name="maximumSize">
+                 <size>
+                  <width>79</width>
+                  <height>23</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 85, 255);</string>
+                </property>
+                <property name="editable">
+                 <bool>false</bool>
+                </property>
+                <property name="currentText">
+                 <string>nearest</string>
+                </property>
+                <property name="placeholderText">
+                 <string/>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>nearest</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>nearest-exact</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>linear</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>bilinear</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>bicubic</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>trilinear</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>area</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="0" column="6">
+               <widget class="QLineEdit" name="resizeW">
+                <property name="maximumSize">
+                 <size>
+                  <width>51</width>
+                  <height>23</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 85, 255);</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="placeholderText">
+                 <string>W</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="4">
+               <widget class="QLineEdit" name="resizeC">
+                <property name="maximumSize">
+                 <size>
+                  <width>51</width>
+                  <height>23</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 85, 255);</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="placeholderText">
+                 <string>C</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="5">
+               <widget class="QLineEdit" name="resizeH">
+                <property name="maximumSize">
+                 <size>
+                  <width>51</width>
+                  <height>23</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 85, 255);</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="placeholderText">
+                 <string>H</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="resizeEnabled">
+                <property name="maximumSize">
+                 <size>
+                  <width>85</width>
+                  <height>21</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0,0);</string>
+                </property>
+                <property name="text">
+                 <string>Enabled</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="groupBox_14">
+             <property name="autoFillBackground">
+              <bool>true</bool>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: rgb(0, 85, 255);</string>
+             </property>
+             <property name="title">
+              <string>Flip</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_20">
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="flipEnabled">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0,0,0)</string>
+                </property>
+                <property name="text">
+                 <string>Enabled</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLineEdit" name="flipAxis">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 85, 255);</string>
+                </property>
+                <property name="placeholderText">
+                 <string>Axis [-1,1]</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="groupBox_13">
+             <property name="autoFillBackground">
+              <bool>true</bool>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: rgb(0, 85, 255);</string>
+             </property>
+             <property name="title">
+              <string>Random Flip</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_19">
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="randomFlipEnabled">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0, 0);</string>
+                </property>
+                <property name="text">
+                 <string>Enabled</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="IntensityTab">
+      <attribute name="title">
+       <string>Intensity</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_6">
+       <item row="0" column="0">
+        <widget class="QScrollArea" name="scrollArea_2">
+         <property name="autoFillBackground">
+          <bool>true</bool>
+         </property>
+         <property name="verticalScrollBarPolicy">
+          <enum>Qt::ScrollBarAlwaysOn</enum>
+         </property>
+         <property name="horizontalScrollBarPolicy">
+          <enum>Qt::ScrollBarAlwaysOff</enum>
+         </property>
+         <property name="widgetResizable">
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="scrollAreaWidgetContents_2">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>812</width>
+            <height>951</height>
+           </rect>
+          </property>
+          <property name="layoutDirection">
+           <enum>Qt::LeftToRight</enum>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <item>
+            <widget class="QGroupBox" name="groupBox_6">
+             <property name="autoFillBackground">
+              <bool>true</bool>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: rgb(0, 170, 255);
+color: rgb(0, 85, 255);</string>
+             </property>
+             <property name="title">
+              <string>Scale Intensity</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_10">
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="scaleIntensityEnabled">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0, 0)</string>
+                </property>
+                <property name="text">
+                 <string>Enabled</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLineEdit" name="scaleIntensityFactor">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 85, 255);</string>
+                </property>
+                <property name="placeholderText">
+                 <string>Factor</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="groupBox">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="autoFillBackground">
+              <bool>true</bool>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: rgb(0, 85, 255);</string>
+             </property>
+             <property name="title">
+              <string>Random Scale Intensity</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_7">
+              <item row="0" column="1">
+               <widget class="QLabel" name="label_17">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0, 0);</string>
+                </property>
+                <property name="text">
+                 <string>Factors</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="randomScaleIntensityEnabled">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0, 0);</string>
+                </property>
+                <property name="text">
+                 <string>Enabled</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="2">
+               <widget class="QLineEdit" name="randomScaleIntensityFactorFrom">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 85, 255);</string>
+                </property>
+                <property name="placeholderText">
+                 <string>From</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="3">
+               <widget class="QLineEdit" name="randomScaleIntensityFactorTo">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 85, 255);</string>
+                </property>
+                <property name="placeholderText">
+                 <string>To</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="groupBox_7">
+             <property name="autoFillBackground">
+              <bool>true</bool>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: rgb(0, 85, 255);</string>
+             </property>
+             <property name="title">
+              <string>Adjust Contrast</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_11">
+              <item row="0" column="1">
+               <widget class="QLineEdit" name="adjustContrastGamma">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 85, 255);</string>
+                </property>
+                <property name="placeholderText">
+                 <string>Gamma</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="adjustContrastEnabled">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0, 0);</string>
+                </property>
+                <property name="text">
+                 <string>Enabled</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="2">
+               <widget class="QCheckBox" name="adjustContrastInvertImage">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0, 0);</string>
+                </property>
+                <property name="text">
+                 <string>Invert image</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="groupBox_2">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="autoFillBackground">
+              <bool>true</bool>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: rgb(0, 85, 255);</string>
+             </property>
+             <property name="title">
+              <string>Random Adjust Contrast</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_8">
+              <item row="0" column="2">
+               <widget class="QLineEdit" name="randomAdjustContrastGammaFrom">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 85, 255);</string>
+                </property>
+                <property name="placeholderText">
+                 <string>From</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="randomAdjustContrastEnabled">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0,0);</string>
+                </property>
+                <property name="text">
+                 <string>Enabled</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="3">
+               <widget class="QLineEdit" name="randomAdjustContrastGammaTo">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 85, 255);</string>
+                </property>
+                <property name="placeholderText">
+                 <string>To</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLabel" name="label_10">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0,0);</string>
+                </property>
+                <property name="text">
+                 <string>Gamma</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="4">
+               <widget class="QCheckBox" name="randomAdjustContrastInvertImage">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0,0);</string>
+                </property>
+                <property name="text">
+                 <string>Invert image</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="groupBox_3">
+             <property name="autoFillBackground">
+              <bool>true</bool>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: rgb(0, 85, 255);</string>
+             </property>
+             <property name="title">
+              <string>Random Gaussian Noise</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_4">
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="randomGaussianNoiseEnabled">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0, 0);</string>
+                </property>
+                <property name="text">
+                 <string>Enabled</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLineEdit" name="randomGaussianNoiseMean">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 85, 255);</string>
+                </property>
+                <property name="placeholderText">
+                 <string>Mean [Default 0.0]</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="2">
+               <widget class="QLineEdit" name="randomGaussianNoiseStd">
+                <property name="autoFillBackground">
+                 <bool>false</bool>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 85, 255);</string>
+                </property>
+                <property name="placeholderText">
+                 <string>Std [Default 0.1]</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="groupBox_4">
+             <property name="autoFillBackground">
+              <bool>true</bool>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: rgb(0, 85, 255);</string>
+             </property>
+             <property name="title">
+              <string>Shift Intensity</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_5">
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="shiftIntensityEnabled">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0,0);</string>
+                </property>
+                <property name="text">
+                 <string>Enabled</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLineEdit" name="shiftIntensityOffset">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 85, 255);</string>
+                </property>
+                <property name="placeholderText">
+                 <string>Offset</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="groupBox_5">
+             <property name="autoFillBackground">
+              <bool>true</bool>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: rgb(0, 85, 255);</string>
+             </property>
+             <property name="title">
+              <string>Random Shift Intensity</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_9">
+              <item row="0" column="2">
+               <widget class="QLineEdit" name="randomShiftIntensityFrom">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 85, 255);</string>
+                </property>
+                <property name="placeholderText">
+                 <string>From</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="3">
+               <widget class="QLineEdit" name="randomShiftIntensityTo">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 85, 255);</string>
+                </property>
+                <property name="placeholderText">
+                 <string>To</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="randomShiftIntensityEnabled">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0,0);</string>
+                </property>
+                <property name="text">
+                 <string>Enabled</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLabel" name="label_14">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0,0);</string>
+                </property>
+                <property name="text">
+                 <string>Offset</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="groupBox_8">
+             <property name="autoFillBackground">
+              <bool>true</bool>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: rgb(0, 85, 255);</string>
+             </property>
+             <property name="title">
+              <string>Normalize Intensity</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_12">
+              <item row="0" column="2">
+               <widget class="QLineEdit" name="normalizeIntensityDivisor">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 85, 255);</string>
+                </property>
+                <property name="placeholderText">
+                 <string>Divisor</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="normalizeIntensityEnabled">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0, 0);</string>
+                </property>
+                <property name="text">
+                 <string>Enabled</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLineEdit" name="normalizeIntensitySubtrahend">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 85, 255);</string>
+                </property>
+                <property name="placeholderText">
+                 <string>Subtrahend</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="3">
+               <widget class="QCheckBox" name="normalizeIntensityNonZero">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0, 0);</string>
+                </property>
+                <property name="text">
+                 <string>Non-zero</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="groupBox_9">
+             <property name="focusPolicy">
+              <enum>Qt::WheelFocus</enum>
+             </property>
+             <property name="toolTip">
+              <string>filter values above the threshold or below the threshold</string>
+             </property>
+             <property name="toolTipDuration">
+              <number>5008</number>
+             </property>
+             <property name="autoFillBackground">
+              <bool>true</bool>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: rgb(0, 85, 255);</string>
+             </property>
+             <property name="title">
+              <string>Threshold Intensity</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_13">
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="thresholdIntensityEnabled">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0,0);</string>
+                </property>
+                <property name="text">
+                 <string>Enabled</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLineEdit" name="thresholdIntensityValue">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 85, 255);</string>
+                </property>
+                <property name="placeholderText">
+                 <string>Threshold</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="2">
+               <widget class="QLineEdit" name="thresholdIntensityCVal">
+                <property name="toolTip">
+                 <string>value to fill the remaining parts of the image, default is 0.</string>
+                </property>
+                <property name="toolTipDuration">
+                 <number>5000</number>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 85, 255);</string>
+                </property>
+                <property name="placeholderText">
+                 <string>Cval [Default 0.0]</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="3">
+               <widget class="QCheckBox" name="thresholdIntensityAbove">
+                <property name="focusPolicy">
+                 <enum>Qt::WheelFocus</enum>
+                </property>
+                <property name="toolTip">
+                 <string>filter values above the threshold or below the threshold</string>
+                </property>
+                <property name="toolTipDuration">
+                 <number>5008</number>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0,0);</string>
+                </property>
+                <property name="text">
+                 <string>Above</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="groupBox_10">
+             <property name="autoFillBackground">
+              <bool>true</bool>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: rgb(0, 85, 255);</string>
+             </property>
+             <property name="title">
+              <string>Median Smooth</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_14">
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="medianSmoothEnabled">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0,0);</string>
+                </property>
+                <property name="text">
+                 <string>Enabled</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLineEdit" name="medianSmoothRadius">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 85, 255);</string>
+                </property>
+                <property name="placeholderText">
+                 <string>Radius [Default 1]</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="groupBox_11">
+             <property name="autoFillBackground">
+              <bool>true</bool>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: rgb(0, 85, 255);</string>
+             </property>
+             <property name="title">
+              <string>Gaussian Smooth</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_15">
+              <item row="0" column="1">
+               <widget class="QLineEdit" name="gaussianSmoothSigma">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 85, 255);</string>
+                </property>
+                <property name="placeholderText">
+                 <string>Sigma [Default 1.0]</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="gaussianSmoothEnabled">
+                <property name="autoFillBackground">
+                 <bool>true</bool>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0,0);</string>
+                </property>
+                <property name="text">
+                 <string>Enabled</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="3">
+               <widget class="QComboBox" name="gaussianSmoothKernelType">
+                <item>
+                 <property name="text">
+                  <string>erf</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>sampled</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>scalespace</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="0" column="2">
+               <widget class="QLabel" name="label_18">
+                <property name="autoFillBackground">
+                 <bool>true</bool>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0,0);</string>
+                </property>
+                <property name="text">
+                 <string>Kernel type</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="groupBox_12">
+             <property name="autoFillBackground">
+              <bool>true</bool>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: rgb(0, 85, 255);</string>
+             </property>
+             <property name="title">
+              <string>Random Gaussian Smooth</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_16">
+              <item row="0" column="4">
+               <widget class="QLineEdit" name="randGaussianSmoothSigmaXTo">
+                <property name="placeholderText">
+                 <string>To</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="3">
+               <widget class="QLineEdit" name="randGaussianSmoothSigmaYFrom">
+                <property name="placeholderText">
+                 <string>From</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QLabel" name="label_21">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0, 0);</string>
+                </property>
+                <property name="text">
+                 <string>Sigma Z</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QLabel" name="label_20">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0, 0);</string>
+                </property>
+                <property name="text">
+                 <string>Sigma Y</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="randGaussianSmoothEnabled">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0, 0);</string>
+                </property>
+                <property name="text">
+                 <string>Enabled</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="4">
+               <widget class="QLineEdit" name="randGaussianSmoothSigmaYTo">
+                <property name="placeholderText">
+                 <string>To</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="3">
+               <widget class="QLineEdit" name="randGaussianSmoothSigmaZFrom">
+                <property name="placeholderText">
+                 <string>From</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLabel" name="label_19">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0, 0);</string>
+                </property>
+                <property name="text">
+                 <string>Sigma X</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="4">
+               <widget class="QLineEdit" name="randGaussianSmoothSigmaZTo">
+                <property name="placeholderText">
+                 <string>To</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="3">
+               <widget class="QLineEdit" name="randGaussianSmoothSigmaXFrom">
+                <property name="placeholderText">
+                 <string>From</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QLabel" name="label_22">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0, 0);</string>
+                </property>
+                <property name="text">
+                 <string>Kernel Type</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="3">
+               <widget class="QComboBox" name="randGaussianSmoothKernelType">
+                <item>
+                 <property name="text">
+                  <string>erf</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>sampled</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>scalespace</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="cropTab">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <attribute name="title">
+       <string>Crop</string>
+      </attribute>
+     </widget>
+    </widget>
+   </item>
   </layout>
   <widget class="QSplitter" name="splitter_2">
    <property name="geometry">
@@ -2219,12 +2759,6 @@
    <class>ctkCollapsibleButton</class>
    <extends>QWidget</extends>
    <header>ctkCollapsibleButton.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>ctkCollapsibleGroupBox</class>
-   <extends>QGroupBox</extends>
-   <header>ctkCollapsibleGroupBox.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

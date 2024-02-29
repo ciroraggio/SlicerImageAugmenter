@@ -49,13 +49,26 @@ def getTransformations(ui) -> dict:
                 },
                 "flip": {
                     "enabled": ui.flipEnabled.isChecked(),
-                    "axes": ui.flipAxes.text,
+                    "axis": ui.flipAxis.text,
+                },
+                "randomFlip": {
+                    "enabled": ui.randomFlipEnabled.isChecked(),
                 },
                 
                 # ----------------- Intensity -----------------                 
+                "scaleIntensity": {
+                    "enabled": ui.scaleIntensityEnabled.isChecked(),
+                    "factor": ui.scaleIntensityFactor.text,
+                },
                 "randomScaleIntensity": {
                     "enabled": ui.randomScaleIntensityEnabled.isChecked(),
-                    "factor": ui.randomScaleIntensityFactor.text,
+                    "factorFrom": ui.randomScaleIntensityFactorFrom.text,
+                    "factorTo": ui.randomScaleIntensityFactorTo.text,
+                },
+                "adjustContrast": {
+                    "enabled": ui.adjustContrastEnabled.isChecked(),
+                    "gamma": ui.adjustContrastGamma.text,
+                    "invertImage":ui.adjustContrastInvertImage.isChecked(),
                 },
                 "randomAdjustContrast": {
                     "enabled": ui.randomAdjustContrastEnabled.isChecked(),
@@ -76,7 +89,38 @@ def getTransformations(ui) -> dict:
                     "enabled": ui.randomShiftIntensityEnabled.isChecked(),
                     "offsetFrom": ui.randomShiftIntensityFrom.text,
                     "offsetTo": ui.randomShiftIntensityTo.text,
-                }
+                },
+                "normalizeIntensity": {
+                    "enabled": ui.normalizeIntensityEnabled.isChecked(),
+                    "subtrahend": ui.normalizeIntensitySubtrahend.text,
+                    "divisor": ui.normalizeIntensityDivisor.text,
+                    "nonZero": ui.normalizeIntensityNonZero.isChecked(),
+                },
+                "thresholdIntensity": {
+                    "enabled": ui.thresholdIntensityEnabled.isChecked(),
+                    "thresholdValue": ui.thresholdIntensityValue.text,
+                    "cVal": ui.thresholdIntensityCVal.text,
+                    "above": ui.thresholdIntensityAbove.isChecked(),
+                },
+                "medianSmooth": {
+                    "enabled": ui.medianSmoothEnabled.isChecked(),
+                    "radius": ui.medianSmoothRadius.text,
+                },
+                "gaussianSmooth": {
+                    "enabled": ui.gaussianSmoothEnabled.isChecked(),
+                    "sigma": ui.gaussianSmoothSigma.text,
+                    "kernel": ui.gaussianSmoothKernelType.currentText,
+                },
+                "randGaussianSmooth": {
+                    "enabled": ui.randGaussianSmoothEnabled.isChecked(),
+                    "sigmaFromX": ui.randGaussianSmoothSigmaXFrom.text,
+                    "sigmaToX":ui.randGaussianSmoothSigmaXTo.text,
+                    "sigmaFromY": ui.randGaussianSmoothSigmaYFrom.text,
+                    "sigmaToY":ui.randGaussianSmoothSigmaYTo.text,
+                    "sigmaFromZ": ui.randGaussianSmoothSigmaZFrom.text,
+                    "sigmaToZ":ui.randGaussianSmoothSigmaZTo.text,
+                    "kernel": ui.randGaussianSmoothKernelType.currentText,
+                },
             }
       
       return transformations
