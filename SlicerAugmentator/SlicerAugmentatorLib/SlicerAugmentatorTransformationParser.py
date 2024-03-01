@@ -9,6 +9,8 @@ except ModuleNotFoundError:
   slicer.util.pip_install("munch")
   from munch import Munch, munchify
 
+DICT_KEYS = ["img", "mask"]
+
 def getSerializedObject(dictionary: dict) -> Munch :     
     return munchify(dictionary)
 
@@ -16,8 +18,8 @@ def mapTransformations(ui) -> list:
     mappedTransformations = []
     transformations = getSerializedObject(getTransformations(ui))
 
-    mappedTransformations.extend(mapSpatialTransformations(mappedTransformations=mappedTransformations,transformations=transformations))  
-    mappedTransformations.extend(mapIntensityTransformations(mappedTransformations=mappedTransformations,transformations=transformations))  
+    mappedTransformations.extend(mapSpatialTransformations(mappedTransformations=mappedTransformations,transformations=transformations, dict_keys = DICT_KEYS))  
+    mappedTransformations.extend(mapIntensityTransformations(mappedTransformations=mappedTransformations,transformations=transformations, dict_keys = DICT_KEYS))  
         
     return mappedTransformations
 
@@ -54,7 +56,21 @@ def getTransformations(ui) -> dict:
                 "randomFlip": {
                     "enabled": ui.randomFlipEnabled.isChecked(),
                 },
-                
+                "zoom": {
+                    "enabled": ui.zoomEnabled.isChecked(),
+                    "factor": ui.zoomFactor.text,
+                    "interpolationMode": ui.zoomInterpolationMode.currentText,
+                    "paddingMode": ui.zoomPaddingMode.currentText,
+                    "alignCorners": ui.zoomAlignCorners.isChecked(),
+                },
+                "randomZoom": {
+                    "enabled": ui.randomZoomEnabled.isChecked(),
+                    "factorMin": ui.randomZoomFactorMin.text,
+                    "factorMax": ui.randomZoomFactorMax.text,
+                    "interpolationMode": ui.randomZoomInterpolationMode.currentText,
+                    "paddingMode": ui.randomZoomPaddingMode.currentText,
+                    "alignCorners": ui.randomZoomAlignCorners.isChecked(),
+                },
                 # ----------------- Intensity -----------------                 
                 "scaleIntensity": {
                     "enabled": ui.scaleIntensityEnabled.isChecked(),

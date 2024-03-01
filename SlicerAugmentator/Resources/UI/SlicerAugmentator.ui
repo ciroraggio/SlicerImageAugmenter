@@ -1244,9 +1244,9 @@
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>-127</y>
+            <y>-327</y>
             <width>812</width>
-            <height>429</height>
+            <height>629</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -1953,6 +1953,331 @@
                 </property>
                 <property name="text">
                  <string>Enabled</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="groupBox_18">
+             <property name="autoFillBackground">
+              <bool>true</bool>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: rgb(0, 85, 255);</string>
+             </property>
+             <property name="title">
+              <string>Zoom</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_17">
+              <item row="2" column="3">
+               <widget class="QComboBox" name="zoomPaddingMode">
+                <item>
+                 <property name="text">
+                  <string>edge</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>constant</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>linear_ramp</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>maximum</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>mean</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>median</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>minimum</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>reflect</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="zoomEnabled">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0, 0);</string>
+                </property>
+                <property name="text">
+                 <string>Enabled</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="2">
+               <widget class="QLabel" name="label_25">
+                <property name="toolTip">
+                 <string>if “all”, will use spatial size for all the spatial dims, if “longest”, rescale the image so that only the longest side is equal to specified spatial_size, which must be an int number in this case, keeping the aspect ratio of the initial image</string>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0,0,0);</string>
+                </property>
+                <property name="text">
+                 <string>Padding mode</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="3">
+               <widget class="QComboBox" name="zoomInterpolationMode">
+                <item>
+                 <property name="text">
+                  <string>area</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>nearest</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>nearest-exact</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>linear</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>bilinear</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>bicubic</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>trilinear</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLineEdit" name="zoomFactor">
+                <property name="toolTip">
+                 <string>The zoom factor along the spatial axes.</string>
+                </property>
+                <property name="toolTipDuration">
+                 <number>5000</number>
+                </property>
+                <property name="placeholderText">
+                 <string>Factor (i.e. 0.2)</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="2">
+               <widget class="QLabel" name="label_24">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0,0,0);</string>
+                </property>
+                <property name="text">
+                 <string>Interpolation mode</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QCheckBox" name="zoomAlignCorners">
+                <property name="toolTip">
+                 <string>This only has an effect when mode is ‘linear’, ‘bilinear’, ‘bicubic’ or ‘trilinear’. </string>
+                </property>
+                <property name="toolTipDuration">
+                 <number>5000</number>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0,0,0);</string>
+                </property>
+                <property name="text">
+                 <string>Align corners</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="groupBox_19">
+             <property name="autoFillBackground">
+              <bool>true</bool>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: rgb(0, 85, 255);</string>
+             </property>
+             <property name="title">
+              <string>Random Zoom</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_21">
+              <item row="0" column="0" rowspan="2">
+               <widget class="QCheckBox" name="randomZoomEnabled">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0,0,0);</string>
+                </property>
+                <property name="text">
+                 <string>Enabled</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="4" rowspan="2">
+               <widget class="QLineEdit" name="randomZoomFactorMax">
+                <property name="placeholderText">
+                 <string>Max</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLabel" name="label_23">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0,0,0);</string>
+                </property>
+                <property name="text">
+                 <string>Factor</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="5">
+               <widget class="QLabel" name="label_26">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0,0,0);</string>
+                </property>
+                <property name="text">
+                 <string>Interpolation mode</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="6">
+               <widget class="QComboBox" name="randomZoomInterpolationMode">
+                <item>
+                 <property name="text">
+                  <string>area</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>nearest</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>nearest-exact</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>linear</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>bilinear</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>bicubic</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>trilinear</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="3" column="5">
+               <widget class="QLabel" name="label_27">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0,0,0);</string>
+                </property>
+                <property name="text">
+                 <string>Padding mode</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="6">
+               <widget class="QComboBox" name="randomZoomPaddingMode">
+                <item>
+                 <property name="text">
+                  <string>edge</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>constant</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>linear_ramp</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>maximum</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>mean</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>median</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>minimum</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>reflect</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="0" column="2" rowspan="2">
+               <widget class="QLineEdit" name="randomZoomFactorMin">
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="placeholderText">
+                 <string>Min</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="2">
+               <widget class="QCheckBox" name="randomZoomAlignCorners">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0,0,0);</string>
+                </property>
+                <property name="text">
+                 <string>Align corners</string>
                 </property>
                </widget>
               </item>

@@ -1,12 +1,12 @@
 import slicer
 try:
-  from monai.transforms import Rotate, Flip, RandAxisFlip, Resize, RandRotate
+  from monai.transforms import Rotate, Flip, RandAxisFlipd, Resize, RandRotated, Zoom, RandZoomd
 except ModuleNotFoundError:
   slicer.util.pip_install("monai[itk]")
-  from monai.transforms import Rotate, Flip, RandAxisFlip, Resize, RandRotate
+  from monai.transforms import Rotate, Flip, RandAxisFlipd, Resize, RandRotated, Zoom, RandZoomd
 
 
-def mapSpatialTransformations(transformations, mappedTransformations: list) -> list:    
+def mapSpatialTransformations(transformations, mappedTransformations: list, dict_keys: dict) -> list:    
     if(transformations.rotate.enabled):
         mappedTransformations.append(Rotate(angle=float(transformations.rotate.angle), 
                                             mode=transformations.rotate.interpolationMode
@@ -21,14 +21,16 @@ def mapSpatialTransformations(transformations, mappedTransformations: list) -> l
         if(transformations.randRotate.rangeFromZ != "" and transformations.randRotate.rangeToZ != "" ):
             rangeZ = [float(transformations.randRotate.rangeFromZ), float(transformations.randRotate.rangeToZ)]
                                                 
-        mappedTransformations.append(RandRotate(prob=1,
+        mappedTransformations.append(RandRotated(prob=1,
+                                keys=dict_keys,               
                                 range_x=rangeX, 
                                 range_y=rangeY, 
                                 range_z=rangeZ, 
                                 padding_mode=transformations.randRotate.paddingMode, 
                                 mode=transformations.randRotate.interpolationMode, 
                                 keep_size=True, 
-                                align_corners=transformations.randRotate.alignCorners))
+                                align_corners=transformations.randRotate.alignCorners,
+                                allow_missing_keys=True))
       except Exception as e:
         raise ValueError(e)      
       
@@ -41,7 +43,32 @@ def mapSpatialTransformations(transformations, mappedTransformations: list) -> l
         mappedTransformations.append(Flip(spatial_axis=int(transformations.flip.axis)))
      
     if(transformations.randomFlip.enabled):
-        mappedTransformations.append(RandAxisFlip(prob=1))
+        mappedTransformations.append(RandAxisFlipd(prob=1, keys=dict_keys, allow_missing_keys=True))
+        
+    if(transformations.zoom.enabled):
+        if(transformations.zoom.factor == ""):
+          raise ValueError("The 'Zoom' transformation is enabled but factor is not specified")      
+        
+        alignCorners = transformations.zoom.alignCorners if(transformations.zoom.interpolationMode in ["linear", "bilinear", "bicubic", "trilinear"]) else None
+        mappedTransformations.append(Zoom(zoom=float(transformations.zoom.factor),
+                                          mode=transformations.zoom.interpolationMode,
+                                          padding_mode=transformations.zoom.paddingMode,
+                                          align_corners=alignCorners))
+        
+    if(transformations.randomZoom.enabled):
+        if(transformations.randomZoom.factorMin == "" or transformations.randomZoom.factorMax == ""):
+          raise ValueError("The 'Random Zoom' transformation is enabled but factors are not specified")      
+        
+        alignCorners = transformations.randomZoom.alignCorners if(transformations.randomZoom.interpolationMode in ["linear", "bilinear", "bicubic", "trilinear"]) else None
+        mappedTransformations.append(RandZoomd(prob=1,
+                                          min_zoom=float(transformations.randomZoom.factorMin),
+                                          max_zoom=float(transformations.randomZoom.factorMax),
+                                          mode=transformations.randomZoom.interpolationMode,
+                                          padding_mode=transformations.randomZoom.paddingMode,
+                                          align_corners=alignCorners,
+                                          keep_size=True,
+                                          keys=dict_keys,
+                                          allow_missing_keys=True))
      
         
     return mappedTransformations

@@ -1,12 +1,12 @@
 import slicer
 try:
-  from monai.transforms import ScaleIntensity, RandScaleIntensity, AdjustContrast, RandAdjustContrast, RandGaussianNoise, ShiftIntensity, RandShiftIntensity, NormalizeIntensity, ThresholdIntensity, MedianSmooth, GaussianSmooth, RandGaussianSmooth
+  from monai.transforms import ScaleIntensity, RandScaleIntensityd, AdjustContrast, RandAdjustContrastd, RandGaussianNoised, ShiftIntensity, RandShiftIntensityd, NormalizeIntensity, ThresholdIntensity, MedianSmooth, GaussianSmooth, RandGaussianSmoothd
 except ModuleNotFoundError:
   slicer.util.pip_install("monai[itk]")
-  from monai.transforms import ScaleIntensity, RandScaleIntensity, AdjustContrast, RandAdjustContrast, RandGaussianNoise, ShiftIntensity, RandShiftIntensity, NormalizeIntensity, ThresholdIntensity, MedianSmooth, GaussianSmooth, RandGaussianSmooth
+  from monai.transforms import ScaleIntensity, RandScaleIntensityd, AdjustContrast, RandAdjustContrastd, RandGaussianNoised, ShiftIntensity, RandShiftIntensityd, NormalizeIntensity, ThresholdIntensity, MedianSmooth, GaussianSmooth, RandGaussianSmoothd
 
 
-def mapIntensityTransformations(transformations, mappedTransformations: list) -> list:    
+def mapIntensityTransformations(transformations, mappedTransformations: list, dict_keys: dict) -> list:    
     if(transformations.scaleIntensity.enabled):
         if(transformations.scaleIntensity.factor == ""):
           raise ValueError("The 'Scale Intensity' transformation is enabled but factor is not specified")      
@@ -15,12 +15,13 @@ def mapIntensityTransformations(transformations, mappedTransformations: list) ->
          
     if(transformations.randomScaleIntensity.enabled):
         if(transformations.randomScaleIntensity.factorFrom == "" or transformations.randomScaleIntensity.factorTo == ""):
-          raise ValueError("The 'Random Scale Intensity' transformation is enabled but factors are not specified")      
+          raise ValueError("The 'Randomd Scale Intensity' transformation is enabled but factors are not specified")      
         
-        mappedTransformations.append(RandScaleIntensity(prob=1, 
+        mappedTransformations.append(RandScaleIntensityd(prob=1, 
                                                         factors=(float(transformations.randomScaleIntensity.factorFrom), 
-                                                                 float(transformations.randomScaleIntensity.factorTo)
-                                                                 )
+                                                                 float(transformations.randomScaleIntensity.factorTo)),
+                                                        keys=dict_keys,
+                                                        allow_missing_keys=True
                                                         ))    
         
     if(transformations.adjustContrast.enabled):
@@ -37,16 +38,22 @@ def mapIntensityTransformations(transformations, mappedTransformations: list) ->
         if(transformations.randomAdjustContrast.gammaFrom == "" or transformations.randomAdjustContrast.gammaTo == ""):
           raise ValueError("The 'Random Adjust Contrast' transformation is enabled but gamma values are not specified")      
         
-        mappedTransformations.append(RandAdjustContrast(prob=1, 
+        mappedTransformations.append(RandAdjustContrastd(prob=1, 
                                                         gamma=(float(transformations.randomAdjustContrast.gammaFrom), float(transformations.randomAdjustContrast.gammaTo)),
                                                         invert_image=transformations.randomAdjustContrast.invertImage,
-                                                        retain_stats=True
+                                                        retain_stats=True,
+                                                        keys=dict_keys,
+                                                        allow_missing_keys=True
                                                         )
                                      )    
     if(transformations.randomGaussianNoise.enabled):  
         mean = float(transformations.randomGaussianNoise.mean) if(transformations.randomGaussianNoise.mean != "") else 0.0
         std = float(transformations.randomGaussianNoise.std) if(transformations.randomGaussianNoise.std != "") else 0.1   
-        mappedTransformations.append(RandGaussianNoise(prob=1, mean=mean, std=std))  
+        mappedTransformations.append(RandGaussianNoised(prob=1, 
+                                                        mean=mean, 
+                                                        std=std,
+                                                        keys=dict_keys,
+                                                        allow_missing_keys=True))  
           
     if(transformations.shiftIntensity.enabled):  
         if(transformations.shiftIntensity.offset == ""):
@@ -58,7 +65,10 @@ def mapIntensityTransformations(transformations, mappedTransformations: list) ->
         if(transformations.randomShiftIntensity.offsetFrom == "" or transformations.randomShiftIntensity.offsetTo == ""):
           raise ValueError("The 'Random Shift Intensity' transformation is enabled but offsets values are not specified")    
       
-        mappedTransformations.append(RandShiftIntensity(prob=1, offsets=(float(transformations.randomShiftIntensity.offsetFrom, transformations.randomShiftIntensity.offsetTo))))    
+        mappedTransformations.append(RandShiftIntensityd(prob=1, 
+                                                        offsets=(float(transformations.randomShiftIntensity.offsetFrom, transformations.randomShiftIntensity.offsetTo)),
+                                                        keys=dict_keys,
+                                                        allow_missing_keys=True))    
         
     if(transformations.normalizeIntensity.enabled):  
         if(transformations.normalizeIntensity.subtrahend == "" or transformations.normalizeIntensity.divisor == ""):
@@ -94,11 +104,13 @@ def mapIntensityTransformations(transformations, mappedTransformations: list) ->
         if(transformations.randGaussianSmooth.sigmaFromZ != "" and transformations.randGaussianSmooth.sigmaToZ != "" ):
             sigmaZ = [float(transformations.randGaussianSmooth.sigmaFromZ), float(transformations.randGaussianSmooth.sigmaToZ)]
                                                 
-        mappedTransformations.append(RandGaussianSmooth(prob=1,
+        mappedTransformations.append(RandGaussianSmoothd(prob=1,
                                 sigma_x=sigmaX, 
                                 sigma_y=sigmaY, 
                                 sigma_z=sigmaZ, 
-                                approx=transformations.randGaussianSmooth.kernel))
+                                approx=transformations.randGaussianSmooth.kernel,
+                                keys=dict_keys,
+                                allow_missing_keys=True))
       except Exception as e:
         raise ValueError(e) 
       
