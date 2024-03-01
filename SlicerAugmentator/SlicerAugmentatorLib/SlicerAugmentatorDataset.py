@@ -14,10 +14,11 @@ except ModuleNotFoundError:
     from monai.transforms import RandomizableTransform
 
 class SlicerAugmentatorDataset(Dataset):
-    def __init__(self, imgPaths, maskPaths=None, transformations=[]):
+    def __init__(self, imgPaths, maskPaths=None, transformations=[], device: str="cpu"):
         self.imgPaths = imgPaths
         self.maskPaths = maskPaths
         self.transformations = transformations
+        self.device = device
 
     def __len__(self):
         return len(self.imgPaths)
@@ -89,16 +90,16 @@ class SlicerAugmentatorDataset(Dataset):
 
         for transform in self.transformations:
             if (img != None and mask != None and isinstance(transform, RandomizableTransform)): 
-                transformedImages, transformedMasks = self.apply_dict_transform(transform, {"img": img, "mask": mask}, transformedImages, transformedMasks)
+                transformedImages, transformedMasks = self.apply_dict_transform(transform, {"img": img.to(self.device), "mask": mask.to(self.device)}, transformedImages, transformedMasks)
             
             if (img != None and mask == None and isinstance(transform, RandomizableTransform)): 
-                transformedImages, transformedMasks = self.apply_dict_transform(transform, {"img": img}, transformedImages, None)
+                transformedImages, transformedMasks = self.apply_dict_transform(transform, {"img": img.to(self.device)}, transformedImages, None)
 
             if (img != None and not isinstance(transform, RandomizableTransform)): 
-                transformedImages = self.apply_transform(transform, img, transformedImages)
+                transformedImages = self.apply_transform(transform, img.to(self.device), transformedImages)
            
             if (mask != None and not isinstance(transform, RandomizableTransform)): 
-                transformedMasks = self.apply_transform(transform, mask, transformedMasks)
+                transformedMasks = self.apply_transform(transform, mask.to(self.device), transformedMasks)
             
 
         return transformedImages, transformedMasks

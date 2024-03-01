@@ -55,6 +55,12 @@ class SlicerAugmentatorWidget(ScriptedLoadableModuleWidget, VTKObservationMixin)
         self.layout.addWidget(uiWidget)
         self.ui = slicer.util.childWidgetVariables(uiWidget)
         uiWidget.setMRMLScene(slicer.mrmlScene)
+        self.ui.deviceList.addItem("cpu")
+
+        if torch.cuda.is_available():
+            for i in range(torch.cuda.device_count()):
+                device_name = torch.cuda.get_device_name(i)
+                self.ui.deviceList.addItem(device_name)
         
         self.logic = SlicerAugmentatorLogic()
 
@@ -108,7 +114,8 @@ class SlicerAugmentatorWidget(ScriptedLoadableModuleWidget, VTKObservationMixin)
                                transformations=transformationList,
                                filesStructure=filesStructure,
                                progressBar=self.ui.progressBar,
-                               infoLabel=self.ui.infoLabel)
+                               infoLabel=self.ui.infoLabel,
+                               device=self.ui.deviceList.currentText)
             
             self.setButtonsEnabled(True)
             self.ui.progressBar.reset()
@@ -154,6 +161,7 @@ class SlicerAugmentatorLogic(ScriptedLoadableModuleLogic):
                 progressBar,
                 infoLabel,
                 transformations: list = [],
+                device: str = "cpu"
                 ) -> None:
         
         OUTPUT_IMG_DIR = "SlicerAugmentator/AugmentedDataset"
@@ -166,7 +174,7 @@ class SlicerAugmentatorLogic(ScriptedLoadableModuleLogic):
                                                 maskPrefix=maskPrefix)
         
         validateCollectedImagesAndMasks(imgs, masks)
-        dataset = SlicerAugmentatorDataset(imgPaths=imgs, maskPaths=masks, transformations=transformations)
+        dataset = SlicerAugmentatorDataset(imgPaths=imgs, maskPaths=masks, transformations=transformations, device=device)
         
         progressBar.setMaximum(len(dataset))
 
@@ -216,7 +224,8 @@ class SlicerAugmentatorLogic(ScriptedLoadableModuleLogic):
                 progressBar,
                 infoLabel,
                 transformations: list = [],
-                filesStructure: str = ""
+                filesStructure: str = "",
+                device: str = "cpu" 
                 ) -> None:
 
         startTime = time.time()
@@ -226,7 +235,7 @@ class SlicerAugmentatorLogic(ScriptedLoadableModuleLogic):
                                                 maskPrefix=maskPrefix)
         validateCollectedImagesAndMasks(imgs, masks)
         clearScene()
-        dataset = SlicerAugmentatorDataset(imgPaths=imgs[:1], maskPaths=masks[:1], transformations=transformations) # [:1] to apply the transformations only on the first image
+        dataset = SlicerAugmentatorDataset(imgPaths=imgs[:1], maskPaths=masks[:1], transformations=transformations, device=device) # [:1] to apply the transformations only on the first image
         progressBar.setMaximum(len(dataset))
 
         for dirIdx in range(len(dataset)):
