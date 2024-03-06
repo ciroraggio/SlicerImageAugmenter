@@ -4,7 +4,6 @@ import SimpleITK as sitk
 import sitkUtils
 import threading
 import slicer
-from PyQt5.QtWidgets import QMessageBox
 
 IS_FILE_ID = "isFileID"  # .../path/CaseID.extension
 IS_FOLDER_ID = "isFolderID"  # .../path/CaseID/img.extension
