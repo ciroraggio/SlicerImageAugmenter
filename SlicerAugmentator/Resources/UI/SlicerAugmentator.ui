@@ -6,103 +6,288 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>868</width>
+    <width>903</width>
     <height>959</height>
    </rect>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
-   <item row="2" column="0">
-    <widget class="ctkCollapsibleButton" name="outputsCollapsibleButton">
+   <item row="9" column="0">
+    <widget class="QLabel" name="infoLabel">
      <property name="maximumSize">
       <size>
-       <width>887</width>
-       <height>129</height>
+       <width>16777215</width>
+       <height>20</height>
       </size>
      </property>
      <property name="text">
-      <string>Outputs</string>
+      <string/>
      </property>
-     <layout class="QFormLayout" name="formLayout">
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="ctkCollapsibleButton" name="inputsCollapsibleButton">
+     <property name="maximumSize">
+      <size>
+       <width>887</width>
+       <height>381</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Inputs</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_23">
       <item row="0" column="0">
-       <widget class="QLabel" name="label_2">
-        <property name="maximumSize">
-         <size>
-          <width>88</width>
-          <height>23</height>
-         </size>
+       <widget class="QScrollArea" name="scrollArea_3">
+        <property name="autoFillBackground">
+         <bool>true</bool>
         </property>
-        <property name="text">
-         <string>Ouput path (*)</string>
+        <property name="widgetResizable">
+         <bool>true</bool>
         </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="ctkDirectoryButton" name="outputPath">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="label_15">
-        <property name="toolTipDuration">
-         <number>5000000</number>
-        </property>
-        <property name="text">
-         <string>FIles structure (*)</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QComboBox" name="filesStructureList">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>32</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">color: rgb(0, 85, 255);</string>
-        </property>
-        <item>
-         <property name="text">
-          <string>your/path/CaseID/img.extension</string>
+        <widget class="QWidget" name="scrollAreaWidgetContents_3">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>865</width>
+           <height>335</height>
+          </rect>
          </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>your/path/CaseID.extension</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QLabel" name="label_16">
-        <property name="font">
-         <font>
-          <weight>75</weight>
-          <bold>true</bold>
-          <kerning>true</kerning>
-         </font>
-        </property>
-        <property name="text">
-         <string>CaseID will be the name of the folder that will contain the augmented images for each patient</string>
-        </property>
+         <layout class="QGridLayout" name="gridLayout_24">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label">
+            <property name="maximumSize">
+             <size>
+              <width>129</width>
+              <height>23</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Input images path</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="ctkDirectoryButton" name="imagesInputPath"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_3">
+            <property name="maximumSize">
+             <size>
+              <width>217</width>
+              <height>23</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Image filename</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="imgPrefix">
+            <property name="maximumSize">
+             <size>
+              <width>665</width>
+              <height>23</height>
+             </size>
+            </property>
+            <property name="placeholderText">
+             <string>CT.nrrd or CT or .tif/.nrrd/.dcm (required)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_4">
+            <property name="maximumSize">
+             <size>
+              <width>183</width>
+              <height>23</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Mask filename</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLineEdit" name="maskPrefix">
+            <property name="maximumSize">
+             <size>
+              <width>665</width>
+              <height>23</height>
+             </size>
+            </property>
+            <property name="placeholderText">
+             <string>mask.nrrd or mask or .tif/.nrrd/.dcm</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_5">
+            <property name="text">
+             <string>Choose input file structure</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <item>
+             <widget class="QRadioButton" name="fileStructureHierarchical">
+              <property name="maximumSize">
+               <size>
+                <width>20</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QTreeWidget" name="treeWidget">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>176</width>
+                <height>200</height>
+               </size>
+              </property>
+              <property name="autoScroll">
+               <bool>true</bool>
+              </property>
+              <property name="showDropIndicator" stdset="0">
+               <bool>true</bool>
+              </property>
+              <property name="itemsExpandable">
+               <bool>true</bool>
+              </property>
+              <property name="animated">
+               <bool>false</bool>
+              </property>
+              <property name="allColumnsShowFocus">
+               <bool>false</bool>
+              </property>
+              <property name="headerHidden">
+               <bool>false</bool>
+              </property>
+              <property name="expandsOnDoubleClick">
+               <bool>true</bool>
+              </property>
+              <column>
+               <property name="text">
+                <string>Hierarchical</string>
+               </property>
+              </column>
+              <item>
+               <property name="text">
+                <string>CaseID_0001</string>
+               </property>
+               <item>
+                <property name="text">
+                 <string>img.ext</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>mask.ext</string>
+                </property>
+               </item>
+              </item>
+              <item>
+               <property name="text">
+                <string>CaseID_0002</string>
+               </property>
+               <item>
+                <property name="text">
+                 <string>img.ext</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>mask.ext</string>
+                </property>
+               </item>
+              </item>
+              <item>
+               <property name="text">
+                <string>...</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="fileStructureFlat">
+              <property name="maximumSize">
+               <size>
+                <width>20</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QTreeWidget" name="treeWidget_2">
+              <property name="maximumSize">
+               <size>
+                <width>176</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <column>
+               <property name="text">
+                <string>Flat</string>
+               </property>
+              </column>
+              <item>
+               <property name="text">
+                <string>img01.ext</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>img01_label.ext</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>img02.ext</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>img02_label.ext</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>...</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
        </widget>
       </item>
      </layout>
     </widget>
    </item>
-   <item row="4" column="0">
+   <item row="5" column="0">
     <widget class="QTabWidget" name="transformsTabWidget">
      <property name="enabled">
       <bool>true</bool>
@@ -149,7 +334,7 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>812</width>
+            <width>847</width>
             <height>629</height>
            </rect>
           </property>
@@ -368,7 +553,7 @@
                    </size>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">color: rgb(0, 85, 255);ù</string>
+                   <string notr="true">color: rgb(0, 85, 255);</string>
                   </property>
                   <property name="placeholderText">
                    <string>From</string>
@@ -654,19 +839,38 @@
                 </property>
                </widget>
               </item>
-              <item row="0" column="1">
-               <widget class="QLabel" name="label_6">
+              <item row="0" column="5">
+               <widget class="QLineEdit" name="resizeH">
                 <property name="maximumSize">
                  <size>
-                  <width>121</width>
-                  <height>16</height>
+                  <width>51</width>
+                  <height>23</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 85, 255);</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="placeholderText">
+                 <string>H</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="resizeEnabled">
+                <property name="maximumSize">
+                 <size>
+                  <width>85</width>
+                  <height>21</height>
                  </size>
                 </property>
                 <property name="styleSheet">
                  <string notr="true">color: rgb(0, 0,0);</string>
                 </property>
                 <property name="text">
-                 <string>Interpolation mode</string>
+                 <string>Enabled</string>
                 </property>
                </widget>
               </item>
@@ -727,6 +931,22 @@
                 </item>
                </widget>
               </item>
+              <item row="0" column="1">
+               <widget class="QLabel" name="label_6">
+                <property name="maximumSize">
+                 <size>
+                  <width>121</width>
+                  <height>16</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0,0);</string>
+                </property>
+                <property name="text">
+                 <string>Interpolation mode</string>
+                </property>
+               </widget>
+              </item>
               <item row="0" column="6">
                <widget class="QLineEdit" name="resizeW">
                 <property name="maximumSize">
@@ -762,41 +982,6 @@
                 </property>
                 <property name="placeholderText">
                  <string>C</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="5">
-               <widget class="QLineEdit" name="resizeH">
-                <property name="maximumSize">
-                 <size>
-                  <width>51</width>
-                  <height>23</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(0, 85, 255);</string>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="placeholderText">
-                 <string>H</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="QCheckBox" name="resizeEnabled">
-                <property name="maximumSize">
-                 <size>
-                  <width>85</width>
-                  <height>21</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(0, 0,0);</string>
-                </property>
-                <property name="text">
-                 <string>Enabled</string>
                 </property>
                </widget>
               </item>
@@ -1218,7 +1403,7 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>812</width>
+            <width>847</width>
             <height>951</height>
            </rect>
           </property>
@@ -1955,134 +2140,14 @@ color: rgb(0, 85, 255);</string>
      </widget>
     </widget>
    </item>
-   <item row="0" column="0">
-    <widget class="Line" name="line">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0">
+   <item row="4" column="0">
     <widget class="Line" name="line_2">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
     </widget>
    </item>
-   <item row="5" column="0">
-    <widget class="Line" name="line_5">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
    <item row="8" column="0">
-    <widget class="QLabel" name="infoLabel">
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>20</height>
-      </size>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0">
-    <widget class="ctkCollapsibleButton" name="inputsCollapsibleButton">
-     <property name="maximumSize">
-      <size>
-       <width>887</width>
-       <height>163</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>Inputs</string>
-     </property>
-     <layout class="QFormLayout" name="formLayout_2">
-      <item row="1" column="0">
-       <widget class="QLabel" name="label">
-        <property name="maximumSize">
-         <size>
-          <width>129</width>
-          <height>23</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Input images path (*)</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="ctkDirectoryButton" name="imagesInputPath"/>
-      </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="label_3">
-        <property name="maximumSize">
-         <size>
-          <width>217</width>
-          <height>23</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Image filename (i.e. CT.nrrd) (*) </string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1">
-       <widget class="QLineEdit" name="imgPrefix">
-        <property name="maximumSize">
-         <size>
-          <width>665</width>
-          <height>23</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="0">
-       <widget class="QLabel" name="label_4">
-        <property name="maximumSize">
-         <size>
-          <width>183</width>
-          <height>23</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Mask filename (i.e. mask.nrrd)</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="1">
-       <widget class="QLineEdit" name="maskPrefix">
-        <property name="maximumSize">
-         <size>
-          <width>665</width>
-          <height>23</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="0">
-       <widget class="QLabel" name="label_5">
-        <property name="maximumSize">
-         <size>
-          <width>101</width>
-          <height>15</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>(*) - required</string>
-        </property>
-        <property name="wordWrap">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="7" column="0">
     <layout class="QVBoxLayout" name="verticalLayout_4">
      <property name="sizeConstraint">
       <enum>QLayout::SetDefaultConstraint</enum>
@@ -3025,7 +3090,7 @@ color: rgb(0, 85, 255);</string>
          <string notr="true">background-color: rgb(0, 170, 127);</string>
         </property>
         <property name="text">
-         <string>Run (Save to OS)</string>
+         <string>Run (Save to disk)</string>
         </property>
        </widget>
       </widget>
@@ -3041,17 +3106,23 @@ color: rgb(0, 85, 255);</string>
          <height>10</height>
         </size>
        </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
        <property name="value">
         <number>0</number>
        </property>
        <property name="textVisible">
         <bool>false</bool>
        </property>
+       <property name="invertedAppearance">
+        <bool>false</bool>
+       </property>
       </widget>
      </item>
     </layout>
    </item>
-   <item row="6" column="0">
+   <item row="7" column="0">
     <widget class="ctkCollapsibleButton" name="CollapsibleButton">
      <property name="text">
       <string>Advanced</string>
@@ -3071,6 +3142,51 @@ color: rgb(0, 85, 255);</string>
        <widget class="QComboBox" name="deviceList"/>
       </item>
      </layout>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="ctkCollapsibleButton" name="outputsCollapsibleButton">
+     <property name="maximumSize">
+      <size>
+       <width>887</width>
+       <height>86</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Outputs</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_22">
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="maximumSize">
+         <size>
+          <width>88</width>
+          <height>23</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Ouput path</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="ctkDirectoryButton" name="outputPath">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="6" column="0">
+    <widget class="Line" name="line_5">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
     </widget>
    </item>
   </layout>

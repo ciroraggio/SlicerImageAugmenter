@@ -11,7 +11,7 @@ from slicer.util import setSliceViewerLayers
 
 from SlicerAugmentatorLib.SlicerAugmentatorDataset import SlicerAugmentatorDataset
 from SlicerAugmentatorLib.SlicerAugmentatorTransformationParser import mapTransformations
-from SlicerAugmentatorLib.SlicerAugmentatorUtils import collectImagesAndMasksList, getOriginalCase, getFilesStructure, save, showPreview, clearScene, makeDir
+from SlicerAugmentatorLib.SlicerAugmentatorUtils import collectImagesAndMasksList, getOriginalCase, getFilesStructure, save, showPreview, clearScene, makeDir, resetViews
 from SlicerAugmentatorLib.SlicerAugmentatorValidator import validateCollectedImagesAndMasks, validateForms
 import SimpleITK as sitk
 
@@ -55,12 +55,12 @@ class SlicerAugmentatorWidget(ScriptedLoadableModuleWidget, VTKObservationMixin)
         self.layout.addWidget(uiWidget)
         self.ui = slicer.util.childWidgetVariables(uiWidget)
         uiWidget.setMRMLScene(slicer.mrmlScene)
-        self.ui.deviceList.addItem("cpu")
+        self.ui.deviceList.addItem("CPU")
 
         if torch.cuda.is_available():
             for i in range(torch.cuda.device_count()):
                 device_name = torch.cuda.get_device_name(i)
-                self.ui.deviceList.addItem(device_name)
+                self.ui.deviceList.addItem(f"GPU {i} - {device_name}")
         
         self.logic = SlicerAugmentatorLogic()
 
@@ -103,7 +103,7 @@ class SlicerAugmentatorWidget(ScriptedLoadableModuleWidget, VTKObservationMixin)
             validateForms(self.ui)
 
             transformationList = mapTransformations(self.ui)
-            filesStructure = getFilesStructure(self.ui.filesStructureList)
+            filesStructure = getFilesStructure(self.ui)
            
             self.resetAndDisable()
             
@@ -127,7 +127,7 @@ class SlicerAugmentatorWidget(ScriptedLoadableModuleWidget, VTKObservationMixin)
             validateForms(self.ui)
 
             transformationList = mapTransformations(self.ui)
-            filesStructure = getFilesStructure(self.ui.filesStructureList)
+            filesStructure = getFilesStructure(self.ui)
             
             self.resetAndDisable()
 
@@ -161,10 +161,10 @@ class SlicerAugmentatorLogic(ScriptedLoadableModuleLogic):
                 progressBar,
                 infoLabel,
                 transformations: list = [],
-                device: str = "cpu"
+                device: str = "CPU"
                 ) -> None:
         
-        OUTPUT_IMG_DIR = "SlicerAugmentator/AugmentedDataset"
+        OUTPUT_IMG_DIR = "SlicerAugmentator"
 
         startTime = time.time()
         logging.info("Processing started")
@@ -179,39 +179,30 @@ class SlicerAugmentatorLogic(ScriptedLoadableModuleLogic):
         progressBar.setMaximum(len(dataset))
 
         for dirIdx in range(len(dataset)):
-            transformedImages, transformedMasks = dataset[dirIdx] # To find out how these objects are formed, look at dataset __getitem__
+            transformedImages, transformedMasks = dataset[dirIdx]
+
             try:
                 caseName, originalCaseImg = getOriginalCase(imgs[dirIdx], filesStructure)
-                if (len(transformedMasks) > 0):
-                    originalCaseMask = sitk.ReadImage(masks[dirIdx])
-                    for (img_pack, msk_pack) in zip(transformedImages, transformedMasks):
-                        transformName, img = img_pack
-                        _, msk = msk_pack
-                        
-                        currentDir = makeDir(outputPath, OUTPUT_IMG_DIR, caseName, transformName)
-                        
-                        if (len(imgPrefix.split(".")) >= 2):
-                            save(img, currentDir, imgPrefix.split(".")[0], originalCaseImg, imgPrefix.split(".")[1])
-                            save(msk, currentDir, maskPrefix.split(".")[0], originalCaseMask, imgPrefix.split(".")[1])
-                        else:
-                            save(img, currentDir, imgPrefix,originalCaseImg, "tif")
-                            save(msk, currentDir, maskPrefix, originalCaseMask, "tif")
+                originalCaseMask = sitk.ReadImage(masks[dirIdx]) if transformedMasks else None
 
-                else:
-                    for img_pack in transformedImages:
-                        transformName, img = img_pack
-                        
-                        currentDir = makeDir(outputPath, OUTPUT_IMG_DIR, caseName, transformName)
+                for (imgPack, mskPack) in zip(transformedImages, transformedMasks or [None]):
+                    transformName, img = imgPack
+                    _, msk = mskPack if mskPack else (None, None)
 
-                        if (len(imgPrefix.split(".")) > 2):
-                            save(img, currentDir, imgPrefix.split(".")[0], originalCaseImg, imgPrefix.split(".")[1])
-                        else:
-                            save(img, currentDir, caseName.split(".")[0], originalCaseImg, caseName.split(".")[1])
-                
-                progressBar.setValue(dirIdx+1)
+                    currentDir = makeDir(outputPath, OUTPUT_IMG_DIR, caseName, transformName)
+
+                    imgPrefixParts = imgPrefix.split(".")
+                    maskPrefixParts = maskPrefix.split(".")
+
+                    save(img, currentDir, imgPrefixParts[0], originalCaseImg, imgPrefixParts[1] if len(imgPrefixParts) > 1 else "nrrd")
+
+                    if originalCaseMask and msk.any():
+                        save(msk, currentDir, maskPrefixParts[0], originalCaseMask, maskPrefixParts[1] if len(maskPrefixParts) > 1 else "nrrd")
+
+                progressBar.setValue(dirIdx + 1)
                 
             except Exception as e:
-                print(e)
+                raise e
 
         stopTime = time.time()
         infoLabel.setText(f"Processing completed in {stopTime-startTime:.2f} seconds")
@@ -225,7 +216,7 @@ class SlicerAugmentatorLogic(ScriptedLoadableModuleLogic):
                 infoLabel,
                 transformations: list = [],
                 filesStructure: str = "",
-                device: str = "cpu" 
+                device: str = "CPU" 
                 ) -> None:
 
         startTime = time.time()
@@ -233,29 +224,35 @@ class SlicerAugmentatorLogic(ScriptedLoadableModuleLogic):
         imgs, masks = collectImagesAndMasksList(imagesInputPath=imagesInputPath,
                                                 imgPrefix=imgPrefix,
                                                 maskPrefix=maskPrefix)
+        
         validateCollectedImagesAndMasks(imgs, masks)
         clearScene()
         dataset = SlicerAugmentatorDataset(imgPaths=imgs[:1], maskPaths=masks[:1], transformations=transformations, device=device) # [:1] to apply the transformations only on the first image
         progressBar.setMaximum(len(dataset))
 
         for dirIdx in range(len(dataset)):
-            transformedImages, transformedMasks = dataset[dirIdx] # To find out how these objects are formed, look at dataset __getitem__
             try:
+                transformedImages, transformedMasks = dataset[dirIdx]
                 caseName, originalCaseImg = getOriginalCase(imgs[dirIdx], filesStructure)
-                
-                if (len(transformedMasks) > 0):
+
+                if transformedMasks:
                     originalCaseMask = sitk.ReadImage(masks[dirIdx])
-                    for (img_pack, msk_pack) in zip(transformedImages, transformedMasks):
-                        transformName, img = img_pack
-                        _, msk = msk_pack
+
+                    for (imgPack, mskPack) in zip(transformedImages, transformedMasks):
+                        transformName, img = imgPack
+                        _, msk = mskPack
+                        imgNodeName = f"{caseName}_{transformName}_img"
+                        maskNodeName = f"{caseName}_{transformName}_mask"
                         showPreview(img=img, originalCaseImg=originalCaseImg, originalCaseMask=originalCaseMask, mask=msk,
-                                    imgNodeName=f"{caseName}_{transformName}_img", maskNodeName=f"{caseName}_{transformName}_mask")
+                                    imgNodeName=imgNodeName, maskNodeName=maskNodeName)
                 else:
-                    for img_pack in transformedImages:
-                        transformName, img = img_pack
-                        showPreview(img, originalCaseImg, imgNodeName=f"{caseName}_{transformName}_img")
-                
-                progressBar.setValue(dirIdx+1)
+                    for imgPack in transformedImages:
+                        transformName, img = imgPack
+                        imgNodeName = f"{caseName}_{transformName}_img"
+                        showPreview(img, originalCaseImg, imgNodeName=imgNodeName)
+                        
+                resetViews()
+                progressBar.setValue(dirIdx + 1)
 
             except Exception as e:
                 print(e)

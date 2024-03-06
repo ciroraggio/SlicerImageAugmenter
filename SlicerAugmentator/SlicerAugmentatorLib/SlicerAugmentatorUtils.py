@@ -5,9 +5,8 @@ import sitkUtils
 import threading
 import slicer
 
-IS_FILE_ID = "isFileID"  # .../path/CaseID.extension
-IS_FOLDER_ID = "isFolderID"  # .../path/CaseID/img.extension
-
+FLAT = "flat"  # .../path/ImgID.extension, .../path/ImgID_label.extension
+HIERARCHICAL = "hierarchical"  # .../path/CaseID/img.extension, # .../path/CaseID/mask.extension
 
 def collectImagesAndMasksList(imagesInputPath, imgPrefix, maskPrefix):
     imgs, masks = [], []
@@ -35,13 +34,13 @@ def collectImagesAndMasksList(imagesInputPath, imgPrefix, maskPrefix):
     return imgs, masks
 
 
-def getFilesStructure(filesStructureList):
-    structureType = {
-        0: IS_FOLDER_ID,
-        1: IS_FILE_ID
-    }
-
-    return structureType.get(filesStructureList.currentIndex)
+def getFilesStructure(ui):
+    if ui.fileStructureHierarchical.isChecked():
+        return HIERARCHICAL
+    elif ui.fileStructureFlat.isChecked():
+        return FLAT
+    
+    raise ValueError("File structure not recognized!")
 
 def makeDir(outputPath, OUTPUT_IMG_DIR, caseName, transformName):
     currentDir = f"{outputPath}/{OUTPUT_IMG_DIR}/{caseName}_{transformName}"
@@ -66,7 +65,7 @@ def getOriginalCase(fullImgPath, filesStructure, loadOriginalImg=True):
     The extracted name/ID will be used as the title of the folder that will contain the augmented images.
     """
     caseName = fullImgPath.split(
-        '/')[-2] if (filesStructure == IS_FOLDER_ID) else fullImgPath.split('/')[-1]
+        '/')[-2] if (filesStructure == HIERARCHICAL) else fullImgPath.split('/')[-1]
 
     originalCaseImg = sitk.ReadImage(fullImgPath)
 
@@ -106,4 +105,9 @@ def showPreview(img, originalCaseImg, originalCaseMask=None, mask=None, imgNodeN
 def clearScene():
     scene = slicer.mrmlScene
     scene.Clear()
+    
+def resetViews():
+    slicer.app.layoutManager().resetThreeDViews()
+    slicer.util.resetSliceViews()
+
 

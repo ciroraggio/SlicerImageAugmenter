@@ -18,9 +18,9 @@ def mapTransformations(ui) -> list:
     mappedTransformations = []
     transformations = getSerializedObject(getTransformations(ui))
 
-    mappedTransformations.extend(mapSpatialTransformations(mappedTransformations=mappedTransformations,transformations=transformations, dict_keys = DICT_KEYS))  
-    mappedTransformations.extend(mapIntensityTransformations(mappedTransformations=mappedTransformations,transformations=transformations, dict_keys = DICT_KEYS))  
-        
+    mappedTransformations = mapSpatialTransformations(mappedTransformations=mappedTransformations,transformations=transformations, dict_keys = DICT_KEYS)
+    mappedTransformations = mapIntensityTransformations(mappedTransformations=mappedTransformations,transformations=transformations, dict_keys = DICT_KEYS)
+
     return mappedTransformations
 
 

@@ -1,8 +1,8 @@
 import slicer
 from SlicerAugmentatorLib.SlicerAugmentatorUtils import sanitizeTransformName
 import SimpleITK as sitk
+import re
 try:
-    import numpy as np
     import torch
     from torch.utils.data import Dataset
     from monai.transforms import RandomizableTransform
@@ -10,18 +10,25 @@ except ModuleNotFoundError:
     slicer.util.pip_install("monai[itk]")
     import torch
     from torch.utils.data import Dataset
-    import numpy as np
     from monai.transforms import RandomizableTransform
 
 class SlicerAugmentatorDataset(Dataset):
-    def __init__(self, imgPaths, maskPaths=None, transformations=[], device: str="cpu"):
+    def __init__(self, imgPaths, maskPaths=None, transformations=[], device: str="CPU"):
         self.imgPaths = imgPaths
         self.maskPaths = maskPaths
         self.transformations = transformations
-        self.device = device
+        self.device = self.extract_device_number(device) if device != "CPU" else "cpu"
 
     def __len__(self):
         return len(self.imgPaths)
+    
+    def extract_device_number(self, gpu_info):
+        match = re.search(r"GPU (\d+) -", gpu_info)
+        
+        if match:
+            return f"cuda:{str(match.group(1))}"
+        else:
+            raise ValueError("GPU text format is invalid. Please report this to the developer!")
 
     def load(self, path: str):
         try:
