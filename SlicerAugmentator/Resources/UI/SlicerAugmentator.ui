@@ -75,7 +75,7 @@
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="SpatialTab">
       <attribute name="title">
@@ -97,7 +97,7 @@
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>0</y>
+            <y>-355</y>
             <width>847</width>
             <height>629</height>
            </rect>
@@ -147,7 +147,7 @@
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>91</width>
+                  <width>139</width>
                   <height>16777215</height>
                  </size>
                 </property>
@@ -155,7 +155,7 @@
                  <string notr="true">color: rgb(0, 85, 255);</string>
                 </property>
                 <property name="placeholderText">
-                 <string>Angle (rad)</string>
+                 <string>Angle [rad] (i.e. 0.5)</string>
                 </property>
                </widget>
               </item>
@@ -320,7 +320,7 @@
                    <string notr="true">color: rgb(0, 85, 255);</string>
                   </property>
                   <property name="placeholderText">
-                   <string>From</string>
+                   <string>From (i.e. -1)</string>
                   </property>
                  </widget>
                 </item>
@@ -342,7 +342,7 @@
                    <string notr="true"/>
                   </property>
                   <property name="placeholderText">
-                   <string>To</string>
+                   <string>To (i.e. 1)</string>
                   </property>
                  </widget>
                 </item>
@@ -780,7 +780,7 @@
                  <string notr="true">color: rgb(0, 85, 255);</string>
                 </property>
                 <property name="placeholderText">
-                 <string>Axis [-1,1]</string>
+                 <string>Axis (i.e. -1)</string>
                 </property>
                </widget>
               </item>
@@ -997,7 +997,7 @@
               <item row="0" column="4" rowspan="2">
                <widget class="QLineEdit" name="randomZoomFactorMax">
                 <property name="placeholderText">
-                 <string>Max</string>
+                 <string>Max (i.e. 1.2)</string>
                 </property>
                </widget>
               </item>
@@ -1120,7 +1120,7 @@
                  <string/>
                 </property>
                 <property name="placeholderText">
-                 <string>Min</string>
+                 <string>Min (i.e. 0.2)</string>
                 </property>
                </widget>
               </item>
@@ -1166,7 +1166,7 @@
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>0</y>
+            <y>-677</y>
             <width>847</width>
             <height>951</height>
            </rect>
@@ -1204,7 +1204,7 @@ color: rgb(0, 85, 255);</string>
                  <string notr="true">color: rgb(0, 85, 255);</string>
                 </property>
                 <property name="placeholderText">
-                 <string>Factor</string>
+                 <string>Factor (i.e. 1.3)</string>
                 </property>
                </widget>
               </item>
@@ -1252,7 +1252,7 @@ color: rgb(0, 85, 255);</string>
                  <string notr="true">color: rgb(0, 85, 255);</string>
                 </property>
                 <property name="placeholderText">
-                 <string>From</string>
+                 <string>(i.e. 1.3)</string>
                 </property>
                </widget>
               </item>
@@ -1262,7 +1262,7 @@ color: rgb(0, 85, 255);</string>
                  <string notr="true">color: rgb(0, 85, 255);</string>
                 </property>
                 <property name="placeholderText">
-                 <string>To</string>
+                 <string>To (i.e. 1.5)</string>
                 </property>
                </widget>
               </item>
@@ -1287,7 +1287,7 @@ color: rgb(0, 85, 255);</string>
                  <string notr="true">color: rgb(0, 85, 255);</string>
                 </property>
                 <property name="placeholderText">
-                 <string>Gamma</string>
+                 <string>Gamma (i.e. 0.6)</string>
                 </property>
                </widget>
               </item>
@@ -1335,7 +1335,7 @@ color: rgb(0, 85, 255);</string>
                  <string notr="true">color: rgb(0, 85, 255);</string>
                 </property>
                 <property name="placeholderText">
-                 <string>From</string>
+                 <string>From (i.e. 0.6)</string>
                 </property>
                </widget>
               </item>
@@ -1355,7 +1355,7 @@ color: rgb(0, 85, 255);</string>
                  <string notr="true">color: rgb(0, 85, 255);</string>
                 </property>
                 <property name="placeholderText">
-                 <string>To</string>
+                 <string>To (i.e. 0.8)</string>
                 </property>
                </widget>
               </item>
@@ -1458,7 +1458,7 @@ color: rgb(0, 85, 255);</string>
                  <string notr="true">color: rgb(0, 85, 255);</string>
                 </property>
                 <property name="placeholderText">
-                 <string>Offset</string>
+                 <string>Offset (i.e. 1.2)</string>
                 </property>
                </widget>
               </item>
@@ -1483,7 +1483,7 @@ color: rgb(0, 85, 255);</string>
                  <string notr="true">color: rgb(0, 85, 255);</string>
                 </property>
                 <property name="placeholderText">
-                 <string>From</string>
+                 <string>From (i.e. 0.6)</string>
                 </property>
                </widget>
               </item>
@@ -1493,7 +1493,7 @@ color: rgb(0, 85, 255);</string>
                  <string notr="true">color: rgb(0, 85, 255);</string>
                 </property>
                 <property name="placeholderText">
-                 <string>To</string>
+                 <string>To (i.e. 1.2)</string>
                 </property>
                </widget>
               </item>
@@ -1538,7 +1538,7 @@ color: rgb(0, 85, 255);</string>
                  <string notr="true">color: rgb(0, 85, 255);</string>
                 </property>
                 <property name="placeholderText">
-                 <string>Divisor</string>
+                 <string>Divisor (i.e. 10)</string>
                 </property>
                </widget>
               </item>
@@ -1558,7 +1558,7 @@ color: rgb(0, 85, 255);</string>
                  <string notr="true">color: rgb(0, 85, 255);</string>
                 </property>
                 <property name="placeholderText">
-                 <string>Subtrahend</string>
+                 <string>Subtrahend (i.e. 0)</string>
                 </property>
                </widget>
               </item>
@@ -1612,7 +1612,7 @@ color: rgb(0, 85, 255);</string>
                  <string notr="true">color: rgb(0, 85, 255);</string>
                 </property>
                 <property name="placeholderText">
-                 <string>Threshold</string>
+                 <string>Threshold (i.e. 200)</string>
                 </property>
                </widget>
               </item>
@@ -1777,7 +1777,7 @@ color: rgb(0, 85, 255);</string>
               <item row="0" column="4">
                <widget class="QLineEdit" name="randGaussianSmoothSigmaXTo">
                 <property name="placeholderText">
-                 <string>To</string>
+                 <string>To (i.e. 1.5)</string>
                 </property>
                </widget>
               </item>
@@ -1852,7 +1852,7 @@ color: rgb(0, 85, 255);</string>
               <item row="0" column="3">
                <widget class="QLineEdit" name="randGaussianSmoothSigmaXFrom">
                 <property name="placeholderText">
-                 <string>From</string>
+                 <string>From (i.e. 1)</string>
                 </property>
                </widget>
               </item>
@@ -1901,6 +1901,25 @@ color: rgb(0, 85, 255);</string>
       <attribute name="title">
        <string>Crop</string>
       </attribute>
+      <widget class="QLabel" name="label_15">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>320</x>
+         <y>130</y>
+         <width>176</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(0, 85, 255);</string>
+       </property>
+       <property name="text">
+        <string>Available in the next release!</string>
+       </property>
+      </widget>
      </widget>
     </widget>
    </item>
