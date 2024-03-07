@@ -8,6 +8,9 @@ except ModuleNotFoundError:
 
 def mapSpatialTransformations(transformations, mappedTransformations: list, dict_keys: dict) -> list:    
     if(transformations.rotate.enabled):
+        if(transformations.rotate.angle == ""):
+          raise ValueError("The 'Rotate' transformation is enabled but angle is not specified")
+        
         mappedTransformations.append(Rotate(angle=float(transformations.rotate.angle), 
                                             mode=transformations.rotate.interpolationMode
                                             ))
@@ -36,11 +39,18 @@ def mapSpatialTransformations(transformations, mappedTransformations: list, dict
       
                                      
     if(transformations.resize.enabled):
+      for size in transformations.resize.spatialSize:
+        if (size == None or size==""): 
+          raise ValueError("The 'Resize' transformation is enabled but spatial size is not specified")
+
         mappedTransformations.append(Resize(spatial_size=(transformations.resize.spatialSize),
                                             mode=transformations.resize.interpolationMode 
                                             ))
     if(transformations.flip.enabled):
-        mappedTransformations.append(Flip(spatial_axis=int(transformations.flip.axis)))
+      if(transformations.flip.axis == "" or transformations.flip.axis == None):
+        raise ValueError("The 'Flip' transformation is enabled but axis is not specified")
+
+      mappedTransformations.append(Flip(spatial_axis=int(transformations.flip.axis)))
      
     if(transformations.randomFlip.enabled):
         mappedTransformations.append(RandAxisFlipd(prob=1, keys=dict_keys, allow_missing_keys=True))
@@ -71,4 +81,4 @@ def mapSpatialTransformations(transformations, mappedTransformations: list, dict
                                           allow_missing_keys=True))
      
         
-    return mappedTransformations
+    return mappedTransformations 

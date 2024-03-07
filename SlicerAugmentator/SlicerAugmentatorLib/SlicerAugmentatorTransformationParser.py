@@ -21,6 +21,8 @@ def mapTransformations(ui) -> list:
     mappedTransformations = mapSpatialTransformations(mappedTransformations=mappedTransformations,transformations=transformations, dict_keys = DICT_KEYS)
     mappedTransformations = mapIntensityTransformations(mappedTransformations=mappedTransformations,transformations=transformations, dict_keys = DICT_KEYS)
 
+    if(not mappedTransformations): raise ValueError("Choose at least one transformation to apply")
+
     return mappedTransformations
 
 

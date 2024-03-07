@@ -43,7 +43,8 @@ def getFilesStructure(ui):
     raise ValueError("File structure not recognized!")
 
 def makeDir(outputPath, OUTPUT_IMG_DIR, caseName, transformName):
-    currentDir = f"{outputPath}/{OUTPUT_IMG_DIR}/{caseName}_{transformName}"
+    # currentDir = f"{outputPath}/{OUTPUT_IMG_DIR}/{caseName}_{transformName}"
+    currentDir = f"{outputPath}/{caseName}_{transformName}"
     os.makedirs(currentDir, exist_ok=True)
     return currentDir
 

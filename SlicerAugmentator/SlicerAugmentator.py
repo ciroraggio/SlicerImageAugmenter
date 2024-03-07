@@ -7,7 +7,7 @@ from slicer.i18n import tr as _
 from slicer.i18n import translate
 from slicer.ScriptedLoadableModule import *
 from slicer.util import VTKObservationMixin
-from slicer.util import setSliceViewerLayers
+from slicer.util import setDataProbeVisible
 
 from SlicerAugmentatorLib.SlicerAugmentatorDataset import SlicerAugmentatorDataset
 from SlicerAugmentatorLib.SlicerAugmentatorTransformationParser import mapTransformations
@@ -32,7 +32,7 @@ class SlicerAugmentator(ScriptedLoadableModule):
 
     def __init__(self, parent):
         ScriptedLoadableModule.__init__(self, parent)
-        self.parent.title = _("SlicerAugmentator")
+        self.parent.title = _("Augmentator")
         self.parent.categories = [translate("qSlicerAbstractCoreModule", "Utilities")]
         self.parent.dependencies = []
         self.parent.contributors = ["Ciro Benito Raggio (Karlsruhe Institute of Technology, Germany), Paolo Zaffino (Magna Graecia University of Catanzaro, Italy), Maria Francesca Spadea (Karlsruhe Institute of Technology, Germany)"]
@@ -55,12 +55,16 @@ class SlicerAugmentatorWidget(ScriptedLoadableModuleWidget, VTKObservationMixin)
         self.layout.addWidget(uiWidget)
         self.ui = slicer.util.childWidgetVariables(uiWidget)
         uiWidget.setMRMLScene(slicer.mrmlScene)
+        setDataProbeVisible(False)
         self.ui.deviceList.addItem("CPU")
 
         if torch.cuda.is_available():
             for i in range(torch.cuda.device_count()):
                 device_name = torch.cuda.get_device_name(i)
                 self.ui.deviceList.addItem(f"GPU {i} - {device_name}")
+        
+        self.ui.hierarchicalTreeWidget.expandItem(self.ui.hierarchicalTreeWidget.topLevelItem(0))
+
         
         self.logic = SlicerAugmentatorLogic()
 
@@ -102,7 +106,7 @@ class SlicerAugmentatorWidget(ScriptedLoadableModuleWidget, VTKObservationMixin)
         with slicer.util.tryWithErrorDisplay(_("Failed to compute results."), waitCursor=True):
             validateForms(self.ui)
 
-            transformationList = mapTransformations(self.ui)
+            transformationList = mapTransformations(self.ui)     
             filesStructure = getFilesStructure(self.ui)
            
             self.resetAndDisable()
@@ -194,10 +198,10 @@ class SlicerAugmentatorLogic(ScriptedLoadableModuleLogic):
                     imgPrefixParts = imgPrefix.split(".")
                     maskPrefixParts = maskPrefix.split(".")
 
-                    save(img, currentDir, imgPrefixParts[0], originalCaseImg, imgPrefixParts[1] if len(imgPrefixParts) > 1 else "nrrd")
+                    save(img.detach().cpu(), currentDir, imgPrefixParts[0], originalCaseImg, imgPrefixParts[1] if len(imgPrefixParts) > 1 else "nrrd")
 
                     if originalCaseMask and msk.any():
-                        save(msk, currentDir, maskPrefixParts[0], originalCaseMask, maskPrefixParts[1] if len(maskPrefixParts) > 1 else "nrrd")
+                        save(msk.detach().cpu(), currentDir, maskPrefixParts[0], originalCaseMask, maskPrefixParts[1] if len(maskPrefixParts) > 1 else "nrrd")
 
                 progressBar.setValue(dirIdx + 1)
                 

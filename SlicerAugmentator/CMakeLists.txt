@@ -1,4 +1,5 @@
 #-----------------------------------------------------------------------------
+set(EXT_MODULE_NAME Augmentator)
 set(MODULE_NAME SlicerAugmentator)
 
 #-----------------------------------------------------------------------------
@@ -19,7 +20,7 @@ set(MODULE_PYTHON_RESOURCES
 
 #-----------------------------------------------------------------------------
 slicerMacroBuildScriptedModule(
-  NAME ${MODULE_NAME}
+  NAME ${EXT_MODULE_NAME}
   SCRIPTS ${MODULE_PYTHON_SCRIPTS}
   RESOURCES ${MODULE_PYTHON_RESOURCES}
   WITH_GENERIC_TESTS
