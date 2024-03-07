@@ -75,7 +75,7 @@
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="SpatialTab">
       <attribute name="title">
@@ -97,7 +97,7 @@
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>-355</y>
+            <y>0</y>
             <width>847</width>
             <height>629</height>
            </rect>
@@ -1166,8 +1166,8 @@
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>-677</y>
-            <width>847</width>
+            <y>0</y>
+            <width>346</width>
             <height>951</height>
            </rect>
           </property>
