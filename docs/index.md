@@ -30,6 +30,7 @@ li a:hover {
 <ul>
   <li><a href="https://ciroraggio.github.io/SlicerAugmentator/index">Home</a></li>
   <li><a href="https://ciroraggio.github.io/SlicerAugmentator/examples">Examples</a></li>
+  <li><a href="https://ciroraggio.github.io/SlicerAugmentator/changelog">Changelog</a></li>
   <li><a href="https://ciroraggio.github.io/SlicerAugmentator/developers">Developers</a></li>
 </ul>
 
