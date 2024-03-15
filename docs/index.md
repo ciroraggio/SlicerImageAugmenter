@@ -1,4 +1,4 @@
-<center> <h2> SlicerAugmentator</h2></center>
+<center><h2>Home</h2></center>
 
 <style>
 ul {

@@ -1,7 +1,7 @@
-<center> <h2> SlicerAugmentator</h2></center>
+<center><h2>SlicerAugmentator</h2></center>
 
 <style>
-ul {
+.navbar {
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -9,11 +9,11 @@ ul {
   background-color: #333;
 }
 
-li {
+.navbar li {  /* Target nested elements within the navbar */
   float: left;
 }
 
-li a {
+.navbar li a {  /* Target links within the navbar */
   display: block;
   color: white;
   text-align: center;
@@ -27,12 +27,13 @@ li a:hover {
 }
 </style>
 
-<ul>
+<ul class="navbar">
   <li><a href="https://ciroraggio.github.io/SlicerAugmentator/index">Home</a></li>
   <li><a href="https://ciroraggio.github.io/SlicerAugmentator/examples">Examples</a></li>
   <li><a href="https://ciroraggio.github.io/SlicerAugmentator/changelog">Changelog</a></li>
   <li><a href="https://ciroraggio.github.io/SlicerAugmentator/developers">Developers</a></li>
 </ul>
+
 ## Developers
 * [Ciro B. Raggio](https://www.ibt.kit.edu/english/Raggio_C.php) (Karlsruhe Institute of Technology, Germany) - [GitHub](<https://github.com/ciroraggio>)
 * [Paolo Zaffino](http://dmsc.unicz.it/personale/docente/paolozaffino) (Universita’ degli Studi “Magna Græcia” di Catanzaro, Italy) - [GitHub](<https://github.com/pzaffino>)
