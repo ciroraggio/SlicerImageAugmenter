@@ -16,7 +16,7 @@ Apply augmentation to your medical image dataset in a few simple steps:
     </li>
 </ul>
 <center>            
-<img src="../assets/SlicerAugmentatorInputExample.png">
+<img src="https://raw.githubusercontent.com/ciroraggio/SlicerAugmentator/main/assets/SlicerAugmentatorInputExample.png">
 </center>
 
 **5.** Choose where you want to save the augmented samples
@@ -24,18 +24,18 @@ Apply augmentation to your medical image dataset in a few simple steps:
 <table>
     <tr>
         <td>
-            <img src="../assets/SlicerAugmentatorEnableTransformsExample1.png">
+            <img src="https://raw.githubusercontent.com/ciroraggio/SlicerAugmentator/main/assets/SlicerAugmentatorEnableTransformsExample1.png">
         </td>
         <td>
-            <img src="../assets/SlicerAugmentatorEnableTransformsExample2.png">
+            <img src="https://raw.githubusercontent.com/ciroraggio/SlicerAugmentator/main/assets/SlicerAugmentatorEnableTransformsExample2.png">
         </td>
     </tr>
 </table>
 
 **7.1** Use the **Preview** button if you want to preview the final result on the first sample of the dataset directly into the Slicer scene, if you are not satisfied, change the parameters and request a new preview
 
-![filled](../assets/SlicerAugmentatorScreen.png)
+![filled](https://raw.githubusercontent.com/ciroraggio/SlicerAugmentator/main/assets/SlicerAugmentatorScreen.png)
 
 **7.2** If you are satisfied with the result, use the **Run** button to save the augmented samples in the folder chosen in step 5. The files will be saved respecting the input hierarchy, as in this case:
 
-![output_folder](../assets/SlicerAugmentatorOutputExample.png)
+![output_folder](https://raw.githubusercontent.com/ciroraggio/SlicerAugmentator/main/assets/SlicerAugmentatorOutputExample.png)
