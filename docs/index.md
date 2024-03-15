@@ -1,4 +1,4 @@
-# SlicerAugmentator
+<center> <h2> SlicerAugmentator</h2></center>
 
 <style>
 ul {
@@ -42,10 +42,13 @@ It's designed to operate on a dataset of medical images and apply a series of sp
 
 ## Features
 ***MONAI Transformations***
+
 SlicerAugmentator provides more than 20 MONAI transformations, leaving the user the freedom to choose all the parameters available for the transformation. If you want to delve deeper into MONAI transformations and understand more about the meaning of the parameters of each transformation, visit the [MONAI](https://docs.monai.io/en/latest/transforms.html) documentation.
 
 ***Preview mode***
+
 SlicerAugmentator allows users to view images or augmented images and masks directly in the scene thanks to the "Preview" function. In this way it will be possible to explore the transformations and test the parameters taking the first image as an example, saving the images to disk only when you are completely satisfied with the result.
 
-***Choice of device***
+***Use the device you prefer***
+
 In the "Advanced" section it will be possible to choose which device to apply the transformations with. In addition to the CPU, all PyTorch compatible GPUs will be shown.

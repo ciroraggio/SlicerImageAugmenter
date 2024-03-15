@@ -1,3 +1,39 @@
+<center> <h2> SlicerAugmentator</h2></center>
+
+<style>
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+  background-color: #111;
+}
+</style>
+
+<ul>
+  <li><a href="https://ciroraggio.github.io/SlicerAugmentator/index">Home</a></li>
+  <li><a href="https://ciroraggio.github.io/SlicerAugmentator/examples">Examples</a></li>
+  <li><a href="https://ciroraggio.github.io/SlicerAugmentator/changelog">Changelog</a></li>
+  <li><a href="https://ciroraggio.github.io/SlicerAugmentator/developers">Developers</a></li>
+</ul>
+
 ## Examples
 Apply augmentation to your medical image dataset in a few simple steps:
 
@@ -6,15 +42,9 @@ Apply augmentation to your medical image dataset in a few simple steps:
 **2.** Specifies by what name or substring of the name SlicerAugmentator can recognize images (CT, CT.nrrd, .nrrd)
 
 **3.** If you also want to include masks/segmentations associated with the images, simply indicate the name or a substring of the name with which SlicerAugmentator can recognize them (mask, mask.nrrd, _label)
-**4.** Indicates what type of hierarchy the images respect. This will allow SlicerAugmentator to maintain the original dataset hierarchy when saving. There are two options:
-<ul>
-    <li>
-    <p><u><b>Hierarchical</b></u> - use this setting if your images are grouped by case and each case is a folder</p>
-    </li>
-    <li>
-    <p><u><b>Flat</b></u> - use this setting if your images/masks are in a single folder and the case name matches the file name</p>
-    </li>
-</ul>
+
+**4.** Indicates what type of hierarchy the images respect. This will allow SlicerAugmentator to maintain the original dataset hierarchy when saving. There are two options: **hierarchical** (use this setting if your images are grouped by case and each case is a folder) or **flat** (use this setting if your images/masks are in a single folder and the case name matches the file name)
+
 <center>            
 <img src="https://raw.githubusercontent.com/ciroraggio/SlicerAugmentator/main/assets/SlicerAugmentatorInputExample.png">
 </center>
