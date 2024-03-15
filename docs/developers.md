@@ -37,3 +37,4 @@ li a:hover {
 ## Developers
 * [Ciro B. Raggio](https://www.ibt.kit.edu/english/Raggio_C.php) (Karlsruhe Institute of Technology, Germany) - [GitHub](<https://github.com/ciroraggio>)
 * [Paolo Zaffino](http://dmsc.unicz.it/personale/docente/paolozaffino) (Universita’ degli Studi “Magna Græcia” di Catanzaro, Italy) - [GitHub](<https://github.com/pzaffino>)
+* [Maria Francesca Spadea](https://www.ibt.kit.edu/english/Spadea_Francesca.php) (Karlsruhe Institute of Technology, Germany)
