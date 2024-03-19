@@ -34,7 +34,10 @@ li a:hover {
   <li><a href="https://ciroraggio.github.io/SlicerAugmentator/developers">Developers</a></li>
 </ul>
 
-## Chengelog
+## Changelog
+ - v0.4:
+   1. Improved code readability with objects
+   2. Fixed bug on saving without masks
  - v0.3:
     1. Updated UI
     2. Added device choice
