@@ -1,5 +1,5 @@
 import slicer
-from SlicerAugmentatorLib.SlicerAugmentatorUtils import sanitizeTransformName
+from SlicerAugmentatorLib.SlicerAugmentatorUtils import sanitizeTransformName, extract_device_number
 import SimpleITK as sitk
 import re
 try:
@@ -17,20 +17,12 @@ class SlicerAugmentatorDataset(Dataset):
         self.imgPaths = imgPaths
         self.maskPaths = maskPaths
         self.transformations = transformations
-        self.device = self.extract_device_number(device) if device != "CPU" else "cpu"
+        self.device = extract_device_number(device) if device != "CPU" else "cpu"
 
     def __len__(self):
         return len(self.imgPaths)
-    
-    def extract_device_number(self, gpu_info):
-        match = re.search(r"GPU (\d+) -", gpu_info)
-        
-        if match:
-            return f"cuda:{str(match.group(1))}"
-        else:
-            raise ValueError("GPU text format is invalid. Please report this to the developer!")
 
-    def load(self, path: str):
+    def load(self, path: str) -> torch.Tensor:
         try:
             if (path):
                 img = sitk.ReadImage(path)
@@ -42,17 +34,16 @@ class SlicerAugmentatorDataset(Dataset):
             return None
         
     def apply_transform(self, transform, img, transformedList: list) -> list:
-        if (img.any()):
-            transformedImg = transform(img.float())
-            try:
-                transform_name = transform.get_transform_info()["class"]
-            except AttributeError:
-                # in this case get_transform_info is missing, so recover the name starting from __class__:
-                transform_name = sanitizeTransformName(transform)
+        try:
+            transform_name = transform.get_transform_info()["class"]
+        except AttributeError:
+            # in this case get_transform_info is missing, so recover the name starting from __class__:
+            transform_name = sanitizeTransformName(transform)
 
-            # adding ["rotate", torch.Tensor[[...]] ]
-            transformedList.append([transform_name, transformedImg])
-
+        transformedImg = transform(img.float())
+        # adding ["rotate", torch.Tensor[[...]] ]
+        transformedList.append([transform_name, transformedImg])
+        
         return transformedList
     
     def apply_dict_transform(self, transform, data_dict, transformedImages: list, transformedMasks: list = None) -> list:
@@ -73,8 +64,6 @@ class SlicerAugmentatorDataset(Dataset):
         transformedImg = transform(data_dict)
         transformedImages.append([transform_name, transformedImg["img"]])
         return transformedImages, []
-
-
 
     def __getitem__(self, idx) -> tuple[list[list[str, torch.Tensor]], list[list[str, torch.Tensor]]]:
         """
@@ -108,5 +97,4 @@ class SlicerAugmentatorDataset(Dataset):
             if (mask != None and not isinstance(transform, RandomizableTransform)): 
                 transformedMasks = self.apply_transform(transform, mask.to(self.device), transformedMasks)
             
-
         return transformedImages, transformedMasks
