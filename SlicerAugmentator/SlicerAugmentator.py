@@ -10,7 +10,7 @@ from slicer.util import VTKObservationMixin
 from slicer.util import setDataProbeVisible
 
 from SlicerAugmentatorLib.SlicerAugmentatorDataset import SlicerAugmentatorDataset
-from SlicerAugmentatorLib.SlicerAugmentatorTransformationParser import mapTransformations
+from SlicerAugmentatorLib.SlicerAugmentatorTransformationParser import SlicerAugmentatorTransformationParser
 from SlicerAugmentatorLib.SlicerAugmentatorUtils import collectImagesAndMasksList, getOriginalCase, getFilesStructure, save, showPreview, clearScene, makeDir, resetViews
 from SlicerAugmentatorLib.SlicerAugmentatorValidator import validateCollectedImagesAndMasks, validateForms
 import SimpleITK as sitk
@@ -104,9 +104,11 @@ class SlicerAugmentatorWidget(ScriptedLoadableModuleWidget, VTKObservationMixin)
     def onApplyButton(self) -> None:
         """Run processing when user clicks "Apply" button."""
         with slicer.util.tryWithErrorDisplay(_("Failed to compute results."), waitCursor=True):
-            validateForms(self.ui)
 
-            transformationList = mapTransformations(self.ui)     
+            validateForms(self.ui)
+            
+            self.transformationParser = SlicerAugmentatorTransformationParser(self.ui)    
+            transformationList = self.transformationParser.mapTransformations()     
             filesStructure = getFilesStructure(self.ui)
            
             self.resetAndDisable()
@@ -129,8 +131,9 @@ class SlicerAugmentatorWidget(ScriptedLoadableModuleWidget, VTKObservationMixin)
         """Run processing when user clicks "Preview" button."""
         with slicer.util.tryWithErrorDisplay(_("Failed to compute results."), waitCursor=True):
             validateForms(self.ui)
-
-            transformationList = mapTransformations(self.ui)
+            
+            self.transformationParser = SlicerAugmentatorTransformationParser(self.ui)    
+            transformationList = self.transformationParser.mapTransformations()
             filesStructure = getFilesStructure(self.ui)
             
             self.resetAndDisable()
@@ -184,12 +187,14 @@ class SlicerAugmentatorLogic(ScriptedLoadableModuleLogic):
 
         for dirIdx in range(len(dataset)):
             transformedImages, transformedMasks = dataset[dirIdx]
-
             try:
                 caseName, originalCaseImg = getOriginalCase(imgs[dirIdx], filesStructure)
                 originalCaseMask = sitk.ReadImage(masks[dirIdx]) if transformedMasks else None
 
-                for (imgPack, mskPack) in zip(transformedImages, transformedMasks or [None]):
+                for i in range(len(transformedImages)):
+                    imgPack = transformedImages[i]
+                    mskPack = transformedMasks[i] if i < len(transformedMasks) else None
+
                     transformName, img = imgPack
                     _, msk = mskPack if mskPack else (None, None)
 
@@ -200,9 +205,10 @@ class SlicerAugmentatorLogic(ScriptedLoadableModuleLogic):
 
                     save(img.detach().cpu(), currentDir, imgPrefixParts[0], originalCaseImg, imgPrefixParts[1] if len(imgPrefixParts) > 1 else "nrrd")
 
-                    if originalCaseMask and msk.any():
+                    if originalCaseMask and msk != None and msk.any():
                         save(msk.detach().cpu(), currentDir, maskPrefixParts[0], originalCaseMask, maskPrefixParts[1] if len(maskPrefixParts) > 1 else "nrrd")
-
+                    
+                    
                 progressBar.setValue(dirIdx + 1)
                 
             except Exception as e:
@@ -241,10 +247,14 @@ class SlicerAugmentatorLogic(ScriptedLoadableModuleLogic):
 
                 if transformedMasks:
                     originalCaseMask = sitk.ReadImage(masks[dirIdx])
-
-                    for (imgPack, mskPack) in zip(transformedImages, transformedMasks):
+                    
+                    for i in range(len(transformedImages)):
+                        imgPack = transformedImages[i]
+                        mskPack = transformedMasks[i] if i < len(transformedMasks) else None
+                        
                         transformName, img = imgPack
                         _, msk = mskPack
+                        
                         imgNodeName = f"{caseName}_{transformName}_img"
                         maskNodeName = f"{caseName}_{transformName}_mask"
                         showPreview(img=img, originalCaseImg=originalCaseImg, originalCaseMask=originalCaseMask, mask=msk,

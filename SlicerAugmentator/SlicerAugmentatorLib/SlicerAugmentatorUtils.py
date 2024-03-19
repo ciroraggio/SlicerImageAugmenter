@@ -6,7 +6,9 @@ import threading
 import slicer
 
 FLAT = "flat"  # .../path/ImgID.extension, .../path/ImgID_label.extension
-HIERARCHICAL = "hierarchical"  # .../path/CaseID/img.extension, # .../path/CaseID/mask.extension
+# .../path/CaseID/img.extension, # .../path/CaseID/mask.extension
+HIERARCHICAL = "hierarchical"
+
 
 def collectImagesAndMasksList(imagesInputPath, imgPrefix, maskPrefix):
     imgs, masks = [], []
@@ -39,14 +41,16 @@ def getFilesStructure(ui):
         return HIERARCHICAL
     elif ui.fileStructureFlat.isChecked():
         return FLAT
-    
+
     raise ValueError("File structure not recognized!")
+
 
 def makeDir(outputPath, OUTPUT_IMG_DIR, caseName, transformName):
     # currentDir = f"{outputPath}/{OUTPUT_IMG_DIR}/{caseName}_{transformName}"
     currentDir = f"{outputPath}/{caseName}_{transformName}"
     os.makedirs(currentDir, exist_ok=True)
     return currentDir
+
 
 def sanitizeTransformName(transform) -> str:
     """
@@ -72,7 +76,6 @@ def getOriginalCase(fullImgPath, filesStructure, loadOriginalImg=True):
 
     return caseName, originalCaseImg
 
-
 def save(img, path, filename, originalCase, extension):
     img = sitk.GetImageFromArray(img)
 
@@ -88,27 +91,40 @@ def showPreview(img, originalCaseImg, originalCaseMask=None, mask=None, imgNodeN
     sitkAugmentedImg = sitk.GetImageFromArray(img)
     if (originalCaseImg.GetDepth() > 0):
         sitkAugmentedImg.CopyInformation(originalCaseImg)
-    
-    outputImgNode = sitkUtils.PushVolumeToSlicer(sitkAugmentedImg, name=imgNodeName, className="vtkMRMLScalarVolumeNode")
+
+    outputImgNode = sitkUtils.PushVolumeToSlicer(
+        sitkAugmentedImg, name=imgNodeName, className="vtkMRMLScalarVolumeNode")
 
     if (mask != None):
         sitkAugmentedMask = sitk.GetImageFromArray(mask)
         if (originalCaseMask.GetDepth() > 0):
             sitkAugmentedMask.CopyInformation(originalCaseMask)
-        
-        outputMaskNode = sitkUtils.PushVolumeToSlicer(sitkAugmentedMask, name=maskNodeName, className="vtkMRMLScalarVolumeNode")
 
-        slicer.util.setSliceViewerLayers(background=outputImgNode, label=outputMaskNode, labelOpacity=0.4)
+        outputMaskNode = sitkUtils.PushVolumeToSlicer(
+            sitkAugmentedMask, name=maskNodeName, className="vtkMRMLScalarVolumeNode")
+
+        slicer.util.setSliceViewerLayers(
+            background=outputImgNode, label=outputMaskNode, labelOpacity=0.4)
 
     else:
         slicer.util.setSliceViewerLayers(background=outputImgNode)
 
+
 def clearScene():
     scene = slicer.mrmlScene
     scene.Clear()
-    
+
+
 def resetViews():
     slicer.app.layoutManager().resetThreeDViews()
     slicer.util.resetSliceViews()
 
 
+def extract_device_number(self, gpu_info) -> str:
+    match = re.search(r"GPU (\d+) -", gpu_info)
+
+    if match:
+        return f"cuda:{str(match.group(1))}"
+    else:
+        raise ValueError(
+            "GPU text format is invalid. Please report this to the developer!")
