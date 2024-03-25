@@ -10,7 +10,7 @@ except ModuleNotFoundError:
   from munch import Munch
 
 DICT_KEYS = ["img", "mask"]
-
+UNPOSSIBLE_COPY_INFO_TRANSFORM = ["Resize"]
 class SlicerAugmentatorTransformationParser():
     def __init__(self, ui):
        self.ui = ui

@@ -581,28 +581,6 @@
               <string>Resize</string>
              </property>
              <layout class="QGridLayout" name="gridLayout_18">
-              <item row="0" column="3">
-               <widget class="QLabel" name="label_8">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>121</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(0, 0,0);</string>
-                </property>
-                <property name="text">
-                 <string>Spatial size</string>
-                </property>
-               </widget>
-              </item>
               <item row="0" column="5">
                <widget class="QLineEdit" name="resizeH">
                 <property name="maximumSize">
@@ -619,22 +597,6 @@
                 </property>
                 <property name="placeholderText">
                  <string>H</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="QCheckBox" name="resizeEnabled">
-                <property name="maximumSize">
-                 <size>
-                  <width>85</width>
-                  <height>21</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(0, 0,0);</string>
-                </property>
-                <property name="text">
-                 <string>Enabled</string>
                 </property>
                </widget>
               </item>
@@ -695,6 +657,28 @@
                 </item>
                </widget>
               </item>
+              <item row="0" column="3">
+               <widget class="QLabel" name="label_8">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>121</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0,0);</string>
+                </property>
+                <property name="text">
+                 <string>Spatial size</string>
+                </property>
+               </widget>
+              </item>
               <item row="0" column="1">
                <widget class="QLabel" name="label_6">
                 <property name="maximumSize">
@@ -711,7 +695,23 @@
                 </property>
                </widget>
               </item>
-              <item row="0" column="6">
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="resizeEnabled">
+                <property name="maximumSize">
+                 <size>
+                  <width>85</width>
+                  <height>21</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0,0);</string>
+                </property>
+                <property name="text">
+                 <string>Enabled</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="4">
                <widget class="QLineEdit" name="resizeW">
                 <property name="maximumSize">
                  <size>
@@ -727,25 +727,6 @@
                 </property>
                 <property name="placeholderText">
                  <string>W</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="4">
-               <widget class="QLineEdit" name="resizeC">
-                <property name="maximumSize">
-                 <size>
-                  <width>51</width>
-                  <height>23</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(0, 85, 255);</string>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="placeholderText">
-                 <string>C</string>
                 </property>
                </widget>
               </item>

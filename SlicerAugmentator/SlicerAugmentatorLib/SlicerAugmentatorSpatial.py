@@ -36,7 +36,7 @@ class SlicerAugmentatorSpatialController():
             },
             "resize": {
                 "enabled": self.ui.resizeEnabled.isChecked(),
-                "spatialSize": (self.ui.resizeC.text, self.ui.resizeW.text, self.ui.resizeH.text),
+                "spatialSize": (self.ui.resizeW.text, self.ui.resizeH.text),
                 "interpolationMode": self.ui.resizeInterpolationMode.currentText
             },
             "flip": {
@@ -103,10 +103,11 @@ class SlicerAugmentatorSpatialController():
                 if (size == None or size == ""):
                     raise ValueError(
                         "The 'Resize' transformation is enabled but spatial size is not specified")
-
-                self.mappedTransformations.append(Resize(spatial_size=(self.transformations.resize.spatialSize),
-                                                         mode=self.transformations.resize.interpolationMode
-                                                         ))
+            
+            self.mappedTransformations.append(Resize(spatial_size=(int(self.transformations.resize.spatialSize[0]), 
+                                                                   int(self.transformations.resize.spatialSize[1])),
+                                                     mode=self.transformations.resize.interpolationMode
+                                                    ))
         if (self.transformations.flip.enabled):
             if (self.transformations.flip.axis == "" or self.transformations.flip.axis == None):
                 raise ValueError(

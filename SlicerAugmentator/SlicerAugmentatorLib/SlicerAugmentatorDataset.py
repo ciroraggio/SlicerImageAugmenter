@@ -39,7 +39,6 @@ class SlicerAugmentatorDataset(Dataset):
         except AttributeError:
             # in this case get_transform_info is missing, so recover the name starting from __class__:
             transform_name = sanitizeTransformName(transform)
-
         transformedImg = transform(img.float())
         # adding ["rotate", torch.Tensor[[...]] ]
         transformedList.append([transform_name, transformedImg])

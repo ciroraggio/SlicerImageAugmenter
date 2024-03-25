@@ -64,7 +64,7 @@ def sanitizeTransformName(transform) -> str:
     return re.sub(pattern, "", str(transform.__class__).split(".")[-1])
 
 
-def getOriginalCase(fullImgPath, filesStructure, loadOriginalImg=True):
+def getOriginalCase(fullImgPath, filesStructure):
     """
     This function returns the original image and extracts the specific patient/case name/ID.
     The extracted name/ID will be used as the title of the folder that will contain the augmented images.
@@ -76,10 +76,10 @@ def getOriginalCase(fullImgPath, filesStructure, loadOriginalImg=True):
 
     return caseName, originalCaseImg
 
-def save(img, path, filename, originalCase, extension):
+def save(img, path, filename, originalCase, extension, copyInfo=True):
     img = sitk.GetImageFromArray(img)
 
-    if (originalCase.GetDepth() > 0):
+    if (copyInfo and originalCase.GetDepth() > 0):
         img.CopyInformation(originalCase)
 
     saveThread = threading.Thread(target=sitk.WriteImage, args=(
@@ -87,9 +87,9 @@ def save(img, path, filename, originalCase, extension):
     saveThread.start()
 
 
-def showPreview(img, originalCaseImg, originalCaseMask=None, mask=None, imgNodeName="imgNode", maskNodeName="maskNode"):
+def showPreview(img, originalCaseImg, originalCaseMask=None, mask=None, imgNodeName="imgNode", maskNodeName="maskNode", copyInfo=True):
     sitkAugmentedImg = sitk.GetImageFromArray(img)
-    if (originalCaseImg.GetDepth() > 0):
+    if (copyInfo and originalCaseImg.GetDepth() > 0):
         sitkAugmentedImg.CopyInformation(originalCaseImg)
 
     outputImgNode = sitkUtils.PushVolumeToSlicer(
@@ -97,7 +97,7 @@ def showPreview(img, originalCaseImg, originalCaseMask=None, mask=None, imgNodeN
 
     if (mask != None):
         sitkAugmentedMask = sitk.GetImageFromArray(mask)
-        if (originalCaseMask.GetDepth() > 0):
+        if (copyInfo and originalCaseMask.GetDepth() > 0):
             sitkAugmentedMask.CopyInformation(originalCaseMask)
 
         outputMaskNode = sitkUtils.PushVolumeToSlicer(

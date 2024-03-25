@@ -10,7 +10,7 @@ from slicer.util import VTKObservationMixin
 from slicer.util import setDataProbeVisible
 
 from SlicerAugmentatorLib.SlicerAugmentatorDataset import SlicerAugmentatorDataset
-from SlicerAugmentatorLib.SlicerAugmentatorTransformationParser import SlicerAugmentatorTransformationParser
+from SlicerAugmentatorLib.SlicerAugmentatorTransformationParser import SlicerAugmentatorTransformationParser, UNPOSSIBLE_COPY_INFO_TRANSFORM
 from SlicerAugmentatorLib.SlicerAugmentatorUtils import collectImagesAndMasksList, getOriginalCase, getFilesStructure, save, showPreview, clearScene, makeDir, resetViews
 from SlicerAugmentatorLib.SlicerAugmentatorValidator import validateCollectedImagesAndMasks, validateForms
 import SimpleITK as sitk
@@ -202,11 +202,20 @@ class SlicerAugmentatorLogic(ScriptedLoadableModuleLogic):
 
                     imgPrefixParts = imgPrefix.split(".")
                     maskPrefixParts = maskPrefix.split(".")
+                    copyInfo = False if transformName in UNPOSSIBLE_COPY_INFO_TRANSFORM else True
 
-                    save(img.detach().cpu(), currentDir, imgPrefixParts[0], originalCaseImg, imgPrefixParts[1] if len(imgPrefixParts) > 1 else "nrrd")
+                    save(img=img.detach().cpu(), path=currentDir, 
+                         filename=imgPrefixParts[0], 
+                         originalCase=originalCaseImg, 
+                         extension=imgPrefixParts[1] if len(imgPrefixParts) > 1 else "nrrd", 
+                         copyInfo=copyInfo)
 
                     if originalCaseMask and msk != None and msk.any():
-                        save(msk.detach().cpu(), currentDir, maskPrefixParts[0], originalCaseMask, maskPrefixParts[1] if len(maskPrefixParts) > 1 else "nrrd")
+                        save(img=msk.detach().cpu(), path=currentDir, 
+                             filename=maskPrefixParts[0], 
+                             originalCase=originalCaseMask, 
+                             extension=maskPrefixParts[1] if len(maskPrefixParts) > 1 else "nrrd", 
+                             copyInfo=copyInfo)
                     
                     
                 progressBar.setValue(dirIdx + 1)
@@ -257,19 +266,21 @@ class SlicerAugmentatorLogic(ScriptedLoadableModuleLogic):
                         
                         imgNodeName = f"{caseName}_{transformName}_img"
                         maskNodeName = f"{caseName}_{transformName}_mask"
+                        copyInfo = False if transformName in UNPOSSIBLE_COPY_INFO_TRANSFORM else True
                         showPreview(img=img, originalCaseImg=originalCaseImg, originalCaseMask=originalCaseMask, mask=msk,
-                                    imgNodeName=imgNodeName, maskNodeName=maskNodeName)
+                                    imgNodeName=imgNodeName, maskNodeName=maskNodeName, copyInfo=copyInfo)
                 else:
                     for imgPack in transformedImages:
                         transformName, img = imgPack
                         imgNodeName = f"{caseName}_{transformName}_img"
-                        showPreview(img, originalCaseImg, imgNodeName=imgNodeName)
+                        copyInfo = False if transformName in UNPOSSIBLE_COPY_INFO_TRANSFORM else True
+                        showPreview(img, originalCaseImg, imgNodeName=imgNodeName, copyInfo=copyInfo)
                         
                 resetViews()
                 progressBar.setValue(dirIdx + 1)
 
             except Exception as e:
-                print(e)
+                raise e
 
         stopTime = time.time()
         infoLabel.setText(f"Processing completed in {stopTime-startTime:.2f} seconds")
