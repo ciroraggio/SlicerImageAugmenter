@@ -1,7 +1,8 @@
 import slicer
 from SlicerAugmentatorLib.SlicerAugmentatorUtils import sanitizeTransformName, extract_device_number
 import SimpleITK as sitk
-import re
+from typing import List, Dict, Any, Optional, Tuple, Union
+
 try:
     import torch
     from torch.utils.data import Dataset
@@ -13,16 +14,22 @@ except ModuleNotFoundError:
     from monai.transforms import RandomizableTransform
 
 class SlicerAugmentatorDataset(Dataset):
-    def __init__(self, imgPaths, maskPaths=None, transformations=[], device: str="CPU"):
-        self.imgPaths = imgPaths
-        self.maskPaths = maskPaths
-        self.transformations = transformations
-        self.device = extract_device_number(device) if device != "CPU" else "cpu"
+    def __init__(
+        self,
+        imgPaths: List[str],
+        maskPaths: Optional[List[str]] = None,
+        transformations: List[object] = [],  # Assuming MonaiTransform exists
+        device: Union[str, int] = "CPU",
+    ):
+        self.imgPaths: List[str] = imgPaths
+        self.maskPaths: Optional[List[str]] = maskPaths
+        self.transformations: List[object] = transformations
+        self.device: Union[str, int] = extract_device_number(device) if device != "CPU" else "cpu"
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self.imgPaths)
 
-    def load(self, path: str) -> torch.Tensor:
+    def load(self, path: str) -> Optional[torch.Tensor]:
         try:
             if (path):
                 img = sitk.ReadImage(path)
@@ -33,7 +40,7 @@ class SlicerAugmentatorDataset(Dataset):
         except:
             return None
         
-    def apply_transform(self, transform, img, transformedList: list) -> list:
+    def apply_transform(self, transform: object, img: torch.Tensor, transformedList: List[List[Any]]) -> List[List[Any]]:
         try:
             transform_name = transform.get_transform_info()["class"]
         except AttributeError:
@@ -45,7 +52,13 @@ class SlicerAugmentatorDataset(Dataset):
         
         return transformedList
     
-    def apply_dict_transform(self, transform, data_dict, transformedImages: list, transformedMasks: list = None) -> list:
+    def apply_dict_transform(
+        self,
+        transform: object,
+        data_dict: Dict[str, torch.Tensor],
+        transformedImages: List[List[Any]],
+        transformedMasks: Optional[List[List[Any]]] = None,
+    ) -> List[List[Any]]:  # Generic return for flexibility        
         try:
             transform_name = transform.get_transform_info()["class"]
         except AttributeError:
@@ -64,7 +77,7 @@ class SlicerAugmentatorDataset(Dataset):
         transformedImages.append([transform_name, transformedImg["img"]])
         return transformedImages, []
 
-    def __getitem__(self, idx) -> tuple[list[list[str, torch.Tensor]], list[list[str, torch.Tensor]]]:
+    def __getitem__(self, idx: int) -> Tuple[List[List[Any]], Optional[List[List[Any]]]]:
         """
         Returns:
             transformedImgs | transformedMasks  =  [

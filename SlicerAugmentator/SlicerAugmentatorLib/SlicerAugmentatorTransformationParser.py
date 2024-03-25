@@ -1,7 +1,7 @@
 import slicer
 from SlicerAugmentatorLib.SlicerAugmentatorIntensity import SlicerAugmentatorIntensityController
 from SlicerAugmentatorLib.SlicerAugmentatorSpatial import SlicerAugmentatorSpatialController
-
+from typing import List
 
 try:
   from munch import Munch
@@ -17,7 +17,7 @@ class SlicerAugmentatorTransformationParser():
        self.spatialTransformationController : SlicerAugmentatorSpatialController = None 
        self.intensityTransformationController : SlicerAugmentatorIntensityController = None
        
-    def mapTransformations(self) -> list:
+    def mapTransformations(self) -> List[object]:
         mappedTransformations = []
         
         self.spatialTransformationController = SlicerAugmentatorSpatialController(ui=self.ui, mappedTransformations=mappedTransformations, dictKeys=DICT_KEYS)

@@ -12,11 +12,11 @@ except ModuleNotFoundError:
 from SlicerAugmentatorLib.SlicerAugmentatorTransformControllerInterface import SlicerAugmentatorTransformControllerInterface
 
 class SlicerAugmentatorSpatialController(SlicerAugmentatorTransformControllerInterface):
-    def __init__(self, ui, mappedTransformations: list, dictKeys: dict) -> None:
+    def __init__(self, ui, mappedTransformations: List[object], dictKeys: Dict[str, str]) -> None:
         self.ui = ui
         self.transformations: Munch = munchify(self.getTransformations())
-        self.mappedTransformations: list = mappedTransformations
-        self.dictKeys: dict = dictKeys
+        self.mappedTransformations: List[object] = mappedTransformations
+        self.dictKeys: Dict[str, str] = dictKeys
 
     def getTransformations(self) -> Dict[str, Dict]:
         return {

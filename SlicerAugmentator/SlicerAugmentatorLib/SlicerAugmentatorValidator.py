@@ -25,8 +25,7 @@ def validateRotation(transformations):
         try:
             float(transformations.rotate.angle)
         except:
-            print(
-                "The transformation angle specified in the 'Rotation' transformation is invalid.")
+            print("The transformation angle specified in the 'Rotation' transformation is invalid.")
 
 
 def validateFlip(transformations):
@@ -39,8 +38,7 @@ def validateFlip(transformations):
         try:
             int(transformations.flip.axes)
         except:
-            print(
-                "The transformation axes specified in the 'Flip' transformation is invalid.")
+            print("The transformation axes specified in the 'Flip' transformation is invalid.")
 
 
 def validateTransforms(transformations):
