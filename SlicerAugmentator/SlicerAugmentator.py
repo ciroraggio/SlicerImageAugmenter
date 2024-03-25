@@ -10,7 +10,7 @@ from slicer.util import VTKObservationMixin
 from slicer.util import setDataProbeVisible
 
 from SlicerAugmentatorLib.SlicerAugmentatorDataset import SlicerAugmentatorDataset
-from SlicerAugmentatorLib.SlicerAugmentatorTransformationParser import SlicerAugmentatorTransformationParser, UNPOSSIBLE_COPY_INFO_TRANSFORM
+from SlicerAugmentatorLib.SlicerAugmentatorTransformationParser import SlicerAugmentatorTransformationParser, IMPOSSIBLE_COPY_INFO_TRANSFORM
 from SlicerAugmentatorLib.SlicerAugmentatorUtils import collectImagesAndMasksList, getOriginalCase, getFilesStructure, save, showPreview, clearScene, makeDir, resetViews
 from SlicerAugmentatorLib.SlicerAugmentatorValidator import validateCollectedImagesAndMasks, validateForms
 import SimpleITK as sitk
@@ -202,7 +202,7 @@ class SlicerAugmentatorLogic(ScriptedLoadableModuleLogic):
 
                     imgPrefixParts = imgPrefix.split(".")
                     maskPrefixParts = maskPrefix.split(".")
-                    copyInfo = False if transformName in UNPOSSIBLE_COPY_INFO_TRANSFORM else True
+                    copyInfo = False if transformName in IMPOSSIBLE_COPY_INFO_TRANSFORM else True
 
                     save(img=img.detach().cpu(), path=currentDir, 
                          filename=imgPrefixParts[0], 
@@ -266,14 +266,14 @@ class SlicerAugmentatorLogic(ScriptedLoadableModuleLogic):
                         
                         imgNodeName = f"{caseName}_{transformName}_img"
                         maskNodeName = f"{caseName}_{transformName}_mask"
-                        copyInfo = False if transformName in UNPOSSIBLE_COPY_INFO_TRANSFORM else True
+                        copyInfo = False if transformName in IMPOSSIBLE_COPY_INFO_TRANSFORM else True
                         showPreview(img=img, originalCaseImg=originalCaseImg, originalCaseMask=originalCaseMask, mask=msk,
                                     imgNodeName=imgNodeName, maskNodeName=maskNodeName, copyInfo=copyInfo)
                 else:
                     for imgPack in transformedImages:
                         transformName, img = imgPack
                         imgNodeName = f"{caseName}_{transformName}_img"
-                        copyInfo = False if transformName in UNPOSSIBLE_COPY_INFO_TRANSFORM else True
+                        copyInfo = False if transformName in IMPOSSIBLE_COPY_INFO_TRANSFORM else True
                         showPreview(img, originalCaseImg, imgNodeName=imgNodeName, copyInfo=copyInfo)
                         
                 resetViews()
