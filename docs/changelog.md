@@ -35,9 +35,14 @@ li a:hover {
 </ul>
 
 ## Changelog
+ - v0.5:
+   1. Revised the Resize transformation to avoid image consistency issues
+   2. Added SlicerAugmentatorTransformControllerInterface
+   
  - v0.4:
    1. Improved code readability with objects
    2. Fixed bug on saving without masks
+   
  - v0.3:
     1. Updated UI
     2. Added device choice
