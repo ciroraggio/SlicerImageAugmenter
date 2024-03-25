@@ -11,6 +11,7 @@ set(MODULE_PYTHON_SCRIPTS
   ${MODULE_NAME}Lib/SlicerAugmentatorTransformationParser.py
   ${MODULE_NAME}Lib/SlicerAugmentatorIntensity.py
   ${MODULE_NAME}Lib/SlicerAugmentatorSpatial.py
+  ${MODULE_NAME}Lib/SlicerAugmentatorTransformControllerInterface.py
   )
 
 set(MODULE_PYTHON_RESOURCES

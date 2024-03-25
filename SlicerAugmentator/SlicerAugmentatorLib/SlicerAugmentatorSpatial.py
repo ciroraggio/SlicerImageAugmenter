@@ -1,4 +1,6 @@
 import slicer
+from typing import Dict, List
+
 try:
     from monai.transforms import Rotate, Flip, RandAxisFlipd, Resize, RandRotated, Zoom, RandZoomd
     from munch import Munch, munchify
@@ -7,15 +9,16 @@ except ModuleNotFoundError:
     from monai.transforms import Rotate, Flip, RandAxisFlipd, Resize, RandRotated, Zoom, RandZoomd
     from munch import Munch, munchify
 
+from SlicerAugmentatorLib.SlicerAugmentatorTransformControllerInterface import SlicerAugmentatorTransformControllerInterface
 
-class SlicerAugmentatorSpatialController():
+class SlicerAugmentatorSpatialController(SlicerAugmentatorTransformControllerInterface):
     def __init__(self, ui, mappedTransformations: list, dictKeys: dict) -> None:
         self.ui = ui
         self.transformations: Munch = munchify(self.getTransformations())
         self.mappedTransformations: list = mappedTransformations
         self.dictKeys: dict = dictKeys
 
-    def getTransformations(self) -> dict:
+    def getTransformations(self) -> Dict[str, Dict]:
         return {
             "rotate": {
                 "enabled": self.ui.rotateEnabled.isChecked(),
@@ -63,7 +66,7 @@ class SlicerAugmentatorSpatialController():
             },
         }
 
-    def mapTransformations(self) -> list:
+    def mapTransformations(self) -> List[object]:
         if (self.transformations.rotate.enabled):
             if (self.transformations.rotate.angle == ""):
                 raise ValueError(

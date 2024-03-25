@@ -1,4 +1,5 @@
 import slicer
+from typing import Dict, List
 try:
     from monai.transforms import ScaleIntensity, RandScaleIntensityd, AdjustContrast, RandAdjustContrastd, RandGaussianNoised, ShiftIntensity, RandShiftIntensityd, NormalizeIntensity, ThresholdIntensity, MedianSmooth, GaussianSmooth, RandGaussianSmoothd
     from munch import Munch, munchify
@@ -7,15 +8,16 @@ except ModuleNotFoundError:
     from monai.transforms import ScaleIntensity, RandScaleIntensityd, AdjustContrast, RandAdjustContrastd, RandGaussianNoised, ShiftIntensity, RandShiftIntensityd, NormalizeIntensity, ThresholdIntensity, MedianSmooth, GaussianSmooth, RandGaussianSmoothd
     from munch import Munch, munchify
 
+from SlicerAugmentatorLib.SlicerAugmentatorTransformControllerInterface import SlicerAugmentatorTransformControllerInterface
 
-class SlicerAugmentatorIntensityController():
+class SlicerAugmentatorIntensityController(SlicerAugmentatorTransformControllerInterface):
     def __init__(self, ui, mappedTransformations: list, dictKeys: dict) -> None:
         self.ui = ui
         self.transformations: Munch = munchify(self.getTransformations())
         self.mappedTransformations: list = mappedTransformations
         self.dictKeys: dict = dictKeys
 
-    def getTransformations(self) -> dict:
+    def getTransformations(self) -> Dict[str, Dict]:
         return {
             "scaleIntensity": {
                 "enabled": self.ui.scaleIntensityEnabled.isChecked(),
@@ -84,7 +86,7 @@ class SlicerAugmentatorIntensityController():
             },
         }
 
-    def mapTransformations(self) -> list:
+    def mapTransformations(self) -> List[object]:
         if (self.transformations.scaleIntensity.enabled):
             if (self.transformations.scaleIntensity.factor == ""):
                 raise ValueError(
