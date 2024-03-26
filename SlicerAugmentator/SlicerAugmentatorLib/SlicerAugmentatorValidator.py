@@ -59,5 +59,4 @@ def validateCollectedImagesAndMasks(imgs, masks):
             f"No images found with the criteria set, please double check the input data.")
 
     if len(masks) > 0 and (len(masks) != len(imgs)):
-        raise ValueError(
-            f"Images and masks must have same length. Found:\n{len(imgs)} images\n{len(masks)} masks.")
+        raise ValueError(f"Images and masks must have same length. Found:\n{len(imgs)} images\n{len(masks)} masks.\nMake sure you have specified the correct prefixes to avoid inconsistencies.")

@@ -35,6 +35,11 @@ li a:hover {
 </ul>
 
 ## Changelog
+ - v0.6:
+   1. Added SlicerAugmentatorCropController 
+   2. Added SpatialPad, BorderPad, SpatialCrop, CenterSpatialCrop
+   3. Bugs fixed
+   
  - v0.5:
    1. Revised the Resize transformation to avoid image consistency issues
    2. Added SlicerAugmentatorTransformControllerInterface

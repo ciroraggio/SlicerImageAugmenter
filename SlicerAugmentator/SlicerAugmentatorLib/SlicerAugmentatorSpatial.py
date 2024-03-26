@@ -11,6 +11,7 @@ except ModuleNotFoundError:
 
 from SlicerAugmentatorLib.SlicerAugmentatorTransformControllerInterface import SlicerAugmentatorTransformControllerInterface
 
+
 class SlicerAugmentatorSpatialController(SlicerAugmentatorTransformControllerInterface):
     def __init__(self, ui, mappedTransformations: List[object], dictKeys: Dict[str, str]) -> None:
         self.ui = ui
@@ -69,8 +70,7 @@ class SlicerAugmentatorSpatialController(SlicerAugmentatorTransformControllerInt
     def mapTransformations(self) -> List[object]:
         if (self.transformations.rotate.enabled):
             if (self.transformations.rotate.angle == ""):
-                raise ValueError(
-                    "The 'Rotate' transformation is enabled but angle is not specified")
+                raise ValueError("The 'Rotate' transformation is enabled but angle is not specified")
 
             self.mappedTransformations.append(Rotate(angle=float(self.transformations.rotate.angle),
                                                      mode=self.transformations.rotate.interpolationMode
@@ -102,53 +102,46 @@ class SlicerAugmentatorSpatialController(SlicerAugmentatorTransformControllerInt
                 raise ValueError(e)
 
         if (self.transformations.resize.enabled):
-            for size in self.transformations.resize.spatialSize:
-                if (size == None or size == ""):
-                    raise ValueError(
-                        "The 'Resize' transformation is enabled but spatial size is not specified")
-            
-            self.mappedTransformations.append(Resize(spatial_size=(int(self.transformations.resize.spatialSize[0]), 
+            params = self.transformations.resize
+            if(not all(params.spatialSize)): raise ValueError("The 'Resize' transformation is enabled but spatial size is not specified")
+
+            self.mappedTransformations.append(Resize(spatial_size=(int(self.transformations.resize.spatialSize[0]),
                                                                    int(self.transformations.resize.spatialSize[1])),
                                                      mode=self.transformations.resize.interpolationMode
-                                                    ))
+                                                     ))
         if (self.transformations.flip.enabled):
-            if (self.transformations.flip.axis == "" or self.transformations.flip.axis == None):
-                raise ValueError(
-                    "The 'Flip' transformation is enabled but axis is not specified")
+            params = self.transformations.flip
+            if (params.axis == "" or params.axis == None):
+                raise ValueError("The 'Flip' transformation is enabled but axis is not specified")
 
-            self.mappedTransformations.append(
-                Flip(spatial_axis=int(self.transformations.flip.axis)))
+            self.mappedTransformations.append(Flip(spatial_axis=int(params.axis)))
 
         if (self.transformations.randomFlip.enabled):
-            self.mappedTransformations.append(RandAxisFlipd(
-                prob=1, keys=self.dictKeys, allow_missing_keys=True))
+            self.mappedTransformations.append(RandAxisFlipd(prob=1, keys=self.dictKeys, allow_missing_keys=True))
 
         if (self.transformations.zoom.enabled):
-            if (self.transformations.zoom.factor == ""):
-                raise ValueError(
-                    "The 'Zoom' transformation is enabled but factor is not specified")
+            params = self.transformations.zoom
+            if (params.factor == ""):
+                raise ValueError("The 'Zoom' transformation is enabled but factor is not specified")
 
-            alignCorners = self.transformations.zoom.alignCorners if (self.transformations.zoom.interpolationMode in [
-                                                                      "linear", "bilinear", "bicubic", "trilinear"]) else None
-            self.mappedTransformations.append(Zoom(zoom=float(self.transformations.zoom.factor),
-                                              mode=self.transformations.zoom.interpolationMode,
-                                              padding_mode=self.transformations.zoom.paddingMode,
+            alignCorners = params.alignCorners if (params.interpolationMode in ["linear", "bilinear", "bicubic", "trilinear"]) else None
+            self.mappedTransformations.append(Zoom(zoom=float(params.factor),
+                                              mode=params.interpolationMode,
+                                              padding_mode=params.paddingMode,
                                               align_corners=alignCorners))
 
         if (self.transformations.randomZoom.enabled):
-            if (self.transformations.randomZoom.factorMin == "" or self.transformations.randomZoom.factorMax == ""):
-                raise ValueError(
-                    "The 'Random Zoom' transformation is enabled but factors are not specified")
+            params = self.transformations.randomZoom
+            if (params.factorMin == "" or params.factorMax == ""):
+                raise ValueError("The 'Random Zoom' transformation is enabled but factors are not specified")
 
-            alignCorners = self.transformations.randomZoom.alignCorners if (
-                self.transformations.randomZoom.interpolationMode in ["linear", "bilinear", "bicubic", "trilinear"]) else None
+            alignCorners = params.alignCorners if (
+                params.interpolationMode in ["linear", "bilinear", "bicubic", "trilinear"]) else None
             self.mappedTransformations.append(RandZoomd(prob=1,
-                                              min_zoom=float(
-                                                  self.transformations.randomZoom.factorMin),
-                                              max_zoom=float(
-                                                  self.transformations.randomZoom.factorMax),
-                                              mode=self.transformations.randomZoom.interpolationMode,
-                                              padding_mode=self.transformations.randomZoom.paddingMode,
+                                              min_zoom=float(params.factorMin),
+                                              max_zoom=float(params.factorMax),
+                                              mode=params.interpolationMode,
+                                              padding_mode=params.paddingMode,
                                               align_corners=alignCorners,
                                               keep_size=True,
                                               keys=self.dictKeys,
