@@ -114,8 +114,8 @@ class SlicerAugmentatorWidget(ScriptedLoadableModuleWidget, VTKObservationMixin)
             self.resetAndDisable()
             
             self.logic.process(imagesInputPath=self.ui.imagesInputPath.directory,
-                               imgPrefix=self.ui.imgPrefix.text,
-                               maskPrefix=self.ui.maskPrefix.text,
+                               imgPrefix=self.ui.imgPrefix.text.strip(),
+                               maskPrefix=self.ui.maskPrefix.text.strip(),
                                outputPath=self.ui.outputPath.directory,
                                transformations=transformationList,
                                filesStructure=filesStructure,
@@ -139,8 +139,8 @@ class SlicerAugmentatorWidget(ScriptedLoadableModuleWidget, VTKObservationMixin)
             self.resetAndDisable()
 
             self.logic.preview(imagesInputPath=self.ui.imagesInputPath.directory,
-                               imgPrefix=self.ui.imgPrefix.text,
-                               maskPrefix=self.ui.maskPrefix.text,
+                               imgPrefix=self.ui.imgPrefix.text.strip(),
+                               maskPrefix=self.ui.maskPrefix.text.strip(),
                                transformations=transformationList,
                                filesStructure=filesStructure,
                                progressBar=self.ui.progressBar,
