@@ -6,6 +6,8 @@ try:
     from munch import Munch, munchify
 except ModuleNotFoundError:
     slicer.util.pip_install("monai[itk]")
+    slicer.util.pip_install("munch")
+    
     from monai.transforms import Rotate, Flip, RandAxisFlipd, Resize, RandRotated, Zoom, RandZoomd
     from munch import Munch, munchify
 

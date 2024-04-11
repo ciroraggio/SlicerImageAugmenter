@@ -6,6 +6,7 @@ try:
     from munch import Munch, munchify
 except ModuleNotFoundError:
     slicer.util.pip_install("monai[itk]")
+    slicer.util.pip_install("munch")
     from monai.transforms import SpatialPad, BorderPad, SpatialCrop, CenterSpatialCrop
     from munch import Munch, munchify
 
