@@ -17,7 +17,7 @@ class ImageAugmentator(ScriptedLoadableModule):
 
     def __init__(self, parent):
         ScriptedLoadableModule.__init__(self, parent)
-        self.parent.title = _("Augmentator")
+        self.parent.title = _("ImageAugmentator")
         self.parent.categories = [translate("qSlicerAbstractCoreModule", "Utilities")]
         self.parent.dependencies = []
         self.parent.contributors = ["Ciro Benito Raggio (Karlsruhe Institute of Technology, Germany), Paolo Zaffino (Magna Graecia University of Catanzaro, Italy), Maria Francesca Spadea (Karlsruhe Institute of Technology, Germany)"]
