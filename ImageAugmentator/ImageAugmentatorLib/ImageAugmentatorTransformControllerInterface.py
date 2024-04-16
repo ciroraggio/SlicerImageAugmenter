@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Dict, List
 
-class SlicerAugmentatorTransformControllerInterface(ABC):
+class ImageAugmentatorTransformControllerInterface(ABC):
     @abstractmethod
     def getTransformations(self) -> Dict[str, Dict]:
         """

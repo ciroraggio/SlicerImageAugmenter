@@ -1,18 +1,10 @@
-import slicer
 from typing import Dict, List
-try:
-    from monai.transforms import ScaleIntensity, RandScaleIntensityd, AdjustContrast, RandAdjustContrastd, RandGaussianNoised, ShiftIntensity, RandShiftIntensityd, NormalizeIntensity, ThresholdIntensity, MedianSmooth, GaussianSmooth, RandGaussianSmoothd
-    from munch import Munch, munchify
-except ModuleNotFoundError:
-    slicer.util.pip_install("monai[itk]")
-    slicer.util.pip_install("munch")
-    from monai.transforms import ScaleIntensity, RandScaleIntensityd, AdjustContrast, RandAdjustContrastd, RandGaussianNoised, ShiftIntensity, RandShiftIntensityd, NormalizeIntensity, ThresholdIntensity, MedianSmooth, GaussianSmooth, RandGaussianSmoothd
-    from munch import Munch, munchify
+from ImageAugmentatorLib.ImageAugmentatorTransformControllerInterface import ImageAugmentatorTransformControllerInterface
 
-from SlicerAugmentatorLib.SlicerAugmentatorTransformControllerInterface import SlicerAugmentatorTransformControllerInterface
-
-class SlicerAugmentatorIntensityController(SlicerAugmentatorTransformControllerInterface):
+class ImageAugmentatorIntensityController(ImageAugmentatorTransformControllerInterface):
     def __init__(self, ui, mappedTransformations: List[object], dictKeys: Dict[str, str]) -> None:
+        from munch import Munch, munchify
+
         self.ui = ui
         self.transformations: Munch = munchify(self.getTransformations())
         self.mappedTransformations: List[object] = mappedTransformations
@@ -88,6 +80,8 @@ class SlicerAugmentatorIntensityController(SlicerAugmentatorTransformControllerI
         }
 
     def mapTransformations(self) -> List[object]:
+        from monai.transforms import ScaleIntensity, RandScaleIntensityd, AdjustContrast, RandAdjustContrastd, RandGaussianNoised, ShiftIntensity, RandShiftIntensityd, NormalizeIntensity, ThresholdIntensity, MedianSmooth, GaussianSmooth, RandGaussianSmoothd
+
         if (self.transformations.scaleIntensity.enabled):
             if (self.transformations.scaleIntensity.factor == ""):
                 raise ValueError(
