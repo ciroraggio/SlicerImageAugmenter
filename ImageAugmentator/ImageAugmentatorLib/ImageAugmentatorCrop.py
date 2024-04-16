@@ -1,19 +1,9 @@
-import slicer
 from typing import Dict, List
+from ImageAugmentatorLib.ImageAugmentatorTransformControllerInterface import ImageAugmentatorTransformControllerInterface
 
-try:
-    from monai.transforms import SpatialPad, BorderPad, SpatialCrop, CenterSpatialCrop
-    from munch import Munch, munchify
-except ModuleNotFoundError:
-    slicer.util.pip_install("monai[itk]")
-    slicer.util.pip_install("munch")
-    from monai.transforms import SpatialPad, BorderPad, SpatialCrop, CenterSpatialCrop
-    from munch import Munch, munchify
-
-from SlicerAugmentatorLib.SlicerAugmentatorTransformControllerInterface import SlicerAugmentatorTransformControllerInterface
-
-class SlicerAugmentatorCropController(SlicerAugmentatorTransformControllerInterface):
+class ImageAugmentatorCropController(ImageAugmentatorTransformControllerInterface):
     def __init__(self, ui, mappedTransformations: List[object], dictKeys: Dict[str, str]) -> None:
+        from munch import Munch, munchify
         self.ui = ui
         self.transformations: Munch = munchify(self.getTransformations())
         self.mappedTransformations: List[object] = mappedTransformations
@@ -44,6 +34,9 @@ class SlicerAugmentatorCropController(SlicerAugmentatorTransformControllerInterf
         }
 
     def mapTransformations(self) -> List[object]:
+        
+        from monai.transforms import SpatialPad, BorderPad, SpatialCrop, CenterSpatialCrop
+        
         if (self.transformations.spatialPad.enabled):
             params = self.transformations.spatialPad
             

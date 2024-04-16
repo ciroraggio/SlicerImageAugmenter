@@ -1,6 +1,5 @@
 import os
 
-
 def validatePrefixes(ui):
     if not ui.imgPrefix.text:
         raise ValueError("Indicate the image prefix")

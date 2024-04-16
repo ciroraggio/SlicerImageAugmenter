@@ -1,19 +1,12 @@
-import slicer
-from SlicerAugmentatorLib.SlicerAugmentatorUtils import sanitizeTransformName, extract_device_number
+from ImageAugmentatorLib.ImageAugmentatorUtils import sanitizeTransformName, extract_device_number
 import SimpleITK as sitk
 from typing import List, Dict, Any, Optional, Tuple, Union
 
-try:
-    import torch
-    from torch.utils.data import Dataset
-    from monai.transforms import RandomizableTransform
-except ModuleNotFoundError:
-    slicer.util.pip_install("monai[itk]")
-    import torch
-    from torch.utils.data import Dataset
-    from monai.transforms import RandomizableTransform
+import torch
+from torch.utils.data import Dataset
+from monai.transforms import RandomizableTransform
 
-class SlicerAugmentatorDataset(Dataset):
+class ImageAugmentatorDataset(Dataset):
     def __init__(
         self,
         imgPaths: List[str],

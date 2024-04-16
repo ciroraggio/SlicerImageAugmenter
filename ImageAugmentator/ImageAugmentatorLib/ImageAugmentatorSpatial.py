@@ -1,21 +1,12 @@
-import slicer
 from typing import Dict, List
-
-try:
-    from monai.transforms import Rotate, Flip, RandAxisFlipd, Resize, RandRotated, Zoom, RandZoomd
-    from munch import Munch, munchify
-except ModuleNotFoundError:
-    slicer.util.pip_install("monai[itk]")
-    slicer.util.pip_install("munch")
-    
-    from monai.transforms import Rotate, Flip, RandAxisFlipd, Resize, RandRotated, Zoom, RandZoomd
-    from munch import Munch, munchify
-
-from SlicerAugmentatorLib.SlicerAugmentatorTransformControllerInterface import SlicerAugmentatorTransformControllerInterface
+from ImageAugmentatorLib.ImageAugmentatorTransformControllerInterface import ImageAugmentatorTransformControllerInterface
 
 
-class SlicerAugmentatorSpatialController(SlicerAugmentatorTransformControllerInterface):
+class ImageAugmentatorSpatialController(ImageAugmentatorTransformControllerInterface):
     def __init__(self, ui, mappedTransformations: List[object], dictKeys: Dict[str, str]) -> None:
+        
+        from munch import Munch, munchify
+        
         self.ui = ui
         self.transformations: Munch = munchify(self.getTransformations())
         self.mappedTransformations: List[object] = mappedTransformations
@@ -70,6 +61,7 @@ class SlicerAugmentatorSpatialController(SlicerAugmentatorTransformControllerInt
         }
 
     def mapTransformations(self) -> List[object]:
+        from monai.transforms import Rotate, Flip, RandAxisFlipd, Resize, RandRotated, Zoom, RandZoomd
         if (self.transformations.rotate.enabled):
             if (self.transformations.rotate.angle == ""):
                 raise ValueError("The 'Rotate' transformation is enabled but angle is not specified")

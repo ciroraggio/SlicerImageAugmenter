@@ -1,17 +1,17 @@
 #-----------------------------------------------------------------------------
-set(EXT_MODULE_NAME Augmentator)
-set(MODULE_NAME SlicerAugmentator)
+set(MODULE_NAME ImageAugmentator)
 
 #-----------------------------------------------------------------------------
 set(MODULE_PYTHON_SCRIPTS
   ${MODULE_NAME}.py
-  ${MODULE_NAME}Lib/SlicerAugmentatorDataset.py
-  ${MODULE_NAME}Lib/SlicerAugmentatorValidator.py
-  ${MODULE_NAME}Lib/SlicerAugmentatorUtils.py
-  ${MODULE_NAME}Lib/SlicerAugmentatorTransformationParser.py
-  ${MODULE_NAME}Lib/SlicerAugmentatorIntensity.py
-  ${MODULE_NAME}Lib/SlicerAugmentatorSpatial.py
-  ${MODULE_NAME}Lib/SlicerAugmentatorTransformControllerInterface.py
+  ${MODULE_NAME}Lib/ImageAugmentatorDataset.py
+  ${MODULE_NAME}Lib/ImageAugmentatorValidator.py
+  ${MODULE_NAME}Lib/ImageAugmentatorUtils.py
+  ${MODULE_NAME}Lib/ImageAugmentatorTransformationParser.py
+  ${MODULE_NAME}Lib/ImageAugmentatorIntensity.py
+  ${MODULE_NAME}Lib/ImageAugmentatorSpatial.py
+  ${MODULE_NAME}Lib/ImageAugmentatorTransformControllerInterface.py
+  ${MODULE_NAME}Lib/ImageAugmentatorCrop.py
   )
 
 set(MODULE_PYTHON_RESOURCES
@@ -21,7 +21,7 @@ set(MODULE_PYTHON_RESOURCES
 
 #-----------------------------------------------------------------------------
 slicerMacroBuildScriptedModule(
-  NAME ${EXT_MODULE_NAME}
+  NAME ${MODULE_NAME}
   SCRIPTS ${MODULE_PYTHON_SCRIPTS}
   RESOURCES ${MODULE_PYTHON_RESOURCES}
   WITH_GENERIC_TESTS

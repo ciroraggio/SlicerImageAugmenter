@@ -1,4 +1,4 @@
-<center><h2>SlicerAugmentator</h2></center>
+<center><h2>ImageAugmentator</h2></center>
 
 <style>
 .navbar {
@@ -28,10 +28,9 @@ li a:hover {
 </style>
 
 <ul class="navbar">
-  <li><a href="https://ciroraggio.github.io/SlicerAugmentator/index">Home</a></li>
-  <li><a href="https://ciroraggio.github.io/SlicerAugmentator/examples">Examples</a></li>
-  <li><a href="https://ciroraggio.github.io/SlicerAugmentator/changelog">Changelog</a></li>
-  <li><a href="https://ciroraggio.github.io/SlicerAugmentator/developers">Developers</a></li>
+  <li><a href="https://ciroraggio.github.io/ImageAugmentator/index">Home</a></li>
+  <li><a href="https://ciroraggio.github.io/ImageAugmentator/examples">Examples</a></li>
+  <li><a href="https://ciroraggio.github.io/ImageAugmentator/developers">Developers</a></li>
 </ul>
 
 ## Developers

@@ -6,9 +6,7 @@ import threading
 import slicer
 
 FLAT = "flat"  # .../path/ImgID.extension, .../path/ImgID_label.extension
-# .../path/CaseID/img.extension, # .../path/CaseID/mask.extension
-HIERARCHICAL = "hierarchical"
-
+HIERARCHICAL = "hierarchical" # .../path/CaseID/img.extension, # .../path/CaseID/mask.extension
 
 def collectImagesAndMasksList(imagesInputPath, imgPrefix, maskPrefix):
     imgs, masks = [], []
