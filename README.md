@@ -1,4 +1,4 @@
-# SlicerImageAugmentator
+# SlicerImageAugmenter
 
 ## Project Description
 MONAI and PyTorch based medical image augmentation tool that can be integrated in Slicer.
@@ -6,7 +6,7 @@ The project aims to be a low-code version of the tool: <https://github.com/ciror
 
 It's designed to operate on a dataset of medical images and apply a series of specific transformations to each image. This process augments the original dataset, providing a greater variety of samples for training deep learning models.
 
-## [Examples](https://ciroraggio.github.io/SlicerImageAugmentator/examples)
+## [Examples](https://ciroraggio.github.io/SlicerImageAugmenter/examples)
 
 ## Contributors
 * [Ciro B. Raggio](https://www.ibt.kit.edu/english/Raggio_C.php) (Karlsruhe Institute of Technology, Germany) - [GitHub](<https://github.com/ciroraggio>)

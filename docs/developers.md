@@ -1,5 +1,3 @@
-<center><h2>ImageAugmentator</h2></center>
-
 <style>
 .navbar {
   list-style-type: none;
@@ -28,9 +26,9 @@ li a:hover {
 </style>
 
 <ul class="navbar">
-  <li><a href="https://ciroraggio.github.io/ImageAugmentator/index">Home</a></li>
-  <li><a href="https://ciroraggio.github.io/ImageAugmentator/examples">Examples</a></li>
-  <li><a href="https://ciroraggio.github.io/ImageAugmentator/developers">Developers</a></li>
+  <li><a href="https://ciroraggio.github.io/SlicerImageAugmenter/index">Home</a></li>
+  <li><a href="https://ciroraggio.github.io/SlicerImageAugmenter/examples">Examples</a></li>
+  <li><a href="https://ciroraggio.github.io/SlicerImageAugmenter/developers">Developers</a></li>
 </ul>
 
 ## Developers

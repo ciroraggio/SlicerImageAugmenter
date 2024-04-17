@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ImageAugmentator</class>
- <widget class="qMRMLWidget" name="ImageAugmentator">
+ <class>ImageAugmenter</class>
+ <widget class="qMRMLWidget" name="ImageAugmenter">
   <property name="geometry">
    <rect>
     <x>0</x>

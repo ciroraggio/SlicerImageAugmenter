@@ -1,7 +1,7 @@
 from typing import Dict, List
-from ImageAugmentatorLib.ImageAugmentatorTransformControllerInterface import ImageAugmentatorTransformControllerInterface
+from ImageAugmenterLib.ImageAugmenterTransformControllerInterface import ImageAugmenterTransformControllerInterface
 
-class ImageAugmentatorIntensityController(ImageAugmentatorTransformControllerInterface):
+class ImageAugmenterIntensityController(ImageAugmenterTransformControllerInterface):
     def __init__(self, ui, mappedTransformations: List[object], dictKeys: Dict[str, str]) -> None:
         from munch import Munch, munchify
 
