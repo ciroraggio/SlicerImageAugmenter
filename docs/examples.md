@@ -61,8 +61,8 @@ Apply augmentation to your medical image dataset in a few simple steps:
 
 **7.1** Use the **Preview** button if you want to preview the final result on the first sample of the dataset directly into the Slicer scene, if you are not satisfied, change the parameters and request a new preview
 
-![filled](https://raw.githubusercontent.com/ciroraggio/ImageAugmenter/main/assets/SlicerImageAugmenterScreen.png)
+![filled](https://raw.githubusercontent.com/ciroraggio/SlicerImageAugmenter/main/assets/SlicerImageAugmenterScreen.png)
 
 **7.2** If you are satisfied with the result, use the **Run** button to save the augmented samples in the folder chosen in step 5. The files will be saved respecting the input hierarchy, as in this case:
 
-![output_folder](https://raw.githubusercontent.com/ciroraggio/ImageAugmenter/main/assets/SlicerImageAugmenterOutputExample.png)
+![output_folder](https://raw.githubusercontent.com/ciroraggio/SlicerImageAugmenter/main/assets/SlicerImageAugmenterOutputExample.png)
