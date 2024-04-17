@@ -27,11 +27,11 @@ li a:hover {
 
 <ul class="navbar">
   <li><a href="https://ciroraggio.github.io/SlicerImageAugmenter/index">Home</a></li>
-  <li><a href="https://ciroraggio.github.io/SlicerImageAugmenter/examples">Examples</a></li>
+  <li><a href="https://ciroraggio.github.io/SlicerImageAugmenter/tutorial">Tutorial</a></li>
   <li><a href="https://ciroraggio.github.io/SlicerImageAugmenter/developers">Developers</a></li>
 </ul>
 
-## Examples
+## Tutorial
 Apply augmentation to your medical image dataset in a few simple steps:
 
 **1.** Choose the path of your images
