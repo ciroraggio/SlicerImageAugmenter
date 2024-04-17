@@ -115,7 +115,6 @@ class ImageAugmenterWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
                 self.ui.infoLabel.setText("Installing dependencies, please wait...")
                 slicer.util.pip_install("munch")
                 slicer.util.pip_install("monai[itk]")
-                slicer.util.pip_install("SimpleITK")
                 slicer.util.restart()
             except Exception as e:
                 raise ValueError(f"Error installing dependencies: {repr(e)}")
