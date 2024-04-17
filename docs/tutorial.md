@@ -32,6 +32,8 @@ li a:hover {
 </ul>
 
 ## Tutorial
+You can download the sample data from here: https://github.com/ciroraggio/SlicerImageAugmenter/releases/download/v1.0.1/PDDCA_sample_data.zip
+
 Apply augmentation to your medical image dataset in a few simple steps:
 
 **1.** Choose the path of your images
