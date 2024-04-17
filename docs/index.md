@@ -26,9 +26,9 @@ li a:hover {
 </style>
 
 <ul>
-  <li><a href="https://ciroraggio.github.io/ImageAugmenter/index">Home</a></li>
-  <li><a href="https://ciroraggio.github.io/ImageAugmenter/examples">Examples</a></li>
-  <li><a href="https://ciroraggio.github.io/ImageAugmenter/developers">Developers</a></li>
+  <li><a href="https://ciroraggio.github.io/SlicerImageAugmenter/index">Home</a></li>
+  <li><a href="https://ciroraggio.github.io/SlicerImageAugmenter/examples">Examples</a></li>
+  <li><a href="https://ciroraggio.github.io/SlicerImageAugmenter/developers">Developers</a></li>
 </ul>
 
 ## Description
