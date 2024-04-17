@@ -47,14 +47,16 @@ Apply augmentation to your medical image dataset in a few simple steps:
 </center>
 
 **5.** Choose where you want to save the augmented samples
+
 **6.** Enable as many transformations as you want by specifying parameters for each transformation
+
 <table>
     <tr>
         <td>
-            <img src="https://raw.githubusercontent.com/ciroraggio/ImageAugmenter/main/assets/SlicerImageAugmenterEnableTransformsExample1.png">
+            <img src="https://raw.githubusercontent.com/ciroraggio/SlicerImageAugmenter/main/assets/SlicerImageAugmenterEnableTransformsExample1.png">
         </td>
         <td>
-            <img src="https://raw.githubusercontent.com/ciroraggio/ImageAugmenter/main/assets/SlicerImageAugmenterEnableTransformsExample2.png">
+            <img src="https://raw.githubusercontent.com/ciroraggio/SlicerImageAugmenter/main/assets/SlicerImageAugmenterEnableTransformsExample2.png">
         </td>
     </tr>
 </table>
