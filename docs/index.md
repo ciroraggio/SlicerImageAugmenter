@@ -1,5 +1,3 @@
-<center><h2>Home</h2></center>
-
 <style>
 ul {
   list-style-type: none;
@@ -28,9 +26,9 @@ li a:hover {
 </style>
 
 <ul>
-  <li><a href="https://ciroraggio.github.io/ImageAugmentator/index">Home</a></li>
-  <li><a href="https://ciroraggio.github.io/ImageAugmentator/examples">Examples</a></li>
-  <li><a href="https://ciroraggio.github.io/ImageAugmentator/developers">Developers</a></li>
+  <li><a href="https://ciroraggio.github.io/ImageAugmenter/index">Home</a></li>
+  <li><a href="https://ciroraggio.github.io/ImageAugmenter/examples">Examples</a></li>
+  <li><a href="https://ciroraggio.github.io/ImageAugmenter/developers">Developers</a></li>
 </ul>
 
 ## Description
@@ -42,11 +40,11 @@ It's designed to operate on a dataset of medical images and apply a series of sp
 ## Features
 ***MONAI Transformations***
 
-ImageAugmentator provides more than 20 MONAI transformations, leaving the user the freedom to choose all the parameters available for the transformation. If you want to delve deeper into MONAI transformations and understand more about the meaning of the parameters of each transformation, visit the [MONAI](https://docs.monai.io/en/latest/transforms.html) documentation.
+ImageAugmenter provides more than 20 MONAI transformations, leaving the user the freedom to choose all the parameters available for the transformation. If you want to delve deeper into MONAI transformations and understand more about the meaning of the parameters of each transformation, visit the [MONAI](https://docs.monai.io/en/latest/transforms.html) documentation.
 
 ***Preview mode***
 
-ImageAugmentator allows users to view images or augmented images and masks directly in the scene thanks to the "Preview" function. In this way it will be possible to explore the transformations and test the parameters taking the first image as an example, saving the images to disk only when you are completely satisfied with the result.
+ImageAugmenter allows users to view images or augmented images and masks directly in the scene thanks to the "Preview" function. In this way it will be possible to explore the transformations and test the parameters taking the first image as an example, saving the images to disk only when you are completely satisfied with the result.
 
 ***Use the device you prefer***
 

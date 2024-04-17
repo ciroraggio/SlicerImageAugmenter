@@ -10,21 +10,21 @@ from slicer.util import setDataProbeVisible
 
 import SimpleITK as sitk
 
-class ImageAugmentator(ScriptedLoadableModule):
+class ImageAugmenter(ScriptedLoadableModule):
     """Uses ScriptedLoadableModule base class, available at:
     https://github.com/Slicer/Slicer/blob/main/Base/Python/slicer/ScriptedLoadableModule.py
     """
 
     def __init__(self, parent):
         ScriptedLoadableModule.__init__(self, parent)
-        self.parent.title = _("ImageAugmentator")
+        self.parent.title = _("ImageAugmenter")
         self.parent.categories = [translate("qSlicerAbstractCoreModule", "Utilities")]
         self.parent.dependencies = []
         self.parent.contributors = ["Ciro Benito Raggio (Karlsruhe Institute of Technology, Germany), Paolo Zaffino (Magna Graecia University of Catanzaro, Italy), Maria Francesca Spadea (Karlsruhe Institute of Technology, Germany)"]
         self.parent.helpText = _("""MONAI and PyTorch based medical image augmentation tool. It's designed to operate on a dataset of medical images and apply a series of specific transformations to each image. This process augments the original dataset, providing a greater variety of samples for training deep learning models.""")
 
 
-class ImageAugmentatorWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
+class ImageAugmenterWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
     def __init__(self, parent=None) -> None:
         """Called when the user opens the module the first time and the widget is initialized."""
         ScriptedLoadableModuleWidget.__init__(self, parent)
@@ -50,7 +50,7 @@ class ImageAugmentatorWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
         """Called when the user opens the module the first time and the widget is initialized."""
         ScriptedLoadableModuleWidget.setup(self)
 
-        uiWidget = slicer.util.loadUI(self.resourcePath("UI/ImageAugmentator.ui"))
+        uiWidget = slicer.util.loadUI(self.resourcePath("UI/ImageAugmenter.ui"))
         # Check if all necessary dependencies are installed to run the extension logic
         self.layout.addWidget(uiWidget)
         self.ui = slicer.util.childWidgetVariables(uiWidget)
@@ -63,7 +63,7 @@ class ImageAugmentatorWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
         
         self.ui.hierarchicalTreeWidget.expandItem(self.ui.hierarchicalTreeWidget.topLevelItem(0))
 
-        self.logic = ImageAugmentatorLogic()
+        self.logic = ImageAugmenterLogic()
 
         # Connections
         # These connections ensure that we update parameter node when scene is closed
@@ -123,13 +123,13 @@ class ImageAugmentatorWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
     def onApplyButton(self) -> None:
         """Run processing when user clicks "Apply" button."""
         with slicer.util.tryWithErrorDisplay(_("Failed to compute results."), waitCursor=True):
-            from ImageAugmentatorLib.ImageAugmentatorTransformationParser import ImageAugmentatorTransformationParser
-            from ImageAugmentatorLib.ImageAugmentatorUtils import getFilesStructure
-            from ImageAugmentatorLib.ImageAugmentatorValidator import validateForms
+            from ImageAugmenterLib.ImageAugmenterTransformationParser import ImageAugmenterTransformationParser
+            from ImageAugmenterLib.ImageAugmenterUtils import getFilesStructure
+            from ImageAugmenterLib.ImageAugmenterValidator import validateForms
 
             validateForms(self.ui)
             
-            self.transformationParser = ImageAugmentatorTransformationParser(self.ui)    
+            self.transformationParser = ImageAugmenterTransformationParser(self.ui)    
             transformationList = self.transformationParser.mapTransformations()     
             filesStructure = getFilesStructure(self.ui)
            
@@ -152,13 +152,13 @@ class ImageAugmentatorWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
     def onPreviewButton(self) -> None:
         """Run processing when user clicks "Preview" button."""
         with slicer.util.tryWithErrorDisplay(_("Failed to compute results."), waitCursor=True):
-            from ImageAugmentatorLib.ImageAugmentatorTransformationParser import ImageAugmentatorTransformationParser
-            from ImageAugmentatorLib.ImageAugmentatorUtils import getFilesStructure
-            from ImageAugmentatorLib.ImageAugmentatorValidator import validateForms
+            from ImageAugmenterLib.ImageAugmenterTransformationParser import ImageAugmenterTransformationParser
+            from ImageAugmenterLib.ImageAugmenterUtils import getFilesStructure
+            from ImageAugmenterLib.ImageAugmenterValidator import validateForms
 
             validateForms(self.ui)
             
-            self.transformationParser = ImageAugmentatorTransformationParser(self.ui)    
+            self.transformationParser = ImageAugmenterTransformationParser(self.ui)    
             transformationList = self.transformationParser.mapTransformations()
             filesStructure = getFilesStructure(self.ui)
             
@@ -177,13 +177,13 @@ class ImageAugmentatorWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
             
                         
 
-class ImageAugmentatorLogic(ScriptedLoadableModuleLogic):
+class ImageAugmenterLogic(ScriptedLoadableModuleLogic):
     def __init__(self) -> None:
         """Called when the logic class is instantiated. Can be used for initializing member variables."""
         ScriptedLoadableModuleLogic.__init__(self)
 
     def getParameterNode(self):
-        return ImageAugmentatorParameterNode(super().getParameterNode())
+        return ImageAugmenterParameterNode(super().getParameterNode())
 
     def process(self,
                 imagesInputPath: str,
@@ -196,13 +196,13 @@ class ImageAugmentatorLogic(ScriptedLoadableModuleLogic):
                 transformations: list = [],
                 device: str = "CPU"
                 ) -> None:
-        from ImageAugmentatorLib.ImageAugmentatorDataset import ImageAugmentatorDataset
-        from ImageAugmentatorLib.ImageAugmentatorTransformationParser import IMPOSSIBLE_COPY_INFO_TRANSFORM
-        from ImageAugmentatorLib.ImageAugmentatorUtils import collectImagesAndMasksList, getOriginalCase, save, makeDir
-        from ImageAugmentatorLib.ImageAugmentatorValidator import validateCollectedImagesAndMasks
+        from ImageAugmenterLib.ImageAugmenterDataset import ImageAugmenterDataset
+        from ImageAugmenterLib.ImageAugmenterTransformationParser import IMPOSSIBLE_COPY_INFO_TRANSFORM
+        from ImageAugmenterLib.ImageAugmenterUtils import collectImagesAndMasksList, getOriginalCase, save, makeDir
+        from ImageAugmenterLib.ImageAugmenterValidator import validateCollectedImagesAndMasks
 
 
-        OUTPUT_IMG_DIR = "ImageAugmentator"
+        OUTPUT_IMG_DIR = "ImageAugmenter"
 
         startTime = time.time()
         logging.info("Processing started")
@@ -212,7 +212,7 @@ class ImageAugmentatorLogic(ScriptedLoadableModuleLogic):
                                                 maskPrefix=maskPrefix)
         
         validateCollectedImagesAndMasks(imgs, masks)
-        dataset = ImageAugmentatorDataset(imgPaths=imgs, maskPaths=masks, transformations=transformations, device=device)
+        dataset = ImageAugmenterDataset(imgPaths=imgs, maskPaths=masks, transformations=transformations, device=device)
         
         progressBar.setMaximum(len(dataset))
 
@@ -269,10 +269,10 @@ class ImageAugmentatorLogic(ScriptedLoadableModuleLogic):
                 device: str = "CPU" 
                 ) -> None:
         
-        from ImageAugmentatorLib.ImageAugmentatorDataset import ImageAugmentatorDataset
-        from ImageAugmentatorLib.ImageAugmentatorTransformationParser import IMPOSSIBLE_COPY_INFO_TRANSFORM
-        from ImageAugmentatorLib.ImageAugmentatorUtils import collectImagesAndMasksList, getOriginalCase, showPreview, clearScene, resetViews
-        from ImageAugmentatorLib.ImageAugmentatorValidator import validateCollectedImagesAndMasks
+        from ImageAugmenterLib.ImageAugmenterDataset import ImageAugmenterDataset
+        from ImageAugmenterLib.ImageAugmenterTransformationParser import IMPOSSIBLE_COPY_INFO_TRANSFORM
+        from ImageAugmenterLib.ImageAugmenterUtils import collectImagesAndMasksList, getOriginalCase, showPreview, clearScene, resetViews
+        from ImageAugmenterLib.ImageAugmenterValidator import validateCollectedImagesAndMasks
         import SimpleITK as sitk
         
         startTime = time.time()
@@ -285,7 +285,7 @@ class ImageAugmentatorLogic(ScriptedLoadableModuleLogic):
         
         validateCollectedImagesAndMasks(imgs, masks)
         clearScene()
-        dataset = ImageAugmentatorDataset(imgPaths=imgs[:1], maskPaths=masks[:1], transformations=transformations, device=device) # [:1] to apply the transformations only on the first image
+        dataset = ImageAugmenterDataset(imgPaths=imgs[:1], maskPaths=masks[:1], transformations=transformations, device=device) # [:1] to apply the transformations only on the first image
         progressBar.setMaximum(len(dataset))
 
         for dirIdx in range(len(dataset)):

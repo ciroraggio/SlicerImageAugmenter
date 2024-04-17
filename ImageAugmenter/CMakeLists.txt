@@ -1,17 +1,17 @@
 #-----------------------------------------------------------------------------
-set(MODULE_NAME ImageAugmentator)
+set(MODULE_NAME ImageAugmenter)
 
 #-----------------------------------------------------------------------------
 set(MODULE_PYTHON_SCRIPTS
   ${MODULE_NAME}.py
-  ${MODULE_NAME}Lib/ImageAugmentatorDataset.py
-  ${MODULE_NAME}Lib/ImageAugmentatorValidator.py
-  ${MODULE_NAME}Lib/ImageAugmentatorUtils.py
-  ${MODULE_NAME}Lib/ImageAugmentatorTransformationParser.py
-  ${MODULE_NAME}Lib/ImageAugmentatorIntensity.py
-  ${MODULE_NAME}Lib/ImageAugmentatorSpatial.py
-  ${MODULE_NAME}Lib/ImageAugmentatorTransformControllerInterface.py
-  ${MODULE_NAME}Lib/ImageAugmentatorCrop.py
+  ${MODULE_NAME}Lib/ImageAugmenterDataset.py
+  ${MODULE_NAME}Lib/ImageAugmenterValidator.py
+  ${MODULE_NAME}Lib/ImageAugmenterUtils.py
+  ${MODULE_NAME}Lib/ImageAugmenterTransformationParser.py
+  ${MODULE_NAME}Lib/ImageAugmenterIntensity.py
+  ${MODULE_NAME}Lib/ImageAugmenterSpatial.py
+  ${MODULE_NAME}Lib/ImageAugmenterTransformControllerInterface.py
+  ${MODULE_NAME}Lib/ImageAugmenterCrop.py
   )
 
 set(MODULE_PYTHON_RESOURCES
