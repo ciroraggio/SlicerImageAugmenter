@@ -17,7 +17,7 @@ class ImageAugmenterDataset(Dataset):
         self.imgPaths: List[str] = imgPaths
         self.maskPaths: Optional[List[str]] = maskPaths
         self.transformations: List[object] = transformations
-        self.device: Union[str, int] = extract_device_number(device) if device != "CPU" else "cpu"
+        self.device: Union[str, int] = extract_device_number(device) if device.lower() != "cpu" else device.lower()
 
     def __len__(self) -> int:
         return len(self.imgPaths)

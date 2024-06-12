@@ -86,7 +86,7 @@ def save(img, path, filename, originalCase, extension, copyInfo=True):
 
 
 def showPreview(img, originalCaseImg, originalCaseMask=None, mask=None, imgNodeName="imgNode", maskNodeName="maskNode", copyInfo=True):
-    sitkAugmentedImg = sitk.GetImageFromArray(img)
+    sitkAugmentedImg = sitk.GetImageFromArray(img.cpu())
     if (copyInfo and originalCaseImg.GetDepth() > 0):
         sitkAugmentedImg.CopyInformation(originalCaseImg)
 
@@ -94,7 +94,7 @@ def showPreview(img, originalCaseImg, originalCaseMask=None, mask=None, imgNodeN
         sitkAugmentedImg, name=imgNodeName, className="vtkMRMLScalarVolumeNode")
 
     if (mask != None):
-        sitkAugmentedMask = sitk.GetImageFromArray(mask)
+        sitkAugmentedMask = sitk.GetImageFromArray(mask.cpu())
         if (copyInfo and originalCaseMask.GetDepth() > 0):
             sitkAugmentedMask.CopyInformation(originalCaseMask)
 
@@ -118,7 +118,7 @@ def resetViews():
     slicer.util.resetSliceViews()
 
 
-def extract_device_number(self, gpu_info) -> str:
+def extract_device_number(gpu_info) -> str:
     match = re.search(r"GPU (\d+) -", gpu_info)
 
     if match:
