@@ -169,7 +169,8 @@ class ImageAugmenterWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
                                transformations=transformationList,
                                filesStructure=filesStructure,
                                progressBar=self.ui.progressBar,
-                               infoLabel=self.ui.infoLabel)
+                               infoLabel=self.ui.infoLabel,
+                               device=self.ui.deviceList.currentText)
             
             self.setButtonsEnabled(True)
             self.ui.progressBar.reset()
