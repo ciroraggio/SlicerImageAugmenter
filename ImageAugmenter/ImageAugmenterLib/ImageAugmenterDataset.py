@@ -11,7 +11,7 @@ class ImageAugmenterDataset(Dataset):
         self,
         imgPaths: List[str],
         maskPaths: Optional[List[str]] = None,
-        transformations: List[object] = [],  # Assuming MonaiTransform exists
+        transformations: List[object] = [],
         device: Union[str, int] = "CPU",
     ):
         self.imgPaths: List[str] = imgPaths

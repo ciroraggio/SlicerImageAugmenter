@@ -229,7 +229,7 @@ class ImageAugmenterLogic(ScriptedLoadableModuleLogic):
                     transformName, img = imgPack
                     _, msk = mskPack if mskPack else (None, None)
 
-                    currentDir = makeDir(outputPath, OUTPUT_IMG_DIR, caseName, transformName)
+                    currentDir = makeDir(outputPath, caseName, transformName)
 
                     imgPrefixParts = imgPrefix.split(".")
                     maskPrefixParts = maskPrefix.split(".")
