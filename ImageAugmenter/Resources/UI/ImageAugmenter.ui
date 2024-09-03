@@ -143,7 +143,7 @@
             <x>0</x>
             <y>0</y>
             <width>847</width>
-            <height>629</height>
+            <height>655</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -1193,7 +1193,7 @@
             <x>0</x>
             <y>0</y>
             <width>847</width>
-            <height>951</height>
+            <height>1005</height>
            </rect>
           </property>
           <property name="layoutDirection">
@@ -1924,7 +1924,7 @@ color: rgb(0, 85, 255);</string>
        <bool>true</bool>
       </property>
       <attribute name="title">
-       <string>Crop</string>
+       <string>Crop and Pad</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_27">
        <item row="0" column="0">
@@ -1950,7 +1950,7 @@ color: rgb(0, 85, 255);</string>
             <x>0</x>
             <y>0</y>
             <width>847</width>
-            <height>412</height>
+            <height>436</height>
            </rect>
           </property>
           <property name="layoutDirection">
@@ -2480,7 +2480,7 @@ color: rgb(0, 85, 255);</string>
            <x>0</x>
            <y>0</y>
            <width>865</width>
-           <height>286</height>
+           <height>285</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_24">
@@ -2729,6 +2729,12 @@ color: rgb(0, 85, 255);</string>
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>400</width>
+          <height>0</height>
+         </size>
         </property>
         <property name="maximumSize">
          <size>
@@ -3197,6 +3203,12 @@ color: rgb(0, 85, 255);</string>
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>400</width>
+          <height>0</height>
+         </size>
         </property>
         <property name="maximumSize">
          <size>

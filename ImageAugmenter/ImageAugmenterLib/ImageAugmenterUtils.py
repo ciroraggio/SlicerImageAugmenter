@@ -1,8 +1,9 @@
 import os
 import re
+import threading
+
 import SimpleITK as sitk
 import sitkUtils
-import threading
 import slicer
 
 FLAT = "flat"  # .../path/ImgID.extension, .../path/ImgID_label.extension
@@ -10,7 +11,7 @@ HIERARCHICAL = "hierarchical" # .../path/CaseID/img.extension, # .../path/CaseID
 
 def collectImagesAndMasksList(imagesInputPath, imgPrefix, maskPrefix):
     imgs, masks = [], []
-    
+
     for root, _, files in os.walk(imagesInputPath):
         for file in files:
             if file.startswith("."):
@@ -20,7 +21,7 @@ def collectImagesAndMasksList(imagesInputPath, imgPrefix, maskPrefix):
                 imgs.append(filePath)
             elif maskPrefix and maskPrefix in file:
                 masks.append(filePath)
-    
+
     return imgs, masks
 
 
@@ -40,23 +41,29 @@ def makeDir(outputPath, caseName, transformName):
 
 
 def sanitizeTransformName(transform) -> str:
-    """
-    This function extracts the name of a transformation by cleaning up the result of transform.__class__
+    """This function extracts the name of a transformation by cleaning up the result of transform.__class__
 
-    Returns:
+    Returns
+    -------
         transform name (str)
+
     """
-    pattern = '[' + \
-        re.escape(''.join(['>', '<', '_', '.', '\'', '-', ','])) + ']'
+    pattern = "[" + \
+        re.escape("".join([">", "<", "_", ".", "'", "-", ","])) + "]"
     return re.sub(pattern, "", str(transform.__class__).split(".")[-1])
 
+def getTransformName(transform) -> str:
+    try:
+            return transform.get_transform_info()["class"]
+    except AttributeError:
+            # in this case get_transform_info is missing, so recover the name starting from __class__:
+            return sanitizeTransformName(transform)
 
 def getOriginalCase(fullImgPath, filesStructure):
-    """
-    This function returns the original image and extracts the specific patient/case name/ID.
+    """This function returns the original image and extracts the specific patient/case name/ID.
     The extracted name/ID will be used as the title of the folder that will contain the augmented images.
     """
-    caseName = fullImgPath.split('/')[-2] if (filesStructure == HIERARCHICAL) else fullImgPath.split('/')[-1]
+    caseName = fullImgPath.split("/")[-2] if (filesStructure == HIERARCHICAL) else fullImgPath.split("/")[-1]
 
     originalCaseImg = sitk.ReadImage(fullImgPath)
 
@@ -74,7 +81,7 @@ def save(img, path, filename, originalCase, extension, copyInfo=True):
 
 def showPreview(img, originalCaseImg, originalCaseMask=None, mask=None, imgNodeName="imgNode", maskNodeName="maskNode", copyInfo=True):
     sitkAugmentedImg = sitk.GetImageFromArray(img.cpu())
-    
+
     if (copyInfo and originalCaseImg.GetDepth() > 0):
         sitkAugmentedImg.CopyInformation(originalCaseImg)
 
@@ -103,7 +110,7 @@ def resetViews():
     slicer.util.resetSliceViews()
 
 
-def extract_device_number(gpu_info) -> str:
+def extractDeviceNumber(gpu_info) -> str:
     match = re.search(r"GPU (\d+) -", gpu_info)
 
     if not match:
