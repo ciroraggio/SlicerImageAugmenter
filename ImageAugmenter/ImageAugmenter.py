@@ -1,14 +1,13 @@
 import logging
 import time
 
+import SimpleITK as sitk
 import slicer
 from slicer.i18n import tr as _
 from slicer.i18n import translate
 from slicer.ScriptedLoadableModule import *
-from slicer.util import VTKObservationMixin
-from slicer.util import setDataProbeVisible
+from slicer.util import VTKObservationMixin, setDataProbeVisible
 
-import SimpleITK as sitk
 
 class ImageAugmenter(ScriptedLoadableModule):
     """Uses ScriptedLoadableModule base class, available at:
@@ -31,13 +30,13 @@ class ImageAugmenterWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
         self.logic = None
         self._parameterNode = None
         self._parameterNodeGuiTag = None
-        
+
     def checkDependencies(self):
         try:
-            from munch import Munch
-            import monai
-            import torch
-            import SimpleITK
+            import monai # noqa: F401
+            import SimpleITK  # noqa: F401
+            import torch # noqa: F401
+            from munch import Munch # noqa: F401
             self.ui.installRequirementsButton.setVisible(False)
             self.ui.applyButton.setVisible(True)
             self.ui.previewButton.setVisible(True)
@@ -45,7 +44,7 @@ class ImageAugmenterWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
             self.ui.installRequirementsButton.setVisible(True)
             self.ui.applyButton.setVisible(False)
             self.ui.previewButton.setVisible(False)
-            
+
     def setup(self) -> None:
         """Called when the user opens the module the first time and the widget is initialized."""
         ScriptedLoadableModuleWidget.setup(self)
@@ -54,13 +53,13 @@ class ImageAugmenterWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
         # Check if all necessary dependencies are installed to run the extension logic
         self.layout.addWidget(uiWidget)
         self.ui = slicer.util.childWidgetVariables(uiWidget)
-        
+
         self.checkDependencies()
         uiWidget.setMRMLScene(slicer.mrmlScene)
         setDataProbeVisible(False)
-        
+
         self.ui.deviceList.addItem("CPU")
-        
+
         self.ui.hierarchicalTreeWidget.expandItem(self.ui.hierarchicalTreeWidget.topLevelItem(0))
 
         self.logic = ImageAugmenterLogic()
@@ -96,44 +95,45 @@ class ImageAugmenterWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
         # If this module is shown while the scene is closed then recreate a new parameter node immediately
         # if self.parent.isEntered:
         #     self.initializeParameterNode()
-        
+
     def setButtonsEnabled(self, state: bool = True):
         self.ui.applyButton.setEnabled(state)
         self.ui.previewButton.setEnabled(state)
-        
+
     def resetAndDisable(self):
         self.ui.progressBar.reset()
         self.ui.infoLabel.setText("")
         self.setButtonsEnabled(False)
-    
+
     def onInstallRequirements(self):
-        if not slicer.util.confirmOkCancelDisplay(f"The dependencies needed for the extension will be installed, the operation may take a few minutes. A Slicer restart will be necessary.","Press OK to install and restart."):
+        if not slicer.util.confirmOkCancelDisplay("The dependencies needed for the extension will be installed, the operation may take a few minutes. A Slicer restart will be necessary.","Press OK to install and restart."):
             raise ValueError("Missing dependencies.")
-        else:
-            try:
-                self.ui.installRequirementsButton.setEnabled(False)
-                self.ui.infoLabel.setText("Installing dependencies, please wait...")
-                slicer.util.pip_install("munch")
-                slicer.util.pip_install("monai[itk]")
-                slicer.util.restart()
-            except Exception as e:
-                raise ValueError(f"Error installing dependencies: {repr(e)}")
-                
+        try:
+            self.ui.installRequirementsButton.setEnabled(False)
+            self.ui.infoLabel.setText("Installing dependencies, please wait...")
+            slicer.util.pip_install("munch")
+            slicer.util.pip_install("monai[itk]")
+            slicer.util.restart()
+        except Exception as e:
+            raise ValueError(f"Error installing dependencies: {e!r}")
+
     def onApplyButton(self) -> None:
         """Run processing when user clicks "Apply" button."""
         with slicer.util.tryWithErrorDisplay(_("Failed to compute results."), waitCursor=True):
-            from ImageAugmenterLib.ImageAugmenterTransformationParser import ImageAugmenterTransformationParser
+            from ImageAugmenterLib.ImageAugmenterTransformationParser import (
+                ImageAugmenterTransformationParser,
+            )
             from ImageAugmenterLib.ImageAugmenterUtils import getFilesStructure
             from ImageAugmenterLib.ImageAugmenterValidator import validateForms
 
             validateForms(self.ui)
-            
-            self.transformationParser = ImageAugmenterTransformationParser(self.ui)    
-            transformationList = self.transformationParser.mapTransformations()     
+
+            self.transformationParser = ImageAugmenterTransformationParser(self.ui)
+            transformationList = self.transformationParser.mapTransformations()
             filesStructure = getFilesStructure(self.ui)
-           
+
             self.resetAndDisable()
-            
+
             self.logic.process(imagesInputPath=self.ui.imagesInputPath.directory,
                                imgPrefix=self.ui.imgPrefix.text.strip(),
                                maskPrefix=self.ui.maskPrefix.text.strip(),
@@ -143,7 +143,7 @@ class ImageAugmenterWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
                                progressBar=self.ui.progressBar,
                                infoLabel=self.ui.infoLabel,
                                device=self.ui.deviceList.currentText)
-            
+
             self.setButtonsEnabled(True)
             self.ui.progressBar.reset()
 
@@ -151,16 +151,18 @@ class ImageAugmenterWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
     def onPreviewButton(self) -> None:
         """Run processing when user clicks "Preview" button."""
         with slicer.util.tryWithErrorDisplay(_("Failed to compute results."), waitCursor=True):
-            from ImageAugmenterLib.ImageAugmenterTransformationParser import ImageAugmenterTransformationParser
+            from ImageAugmenterLib.ImageAugmenterTransformationParser import (
+                ImageAugmenterTransformationParser,
+            )
             from ImageAugmenterLib.ImageAugmenterUtils import getFilesStructure
             from ImageAugmenterLib.ImageAugmenterValidator import validateForms
 
             validateForms(self.ui)
-            
-            self.transformationParser = ImageAugmenterTransformationParser(self.ui)    
+
+            self.transformationParser = ImageAugmenterTransformationParser(self.ui)
             transformationList = self.transformationParser.mapTransformations()
             filesStructure = getFilesStructure(self.ui)
-            
+
             self.resetAndDisable()
 
             self.logic.preview(imagesInputPath=self.ui.imagesInputPath.directory,
@@ -171,11 +173,11 @@ class ImageAugmenterWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
                                progressBar=self.ui.progressBar,
                                infoLabel=self.ui.infoLabel,
                                device=self.ui.deviceList.currentText)
-            
+
             self.setButtonsEnabled(True)
             self.ui.progressBar.reset()
-            
-                        
+
+
 
 class ImageAugmenterLogic(ScriptedLoadableModuleLogic):
     def __init__(self) -> None:
@@ -194,15 +196,21 @@ class ImageAugmenterLogic(ScriptedLoadableModuleLogic):
                 progressBar,
                 infoLabel,
                 transformations: list = [],
-                device: str = "CPU"
+                device: str = "CPU",
                 ) -> None:
         from ImageAugmenterLib.ImageAugmenterDataset import ImageAugmenterDataset
-        from ImageAugmenterLib.ImageAugmenterTransformationParser import IMPOSSIBLE_COPY_INFO_TRANSFORM
-        from ImageAugmenterLib.ImageAugmenterUtils import collectImagesAndMasksList, getOriginalCase, save, makeDir
-        from ImageAugmenterLib.ImageAugmenterValidator import validateCollectedImagesAndMasks
-
-
-        OUTPUT_IMG_DIR = "ImageAugmenter"
+        from ImageAugmenterLib.ImageAugmenterTransformationParser import (
+            IMPOSSIBLE_COPY_INFO_TRANSFORM,
+        )
+        from ImageAugmenterLib.ImageAugmenterUtils import (
+            collectImagesAndMasksList,
+            getOriginalCase,
+            makeDir,
+            save,
+        )
+        from ImageAugmenterLib.ImageAugmenterValidator import (
+            validateCollectedImagesAndMasks,
+        )
 
         startTime = time.time()
         logging.info("Processing started")
@@ -210,10 +218,10 @@ class ImageAugmenterLogic(ScriptedLoadableModuleLogic):
         imgs, masks = collectImagesAndMasksList(imagesInputPath=imagesInputPath,
                                                 imgPrefix=imgPrefix,
                                                 maskPrefix=maskPrefix)
-        
+
         validateCollectedImagesAndMasks(imgs, masks)
         dataset = ImageAugmenterDataset(imgPaths=imgs, maskPaths=masks, transformations=transformations, device=device)
-        
+
         progressBar.setMaximum(len(dataset))
 
         for dirIdx in range(len(dataset)):
@@ -229,28 +237,28 @@ class ImageAugmenterLogic(ScriptedLoadableModuleLogic):
                     transformName, img = imgPack
                     _, msk = mskPack if mskPack else (None, None)
 
-                    currentDir = makeDir(outputPath, OUTPUT_IMG_DIR, caseName, transformName)
+                    currentDir = makeDir(outputPath, caseName, transformName)
 
                     imgPrefixParts = imgPrefix.split(".")
                     maskPrefixParts = maskPrefix.split(".")
                     copyInfo = False if transformName in IMPOSSIBLE_COPY_INFO_TRANSFORM else True
 
-                    save(img=img.detach().cpu(), path=currentDir, 
-                         filename=imgPrefixParts[0], 
-                         originalCase=originalCaseImg, 
-                         extension=imgPrefixParts[1] if len(imgPrefixParts) > 1 else "nrrd", 
+                    save(img=img.detach().cpu(), path=currentDir,
+                         filename=imgPrefixParts[0],
+                         originalCase=originalCaseImg,
+                         extension=imgPrefixParts[1] if len(imgPrefixParts) > 1 else "nrrd",
                          copyInfo=copyInfo)
 
                     if originalCaseMask and msk != None and msk.any():
-                        save(img=msk.detach().cpu(), path=currentDir, 
-                             filename=maskPrefixParts[0], 
-                             originalCase=originalCaseMask, 
-                             extension=maskPrefixParts[1] if len(maskPrefixParts) > 1 else "nrrd", 
+                        save(img=msk.detach().cpu(), path=currentDir,
+                             filename=maskPrefixParts[0],
+                             originalCase=originalCaseMask,
+                             extension=maskPrefixParts[1] if len(maskPrefixParts) > 1 else "nrrd",
                              copyInfo=copyInfo)
-                    
-                    
+
+
                 progressBar.setValue(dirIdx + 1)
-        
+
             except Exception as e:
                 raise e
 
@@ -266,23 +274,34 @@ class ImageAugmenterLogic(ScriptedLoadableModuleLogic):
                 infoLabel,
                 transformations: list = [],
                 filesStructure: str = "",
-                device: str = "CPU" 
+                device: str = "CPU",
                 ) -> None:
-        
-        from ImageAugmenterLib.ImageAugmenterDataset import ImageAugmenterDataset
-        from ImageAugmenterLib.ImageAugmenterTransformationParser import IMPOSSIBLE_COPY_INFO_TRANSFORM
-        from ImageAugmenterLib.ImageAugmenterUtils import collectImagesAndMasksList, getOriginalCase, showPreview, clearScene, resetViews
-        from ImageAugmenterLib.ImageAugmenterValidator import validateCollectedImagesAndMasks
+
         import SimpleITK as sitk
-        
+
+        from ImageAugmenterLib.ImageAugmenterDataset import ImageAugmenterDataset
+        from ImageAugmenterLib.ImageAugmenterTransformationParser import (
+            IMPOSSIBLE_COPY_INFO_TRANSFORM,
+        )
+        from ImageAugmenterLib.ImageAugmenterUtils import (
+            clearScene,
+            collectImagesAndMasksList,
+            getOriginalCase,
+            resetViews,
+            showPreview,
+        )
+        from ImageAugmenterLib.ImageAugmenterValidator import (
+            validateCollectedImagesAndMasks,
+        )
+
         startTime = time.time()
         logging.info("Processing started")
         infoLabel.setText("Processing started, please wait...")
-        
+
         imgs, masks = collectImagesAndMasksList(imagesInputPath=imagesInputPath,
                                                 imgPrefix=imgPrefix,
                                                 maskPrefix=maskPrefix)
-        
+
         validateCollectedImagesAndMasks(imgs, masks)
         clearScene()
         dataset = ImageAugmenterDataset(imgPaths=imgs[:1], maskPaths=masks[:1], transformations=transformations, device=device) # [:1] to apply the transformations only on the first image
@@ -295,14 +314,14 @@ class ImageAugmenterLogic(ScriptedLoadableModuleLogic):
 
                 if transformedMasks:
                     originalCaseMask = sitk.ReadImage(masks[dirIdx])
-                    
+
                     for i in range(len(transformedImages)):
                         imgPack = transformedImages[i]
                         mskPack = transformedMasks[i] if i < len(transformedMasks) else None
-                        
+
                         transformName, img = imgPack
                         _, msk = mskPack
-                        
+
                         imgNodeName = f"{caseName}_{transformName}_img"
                         maskNodeName = f"{caseName}_{transformName}_mask"
                         copyInfo = False if transformName in IMPOSSIBLE_COPY_INFO_TRANSFORM else True
@@ -314,7 +333,7 @@ class ImageAugmenterLogic(ScriptedLoadableModuleLogic):
                         imgNodeName = f"{caseName}_{transformName}_img"
                         copyInfo = False if transformName in IMPOSSIBLE_COPY_INFO_TRANSFORM else True
                         showPreview(img, originalCaseImg, imgNodeName=imgNodeName, copyInfo=copyInfo)
-                        
+
                 resetViews()
                 progressBar.setValue(dirIdx + 1)
 
