@@ -49,3 +49,8 @@ ImageAugmenter allows users to view images or augmented images and masks directl
 ***Use the device you prefer***
 
 In the "Advanced" section it will be possible to choose which device to apply the transformations with. In addition to the CPU, all PyTorch compatible GPUs will be shown.
+
+## How to cite
+
+Please cite the following publications when publishing work that uses or incorporates ImageAugmenter:
+Ciro Benito Raggio, Paolo Zaffino, Maria Francesca Spadea. ImageAugmenter: A user-friendly 3D Slicer tool for medical image augmentation, SoftwareX, Volume 28, 2024, 101923, ISSN 2352-7110, https://doi.org/10.1016/j.softx.2024.101923, https://www.sciencedirect.com/science/article/pii/S2352711024002930.
