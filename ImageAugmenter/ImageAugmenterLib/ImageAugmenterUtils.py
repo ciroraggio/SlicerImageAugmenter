@@ -58,12 +58,15 @@ def getTransformName(transform) -> str:
     except AttributeError:
             # in this case get_transform_info is missing, so recover the name starting from __class__:
             return sanitizeTransformName(transform)
+        
+def getCaseName(fullImgPath, filesStructure):
+    return fullImgPath.split("/")[-2] if (filesStructure == HIERARCHICAL) else fullImgPath.split("/")[-1]
 
 def getOriginalCase(fullImgPath, filesStructure):
     """This function returns the original image and extracts the specific patient/case name/ID.
     The extracted name/ID will be used as the title of the folder that will contain the augmented images.
     """
-    caseName = fullImgPath.split("/")[-2] if (filesStructure == HIERARCHICAL) else fullImgPath.split("/")[-1]
+    caseName = getCaseName(fullImgPath, filesStructure)
 
     originalCaseImg = sitk.ReadImage(fullImgPath)
 

@@ -1,13 +1,11 @@
 import logging
 import time
-
-import SimpleITK as sitk
 import slicer
 from slicer.i18n import tr as _
 from slicer.i18n import translate
 from slicer.ScriptedLoadableModule import *
 from slicer.util import VTKObservationMixin, setDataProbeVisible
-
+import qt
 
 class ImageAugmenter(ScriptedLoadableModule):
     """Uses ScriptedLoadableModule base class, available at:
@@ -33,19 +31,23 @@ class ImageAugmenterWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
 
     def checkDependencies(self):
         try:
-            import monai # noqa: F401
-            import SimpleITK  # noqa: F401
-            import torch # noqa: F401
-            from munch import Munch # noqa: F401
+            from monai import __version__ # noqa: F401
+            from SimpleITK import __version__  # noqa: F401, F811
+            from torch import __version__  # noqa: F401, F811
+            from munch import VERSION # noqa: F401
             self.ui.installRequirementsButton.setVisible(False)
             self.ui.applyButton.setVisible(True)
             self.ui.previewButton.setVisible(True)
+            self.ui.previewSettingsButton.setVisible(True)
         except ModuleNotFoundError:
             self.ui.installRequirementsButton.setVisible(True)
             self.ui.applyButton.setVisible(False)
             self.ui.previewButton.setVisible(False)
-
+            self.ui.previewSettingsButton.setVisible(False)
+            
     def setup(self) -> None:
+        from ImageAugmenterLib.ImageAugmenterUIUtils import CheckboxDialog
+        import os
         """Called when the user opens the module the first time and the widget is initialized."""
         ScriptedLoadableModuleWidget.setup(self)
 
@@ -72,7 +74,15 @@ class ImageAugmenterWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
         # Buttons
         self.ui.applyButton.connect("clicked(bool)", self.onApplyButton)
         self.ui.previewButton.connect("clicked(bool)", self.onPreviewButton)
+        
+        previewSettingsIconPath = os.path.join(os.path.dirname(slicer.util.modulePath(self.__module__)), 'Resources/Icons', 'cog.png')
+        self.ui.previewSettingsButton.setIcon(qt.QIcon(previewSettingsIconPath))
+        self.ui.previewSettingsButton.connect("clicked(bool)", self.onPreviewSettingsButton)
+        
         self.ui.installRequirementsButton.connect("clicked(bool)", self.onInstallRequirements)
+        self.previewSettingsDialog = CheckboxDialog()
+        self.selectedPreviewOptions = []
+
 
         import torch
 
@@ -99,6 +109,8 @@ class ImageAugmenterWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
     def setButtonsEnabled(self, state: bool = True):
         self.ui.applyButton.setEnabled(state)
         self.ui.previewButton.setEnabled(state)
+        self.ui.previewSettingsButton.setEnabled(state)
+        
 
     def resetAndDisable(self):
         self.ui.progressBar.reset()
@@ -172,11 +184,34 @@ class ImageAugmenterWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
                                filesStructure=filesStructure,
                                progressBar=self.ui.progressBar,
                                infoLabel=self.ui.infoLabel,
+                               selectedPreviewOptions=self.selectedPreviewOptions,
                                device=self.ui.deviceList.currentText)
 
             self.setButtonsEnabled(True)
             self.ui.progressBar.reset()
+    
+            
+    def onPreviewSettingsButton(self):
+        """Run processing when user clicks "Preview" button."""
+        with slicer.util.tryWithErrorDisplay(_("Failed to compute results."), waitCursor=True):
+            from ImageAugmenterLib.ImageAugmenterUtils import getFilesStructure
+            from ImageAugmenterLib.ImageAugmenterValidator import validateForms
 
+            validateForms(self.ui)
+            filesStructure = getFilesStructure(self.ui)
+
+            mappedOptions = self.logic.loadPreviewOptions(imagesInputPath=self.ui.imagesInputPath.directory,
+                               imgPrefix=self.ui.imgPrefix.text.strip(),
+                               maskPrefix=self.ui.maskPrefix.text.strip(),
+                               filesStructure=filesStructure
+                               )
+            if(len(mappedOptions.keys()) == 0):
+                raise ValueError("No cases found with the specified parameters!")
+            
+            self.previewSettingsDialog.updateOptions(mappedOptions, self.selectedPreviewOptions)
+
+            if self.previewSettingsDialog.exec_() == qt.QDialog.Accepted:
+                self.selectedPreviewOptions = self.previewSettingsDialog.getSelectedOptions()
 
 
 class ImageAugmenterLogic(ScriptedLoadableModuleLogic):
@@ -272,6 +307,7 @@ class ImageAugmenterLogic(ScriptedLoadableModuleLogic):
                 maskPrefix: str,
                 progressBar,
                 infoLabel,
+                selectedPreviewOptions: list,
                 transformations: list = [],
                 filesStructure: str = "",
                 device: str = "CPU",
@@ -304,7 +340,18 @@ class ImageAugmenterLogic(ScriptedLoadableModuleLogic):
 
         validateCollectedImagesAndMasks(imgs, masks)
         clearScene()
-        dataset = ImageAugmenterDataset(imgPaths=imgs[:1], maskPaths=masks[:1], transformations=transformations, device=device) # [:1] to apply the transformations only on the first image
+        
+        previewIndices = [i for i, path in enumerate(imgs) if path in selectedPreviewOptions] if len(selectedPreviewOptions) > 0 else [0]
+        previewImgs = []
+        previewMasks = []
+        
+        if(len(imgs)>0):
+            previewImgs = [imgs[i] for i in previewIndices]
+            
+        if(len(masks)>0):
+            previewMasks = [masks[i] for i in previewIndices]
+        
+        dataset = ImageAugmenterDataset(imgPaths=previewImgs, maskPaths=previewMasks, transformations=transformations, device=device)
         progressBar.setMaximum(len(dataset))
 
         for dirIdx in range(len(dataset)):
@@ -343,3 +390,20 @@ class ImageAugmenterLogic(ScriptedLoadableModuleLogic):
         stopTime = time.time()
         infoLabel.setText(f"Processing completed in {stopTime-startTime:.2f} seconds")
         logging.info(f"Processing completed in {stopTime-startTime:.2f} seconds")
+        
+    def loadPreviewOptions(self, 
+                           imagesInputPath,
+                           imgPrefix,
+                           maskPrefix,
+                           filesStructure) -> dict[str, str]:        
+        from ImageAugmenterLib.ImageAugmenterUtils import collectImagesAndMasksList, getCaseName
+        
+        imgs, masks = collectImagesAndMasksList(imagesInputPath=imagesInputPath,
+                                                imgPrefix=imgPrefix,
+                                                maskPrefix=maskPrefix)
+        options = {}
+        
+        for case in imgs:
+            options[case] = getCaseName(case, filesStructure)
+
+        return options
