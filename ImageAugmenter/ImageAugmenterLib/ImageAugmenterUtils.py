@@ -8,7 +8,7 @@ import slicer
 
 FLAT = "flat"  # .../path/ImgID.extension, .../path/ImgID_label.extension
 HIERARCHICAL = "hierarchical" # .../path/CaseID/img.extension, # .../path/CaseID/mask.extension
-
+CHANNEL_FIRST_REQUIRED = ["SpatialPad"]
 def collectImagesAndMasksList(imagesInputPath, imgPrefix, maskPrefix):
     imgs, masks = [], []
 

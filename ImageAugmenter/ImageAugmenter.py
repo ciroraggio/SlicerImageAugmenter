@@ -255,7 +255,14 @@ class ImageAugmenterLogic(ScriptedLoadableModuleLogic):
                                                 imgPrefix=imgPrefix,
                                                 maskPrefix=maskPrefix)
 
-        validateCollectedImagesAndMasks(imgs, masks)
+        validationResult = validateCollectedImagesAndMasks(imgs, masks)
+        
+        if isinstance(validationResult, ValueError):
+            setButtonsEnabled(True)
+            progressBar.reset()
+            infoLabel.setText(validationResult)
+            raise validationResult
+        
         dataset = ImageAugmenterDataset(imgPaths=imgs, maskPaths=masks, transformations=transformations, device=device)
 
         progressBar.setMaximum(len(dataset))
@@ -337,7 +344,14 @@ class ImageAugmenterLogic(ScriptedLoadableModuleLogic):
                                                 imgPrefix=imgPrefix,
                                                 maskPrefix=maskPrefix)
 
-        validateCollectedImagesAndMasks(imgs, masks)
+        validationResult = validateCollectedImagesAndMasks(imgs, masks)
+        
+        if isinstance(validationResult, ValueError):
+            setButtonsEnabled(True)
+            progressBar.reset()
+            infoLabel.setText(validationResult)
+            raise validationResult
+            
         clearScene()
         
         previewIndices = [i for i, path in enumerate(imgs) if path in selectedPreviewOptions] if len(selectedPreviewOptions) > 0 else [0]

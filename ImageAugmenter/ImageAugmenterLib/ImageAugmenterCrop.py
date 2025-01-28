@@ -42,7 +42,8 @@ class ImageAugmenterCropController(ImageAugmenterTransformControllerInterface):
         if (self.transformations.spatialPad.enabled):
             params = self.transformations.spatialPad
             
-            if (not all(params.spatialSize)): raise ValueError("The 'Spatial Pad' transformation is enabled but spatial size is not valid")
+            if (not all(params.spatialSize) or params.fillValue == None or params.fillValue == ""): 
+                raise ValueError("The 'Spatial Pad' transformation is enabled but parameters are not valid. Please check all the parameters.")
 
             self.mappedTransformations.append(
                 SpatialPad(spatial_size=(int(params.spatialSize[0]), int(params.spatialSize[1]), int(params.spatialSize[2])),    
@@ -53,15 +54,15 @@ class ImageAugmenterCropController(ImageAugmenterTransformControllerInterface):
             
         if (self.transformations.borderPad.enabled):
             params = self.transformations.borderPad
-            if (params.spatialBorder == "" or params.spatialBorder == None or params.fillValue == None):
-                     raise ValueError("The 'Border Pad' transformation is enabled but spatial border is not valid")
+            if (params.spatialBorder == "" or params.spatialBorder == None or params.fillValue == None or params.fillValue == ""):
+                     raise ValueError("The 'Border Pad' transformation is enabled but parameters are not valid. Please check all the parameters.")
 
             self.mappedTransformations.append(BorderPad(spatial_border=int(params.spatialBorder), mode=params.mode, value=params.fillValue))
 
         if (self.transformations.spatialCrop.enabled):
             params = self.transformations.spatialCrop
 
-            if (not all(params.roiSize) or not all(params.roiCenter)):
+            if (not all(params.roiSize) or not all(params.roiCenter) ):
                     raise ValueError("The 'Spatial Crop' transformation is enabled but ROI size or ROI center is not valid")
             
             self.mappedTransformations.append(SpatialCrop(
