@@ -52,15 +52,18 @@ def sanitizeTransformName(transform) -> str:
         re.escape("".join([">", "<", "_", ".", "'", "-", ","])) + "]"
     return re.sub(pattern, "", str(transform.__class__).split(".")[-1])
 
+
 def getTransformName(transform) -> str:
     try:
-            return transform.get_transform_info()["class"]
+        return transform.get_transform_info()["class"]
     except AttributeError:
-            # in this case get_transform_info is missing, so recover the name starting from __class__:
-            return sanitizeTransformName(transform)
-        
+        # in this case get_transform_info is missing, so recover the name starting from __class__:
+        return sanitizeTransformName(transform)
+
+
 def getCaseName(fullImgPath, filesStructure):
     return fullImgPath.split("/")[-2] if (filesStructure == HIERARCHICAL) else fullImgPath.split("/")[-1]
+
 
 def getOriginalCase(fullImgPath, filesStructure):
     """This function returns the original image and extracts the specific patient/case name/ID.
@@ -72,33 +75,45 @@ def getOriginalCase(fullImgPath, filesStructure):
 
     return caseName, originalCaseImg
 
-def save(img, path, filename, originalCase, extension, copyInfo=True):
+
+def copyInfo(origin, target):
+    """Same behaviour as sitk.CopyInformation but sizes don't need to match
+
+    Returns
+    -------
+        Target volume with new information (sitk.Image)
+
+    """
+    target.SetOrigin(origin.GetOrigin())
+    target.SetSpacing(origin.GetSpacing())
+    target.SetDirection(origin.GetDirection())
+    return target
+
+def save(img, path, filename, originalCase, extension):
     img = sitk.GetImageFromArray(img)
 
-    if (copyInfo and originalCase.GetDepth() > 0):
-        img.CopyInformation(originalCase)
+    if (originalCase.GetDepth() > 0):
+        copyInfo(originalCase, img)
 
     saveThread = threading.Thread(target=sitk.WriteImage, args=(img, f"{path}/{filename}.{extension}"))
     saveThread.start()
 
-
-def showPreview(img, originalCaseImg, originalCaseMask=None, mask=None, imgNodeName="imgNode", maskNodeName="maskNode", copyInfo=True):
+def showPreview(img, originalCaseImg, originalCaseMask=None, mask=None, imgNodeName="imgNode", maskNodeName="maskNode"):
     sitkAugmentedImg = sitk.GetImageFromArray(img.cpu())
 
-    if (copyInfo and originalCaseImg.GetDepth() > 0):
-        sitkAugmentedImg.CopyInformation(originalCaseImg)
+    if (originalCaseImg.GetDepth() > 0):
+        copyInfo(originalCaseImg, sitkAugmentedImg)
 
     outputImgNode = sitkUtils.PushVolumeToSlicer(sitkAugmentedImg, name=imgNodeName, className="vtkMRMLScalarVolumeNode")
 
     if (mask != None):
         sitkAugmentedMask = sitk.GetImageFromArray(mask.cpu())
-        if (copyInfo and originalCaseMask.GetDepth() > 0):
-            sitkAugmentedMask.CopyInformation(originalCaseMask)
+        if (originalCaseMask.GetDepth() > 0):
+            copyInfo(originalCaseMask, sitkAugmentedMask)
 
         outputMaskNode = sitkUtils.PushVolumeToSlicer(sitkAugmentedMask, name=maskNodeName, className="vtkMRMLScalarVolumeNode")
 
         slicer.util.setSliceViewerLayers(background=outputImgNode, label=outputMaskNode, labelOpacity=0.4)
-
     else:
         slicer.util.setSliceViewerLayers(background=outputImgNode)
 
@@ -120,5 +135,3 @@ def extractDeviceNumber(gpu_info) -> str:
         raise ValueError("GPU text format is invalid. Please report this to the developer!")
 
     return f"cuda:{str(match.group(1))}"
-
-        

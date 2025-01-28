@@ -13,14 +13,16 @@ class ImageAugmenterCropController(ImageAugmenterTransformControllerInterface):
         return {
             "spatialPad": {
                 "enabled": self.ui.spatialPadEnabled.isChecked(),
-                "spatialSize": (self.ui.spatialPadW.text, self.ui.spatialPadH.text),
+                "spatialSize": (self.ui.spatialPadC.text, self.ui.spatialPadW.text, self.ui.spatialPadH.text),
                 "method": self.ui.spatialPadMethod.currentText,
-                "mode": self.ui.spatialPadMode.currentText
+                "mode": self.ui.spatialPadMode.currentText,
+                "fillValue": self.ui.spatialPadFillValue.text
             },
             "borderPad": {
                 "enabled": self.ui.borderPadEnabled.isChecked(),
                 "spatialBorder": self.ui.borderPadSpatialBorder.text,
                 "mode": self.ui.borderPadMode.currentText,
+                "fillValue": self.ui.borderPadFillValue.text
             },
             "spatialCrop": {
                 "enabled": self.ui.spatialCropEnabled.isChecked(),
@@ -42,16 +44,19 @@ class ImageAugmenterCropController(ImageAugmenterTransformControllerInterface):
             
             if (not all(params.spatialSize)): raise ValueError("The 'Spatial Pad' transformation is enabled but spatial size is not valid")
 
-            self.mappedTransformations.append(SpatialPad(spatial_size=(int(params.spatialSize[0]), int(params.spatialSize[1])),
-                                                        mode=params.mode,
-                                                        method=params.method))
+            self.mappedTransformations.append(
+                SpatialPad(spatial_size=(int(params.spatialSize[0]), int(params.spatialSize[1]), int(params.spatialSize[2])),    
+                            mode=params.mode,
+                            method=params.method,
+                            value=params.fillValue)
+                )
             
         if (self.transformations.borderPad.enabled):
             params = self.transformations.borderPad
-            if (params.spatialBorder == "" or params.spatialBorder == None):
+            if (params.spatialBorder == "" or params.spatialBorder == None or params.fillValue == None):
                      raise ValueError("The 'Border Pad' transformation is enabled but spatial border is not valid")
 
-            self.mappedTransformations.append(BorderPad(spatial_border=int(params.spatialBorder), mode=params.mode))
+            self.mappedTransformations.append(BorderPad(spatial_border=int(params.spatialBorder), mode=params.mode, value=params.fillValue))
 
         if (self.transformations.spatialCrop.enabled):
             params = self.transformations.spatialCrop

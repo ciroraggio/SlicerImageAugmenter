@@ -6,6 +6,7 @@ from slicer.i18n import translate
 from slicer.ScriptedLoadableModule import *
 from slicer.util import VTKObservationMixin, setDataProbeVisible
 import qt
+from typing import Callable
 
 class ImageAugmenter(ScriptedLoadableModule):
     """Uses ScriptedLoadableModule base class, available at:
@@ -154,6 +155,7 @@ class ImageAugmenterWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
                                filesStructure=filesStructure,
                                progressBar=self.ui.progressBar,
                                infoLabel=self.ui.infoLabel,
+                               setButtonsEnabled=self.setButtonsEnabled,
                                device=self.ui.deviceList.currentText)
 
             self.setButtonsEnabled(True)
@@ -184,6 +186,7 @@ class ImageAugmenterWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
                                filesStructure=filesStructure,
                                progressBar=self.ui.progressBar,
                                infoLabel=self.ui.infoLabel,
+                               setButtonsEnabled=self.setButtonsEnabled,
                                selectedPreviewOptions=self.selectedPreviewOptions,
                                device=self.ui.deviceList.currentText)
 
@@ -230,13 +233,11 @@ class ImageAugmenterLogic(ScriptedLoadableModuleLogic):
                 filesStructure: str,
                 progressBar,
                 infoLabel,
+                setButtonsEnabled: Callable[[bool], None],
                 transformations: list = [],
                 device: str = "CPU",
                 ) -> None:
         from ImageAugmenterLib.ImageAugmenterDataset import ImageAugmenterDataset
-        from ImageAugmenterLib.ImageAugmenterTransformationParser import (
-            IMPOSSIBLE_COPY_INFO_TRANSFORM,
-        )
         from ImageAugmenterLib.ImageAugmenterUtils import (
             collectImagesAndMasksList,
             getOriginalCase,
@@ -276,25 +277,25 @@ class ImageAugmenterLogic(ScriptedLoadableModuleLogic):
 
                     imgPrefixParts = imgPrefix.split(".")
                     maskPrefixParts = maskPrefix.split(".")
-                    copyInfo = False if transformName in IMPOSSIBLE_COPY_INFO_TRANSFORM else True
 
                     save(img=img.detach().cpu(), path=currentDir,
                          filename=imgPrefixParts[0],
                          originalCase=originalCaseImg,
-                         extension=imgPrefixParts[1] if len(imgPrefixParts) > 1 else "nrrd",
-                         copyInfo=copyInfo)
+                         extension=imgPrefixParts[1] if len(imgPrefixParts) > 1 else "nrrd")
 
                     if originalCaseMask and msk != None and msk.any():
                         save(img=msk.detach().cpu(), path=currentDir,
                              filename=maskPrefixParts[0],
                              originalCase=originalCaseMask,
-                             extension=maskPrefixParts[1] if len(maskPrefixParts) > 1 else "nrrd",
-                             copyInfo=copyInfo)
+                             extension=maskPrefixParts[1] if len(maskPrefixParts) > 1 else "nrrd")
 
 
                 progressBar.setValue(dirIdx + 1)
 
             except Exception as e:
+                setButtonsEnabled(True)
+                progressBar.reset()
+                infoLabel.setText(f"{e}")
                 raise e
 
         stopTime = time.time()
@@ -307,6 +308,7 @@ class ImageAugmenterLogic(ScriptedLoadableModuleLogic):
                 maskPrefix: str,
                 progressBar,
                 infoLabel,
+                setButtonsEnabled: Callable[[bool], None],
                 selectedPreviewOptions: list,
                 transformations: list = [],
                 filesStructure: str = "",
@@ -316,9 +318,6 @@ class ImageAugmenterLogic(ScriptedLoadableModuleLogic):
         import SimpleITK as sitk
 
         from ImageAugmenterLib.ImageAugmenterDataset import ImageAugmenterDataset
-        from ImageAugmenterLib.ImageAugmenterTransformationParser import (
-            IMPOSSIBLE_COPY_INFO_TRANSFORM,
-        )
         from ImageAugmenterLib.ImageAugmenterUtils import (
             clearScene,
             collectImagesAndMasksList,
@@ -357,7 +356,7 @@ class ImageAugmenterLogic(ScriptedLoadableModuleLogic):
         for dirIdx in range(len(dataset)):
             try:
                 transformedImages, transformedMasks = dataset[dirIdx]
-                caseName, originalCaseImg = getOriginalCase(imgs[dirIdx], filesStructure)
+                caseName, originalCaseImg = getOriginalCase(previewImgs[dirIdx], filesStructure)
 
                 if transformedMasks:
                     originalCaseMask = sitk.ReadImage(masks[dirIdx])
@@ -371,20 +370,21 @@ class ImageAugmenterLogic(ScriptedLoadableModuleLogic):
 
                         imgNodeName = f"{caseName}_{transformName}_img"
                         maskNodeName = f"{caseName}_{transformName}_mask"
-                        copyInfo = False if transformName in IMPOSSIBLE_COPY_INFO_TRANSFORM else True
                         showPreview(img=img, originalCaseImg=originalCaseImg, originalCaseMask=originalCaseMask, mask=msk,
-                                    imgNodeName=imgNodeName, maskNodeName=maskNodeName, copyInfo=copyInfo)
+                                    imgNodeName=imgNodeName, maskNodeName=maskNodeName)
                 else:
                     for imgPack in transformedImages:
                         transformName, img = imgPack
                         imgNodeName = f"{caseName}_{transformName}_img"
-                        copyInfo = False if transformName in IMPOSSIBLE_COPY_INFO_TRANSFORM else True
-                        showPreview(img, originalCaseImg, imgNodeName=imgNodeName, copyInfo=copyInfo)
+                        showPreview(img, originalCaseImg, imgNodeName=imgNodeName)
 
                 resetViews()
                 progressBar.setValue(dirIdx + 1)
 
             except Exception as e:
+                setButtonsEnabled(True)
+                progressBar.reset()
+                infoLabel.setText(f"{e}")
                 raise e
 
         stopTime = time.time()

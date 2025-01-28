@@ -5,7 +5,7 @@ from typing import List
 
 
 DICT_KEYS = ["img", "mask"]
-IMPOSSIBLE_COPY_INFO_TRANSFORM = ["Resize", "BorderPad", "SpatialCrop", "CenterSpatialCrop"]
+
 class ImageAugmenterTransformationParser():
     def __init__(self, ui):
        self.ui = ui

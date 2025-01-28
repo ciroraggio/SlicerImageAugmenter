@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>914</width>
+    <width>904</width>
     <height>959</height>
    </rect>
   </property>
@@ -55,34 +55,11 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>876</width>
+           <width>866</width>
            <height>272</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_24">
-          <item row="0" column="1">
-           <widget class="ctkDirectoryButton" name="imagesInputPath">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_3">
-            <property name="maximumSize">
-             <size>
-              <width>217</width>
-              <height>23</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Image filename</string>
-            </property>
-           </widget>
-          </item>
           <item row="4" column="1">
            <layout class="QHBoxLayout" name="horizontalLayout">
             <item>
@@ -230,6 +207,26 @@
             </item>
            </layout>
           </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_5">
+            <property name="text">
+             <string>Choose input file structure</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_3">
+            <property name="maximumSize">
+             <size>
+              <width>217</width>
+              <height>23</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Image filename</string>
+            </property>
+           </widget>
+          </item>
           <item row="2" column="1">
            <widget class="QLineEdit" name="maskPrefix">
             <property name="sizePolicy">
@@ -262,6 +259,16 @@
             </property>
            </widget>
           </item>
+          <item row="0" column="1">
+           <widget class="ctkDirectoryButton" name="imagesInputPath">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+           </widget>
+          </item>
           <item row="0" column="0">
            <widget class="QLabel" name="label">
             <property name="maximumSize">
@@ -272,13 +279,6 @@
             </property>
             <property name="text">
              <string>Input images path</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_5">
-            <property name="text">
-             <string>Choose input file structure</string>
             </property>
            </widget>
           </item>
@@ -334,6 +334,12 @@
         </item>
         <item>
          <widget class="QComboBox" name="deviceList">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="minimumSize">
            <size>
             <width>136</width>
@@ -410,7 +416,7 @@
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="SpatialTab">
       <attribute name="title">
@@ -432,9 +438,9 @@
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>0</y>
-            <width>858</width>
-            <height>655</height>
+            <y>-248</y>
+            <width>848</width>
+            <height>657</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -450,6 +456,28 @@
               <string>Rotate</string>
              </property>
              <layout class="QGridLayout" name="gridLayout_3">
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="rotateEnabled">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0, 0);</string>
+                </property>
+                <property name="text">
+                 <string>Enabled</string>
+                </property>
+               </widget>
+              </item>
               <item row="0" column="1">
                <widget class="QLineEdit" name="rotateAngle">
                 <property name="minimumSize">
@@ -460,7 +488,7 @@
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>139</width>
+                  <width>16777215</width>
                   <height>16777215</height>
                  </size>
                 </property>
@@ -491,28 +519,6 @@
                 </property>
                 <property name="text">
                  <string>Interpolation mode</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="QCheckBox" name="rotateEnabled">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>220</width>
-                  <height>21</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(0, 0, 0);</string>
-                </property>
-                <property name="text">
-                 <string>Enabled</string>
                 </property>
                </widget>
               </item>
@@ -916,125 +922,93 @@
               <string>Resize</string>
              </property>
              <layout class="QGridLayout" name="gridLayout_18">
-              <item row="0" column="5">
-               <widget class="QLineEdit" name="resizeH">
-                <property name="maximumSize">
-                 <size>
-                  <width>51</width>
-                  <height>23</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(0, 85, 255);</string>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="placeholderText">
-                 <string>H</string>
-                </property>
-               </widget>
-              </item>
               <item row="0" column="2">
-               <widget class="QComboBox" name="resizeInterpolationMode">
-                <property name="maximumSize">
-                 <size>
-                  <width>79</width>
-                  <height>23</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(0, 85, 255);</string>
-                </property>
-                <property name="editable">
-                 <bool>false</bool>
-                </property>
-                <property name="currentText">
-                 <string>nearest</string>
-                </property>
-                <property name="placeholderText">
-                 <string/>
-                </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_9">
                 <item>
-                 <property name="text">
-                  <string>nearest</string>
-                 </property>
+                 <widget class="QLabel" name="label_8">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(0, 0,0);</string>
+                  </property>
+                  <property name="text">
+                   <string>Spatial size</string>
+                  </property>
+                 </widget>
                 </item>
                 <item>
-                 <property name="text">
-                  <string>nearest-exact</string>
-                 </property>
+                 <widget class="QLineEdit" name="resizeW">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>51</width>
+                    <height>23</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(0, 85, 255);</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="placeholderText">
+                   <string>W</string>
+                  </property>
+                 </widget>
                 </item>
                 <item>
-                 <property name="text">
-                  <string>linear</string>
-                 </property>
+                 <widget class="QLineEdit" name="resizeH">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>51</width>
+                    <height>23</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(0, 85, 255);</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="placeholderText">
+                   <string>H</string>
+                  </property>
+                 </widget>
                 </item>
-                <item>
-                 <property name="text">
-                  <string>bilinear</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>bicubic</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>trilinear</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>area</string>
-                 </property>
-                </item>
-               </widget>
+               </layout>
               </item>
-              <item row="0" column="3">
-               <widget class="QLabel" name="label_8">
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="resizeEnabled">
                 <property name="sizePolicy">
-                 <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>121</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(0, 0,0);</string>
-                </property>
-                <property name="text">
-                 <string>Spatial size</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QLabel" name="label_6">
-                <property name="maximumSize">
-                 <size>
-                  <width>121</width>
-                  <height>16</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(0, 0,0);</string>
-                </property>
-                <property name="text">
-                 <string>Interpolation mode</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="QCheckBox" name="resizeEnabled">
-                <property name="maximumSize">
-                 <size>
-                  <width>85</width>
+                  <width>70</width>
                   <height>21</height>
                  </size>
                 </property>
@@ -1046,24 +1020,88 @@
                 </property>
                </widget>
               </item>
-              <item row="0" column="4">
-               <widget class="QLineEdit" name="resizeW">
-                <property name="maximumSize">
-                 <size>
-                  <width>51</width>
-                  <height>23</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(0, 85, 255);</string>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="placeholderText">
-                 <string>W</string>
-                </property>
-               </widget>
+              <item row="0" column="1">
+               <layout class="QHBoxLayout" name="horizontalLayout_8">
+                <item>
+                 <widget class="QLabel" name="label_6">
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(0, 0,0);</string>
+                  </property>
+                  <property name="text">
+                   <string>Interpolation mode</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QComboBox" name="resizeInterpolationMode">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>79</width>
+                    <height>23</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(0, 85, 255);</string>
+                  </property>
+                  <property name="editable">
+                   <bool>false</bool>
+                  </property>
+                  <property name="currentText">
+                   <string>nearest</string>
+                  </property>
+                  <property name="placeholderText">
+                   <string/>
+                  </property>
+                  <item>
+                   <property name="text">
+                    <string>nearest</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>nearest-exact</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>linear</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>bilinear</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>bicubic</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>trilinear</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>area</string>
+                   </property>
+                  </item>
+                 </widget>
+                </item>
+               </layout>
               </item>
              </layout>
             </widget>
@@ -1300,34 +1338,7 @@
               <string>Random Zoom</string>
              </property>
              <layout class="QGridLayout" name="gridLayout_21">
-              <item row="0" column="0" rowspan="2">
-               <widget class="QCheckBox" name="randomZoomEnabled">
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(0,0,0);</string>
-                </property>
-                <property name="text">
-                 <string>Enabled</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="4" rowspan="2">
-               <widget class="QLineEdit" name="randomZoomFactorMax">
-                <property name="placeholderText">
-                 <string>Max (i.e. 1.2)</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QLabel" name="label_23">
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(0,0,0);</string>
-                </property>
-                <property name="text">
-                 <string>Factor</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="5">
+              <item row="0" column="4">
                <widget class="QLabel" name="label_26">
                 <property name="styleSheet">
                  <string notr="true">color: rgb(0,0,0);</string>
@@ -1337,56 +1348,7 @@
                 </property>
                </widget>
               </item>
-              <item row="0" column="6">
-               <widget class="QComboBox" name="randomZoomInterpolationMode">
-                <item>
-                 <property name="text">
-                  <string>area</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>nearest</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>nearest-exact</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>linear</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>bilinear</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>bicubic</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>trilinear</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
               <item row="3" column="5">
-               <widget class="QLabel" name="label_27">
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(0,0,0);</string>
-                </property>
-                <property name="text">
-                 <string>Padding mode</string>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="6">
                <widget class="QComboBox" name="randomZoomPaddingMode">
                 <item>
                  <property name="text">
@@ -1430,17 +1392,27 @@
                 </item>
                </widget>
               </item>
-              <item row="0" column="2" rowspan="2">
+              <item row="0" column="1" rowspan="2">
                <widget class="QLineEdit" name="randomZoomFactorMin">
                 <property name="text">
                  <string/>
                 </property>
                 <property name="placeholderText">
-                 <string>Min (i.e. 0.2)</string>
+                 <string>Factor - Min (i.e. 0.2)</string>
                 </property>
                </widget>
               </item>
-              <item row="3" column="2">
+              <item row="0" column="0" rowspan="2">
+               <widget class="QCheckBox" name="randomZoomEnabled">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0,0,0);</string>
+                </property>
+                <property name="text">
+                 <string>Enabled</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
                <widget class="QCheckBox" name="randomZoomAlignCorners">
                 <property name="styleSheet">
                  <string notr="true">color: rgb(0,0,0);</string>
@@ -1448,6 +1420,62 @@
                 <property name="text">
                  <string>Align corners</string>
                 </property>
+               </widget>
+              </item>
+              <item row="3" column="4">
+               <widget class="QLabel" name="label_27">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0,0,0);</string>
+                </property>
+                <property name="text">
+                 <string>Padding mode</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="3" rowspan="2">
+               <widget class="QLineEdit" name="randomZoomFactorMax">
+                <property name="placeholderText">
+                 <string>Factor - Max (i.e. 1.2)</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="5">
+               <widget class="QComboBox" name="randomZoomInterpolationMode">
+                <item>
+                 <property name="text">
+                  <string>area</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>nearest</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>nearest-exact</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>linear</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>bilinear</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>bicubic</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>trilinear</string>
+                 </property>
+                </item>
                </widget>
               </item>
              </layout>
@@ -1483,7 +1511,7 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>858</width>
+            <width>848</width>
             <height>1005</height>
            </rect>
           </property>
@@ -1542,13 +1570,23 @@ color: rgb(0, 85, 255);</string>
               <string>Random Scale Intensity</string>
              </property>
              <layout class="QGridLayout" name="gridLayout_7">
-              <item row="0" column="1">
-               <widget class="QLabel" name="label_17">
+              <item row="0" column="2">
+               <widget class="QLineEdit" name="randomScaleIntensityFactorTo">
                 <property name="styleSheet">
-                 <string notr="true">color: rgb(0, 0, 0);</string>
+                 <string notr="true">color: rgb(0, 85, 255);</string>
                 </property>
-                <property name="text">
-                 <string>Factors</string>
+                <property name="placeholderText">
+                 <string>Factor - To (i.e. 1.5)</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLineEdit" name="randomScaleIntensityFactorFrom">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 85, 255);</string>
+                </property>
+                <property name="placeholderText">
+                 <string>Factor - From (i.e. 1.3)</string>
                 </property>
                </widget>
               </item>
@@ -1559,26 +1597,6 @@ color: rgb(0, 85, 255);</string>
                 </property>
                 <property name="text">
                  <string>Enabled</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="2">
-               <widget class="QLineEdit" name="randomScaleIntensityFactorFrom">
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(0, 85, 255);</string>
-                </property>
-                <property name="placeholderText">
-                 <string>(i.e. 1.3)</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="3">
-               <widget class="QLineEdit" name="randomScaleIntensityFactorTo">
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(0, 85, 255);</string>
-                </property>
-                <property name="placeholderText">
-                 <string>To (i.e. 1.5)</string>
                 </property>
                </widget>
               </item>
@@ -1645,13 +1663,33 @@ color: rgb(0, 85, 255);</string>
               <string>Random Adjust Contrast</string>
              </property>
              <layout class="QGridLayout" name="gridLayout_8">
+              <item row="0" column="3">
+               <widget class="QCheckBox" name="randomAdjustContrastInvertImage">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0,0);</string>
+                </property>
+                <property name="text">
+                 <string>Invert image</string>
+                </property>
+               </widget>
+              </item>
               <item row="0" column="2">
+               <widget class="QLineEdit" name="randomAdjustContrastGammaTo">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 85, 255);</string>
+                </property>
+                <property name="placeholderText">
+                 <string>Gamma - To (i.e. 0.8)</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
                <widget class="QLineEdit" name="randomAdjustContrastGammaFrom">
                 <property name="styleSheet">
                  <string notr="true">color: rgb(0, 85, 255);</string>
                 </property>
                 <property name="placeholderText">
-                 <string>From (i.e. 0.6)</string>
+                 <string>Gamma - From (i.e. 0.6)</string>
                 </property>
                </widget>
               </item>
@@ -1662,36 +1700,6 @@ color: rgb(0, 85, 255);</string>
                 </property>
                 <property name="text">
                  <string>Enabled</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="3">
-               <widget class="QLineEdit" name="randomAdjustContrastGammaTo">
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(0, 85, 255);</string>
-                </property>
-                <property name="placeholderText">
-                 <string>To (i.e. 0.8)</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QLabel" name="label_10">
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(0, 0,0);</string>
-                </property>
-                <property name="text">
-                 <string>Gamma</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="4">
-               <widget class="QCheckBox" name="randomAdjustContrastInvertImage">
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(0, 0,0);</string>
-                </property>
-                <property name="text">
-                 <string>Invert image</string>
                 </property>
                </widget>
               </item>
@@ -1794,22 +1802,22 @@ color: rgb(0, 85, 255);</string>
              </property>
              <layout class="QGridLayout" name="gridLayout_9">
               <item row="0" column="2">
-               <widget class="QLineEdit" name="randomShiftIntensityFrom">
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(0, 85, 255);</string>
-                </property>
-                <property name="placeholderText">
-                 <string>From (i.e. 0.6)</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="3">
                <widget class="QLineEdit" name="randomShiftIntensityTo">
                 <property name="styleSheet">
                  <string notr="true">color: rgb(0, 85, 255);</string>
                 </property>
                 <property name="placeholderText">
-                 <string>To (i.e. 1.2)</string>
+                 <string>Offset - To (i.e. 1.2)</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLineEdit" name="randomShiftIntensityFrom">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 85, 255);</string>
+                </property>
+                <property name="placeholderText">
+                 <string>Offset - From (i.e. 0.6)</string>
                 </property>
                </widget>
               </item>
@@ -1820,16 +1828,6 @@ color: rgb(0, 85, 255);</string>
                 </property>
                 <property name="text">
                  <string>Enabled</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QLabel" name="label_14">
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(0, 0,0);</string>
-                </property>
-                <property name="text">
-                 <string>Offset</string>
                 </property>
                </widget>
               </item>
@@ -2239,9 +2237,9 @@ color: rgb(0, 85, 255);</string>
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>0</y>
-            <width>858</width>
-            <height>436</height>
+            <y>-64</y>
+            <width>848</width>
+            <height>500</height>
            </rect>
           </property>
           <property name="layoutDirection">
@@ -2261,6 +2259,16 @@ color: rgb(0, 85, 255);</string>
               <string>Spatial Pad</string>
              </property>
              <layout class="QGridLayout" name="gridLayout_25">
+              <item row="1" column="1">
+               <widget class="QLabel" name="label_10">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0, 0);</string>
+                </property>
+                <property name="text">
+                 <string>Fill value</string>
+                </property>
+               </widget>
+              </item>
               <item row="0" column="0">
                <widget class="QCheckBox" name="spatialPadEnabled">
                 <property name="styleSheet">
@@ -2271,7 +2279,93 @@ color: rgb(0, 85, 255);</string>
                 </property>
                </widget>
               </item>
-              <item row="2" column="2">
+              <item row="3" column="1">
+               <widget class="QLabel" name="label_29">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0,0,0);</string>
+                </property>
+                <property name="text">
+                 <string>Mode</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="3">
+               <widget class="QLineEdit" name="spatialPadH">
+                <property name="placeholderText">
+                 <string>H</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="2">
+               <widget class="QLineEdit" name="spatialPadW">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 170, 255);
+color: rgb(0, 85, 255);</string>
+                </property>
+                <property name="placeholderText">
+                 <string>W</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="4">
+               <widget class="QLineEdit" name="spatialPadC">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 170, 255);
+color: rgb(0, 85, 255);</string>
+                </property>
+                <property name="placeholderText">
+                 <string>C</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLabel" name="label_15">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0,0,0);</string>
+                </property>
+                <property name="text">
+                 <string>Spatial size</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QLabel" name="label_16">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0,0,0);</string>
+                </property>
+                <property name="text">
+                 <string>Method</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="2" colspan="3">
+               <widget class="QLineEdit" name="spatialPadFillValue">
+                <property name="placeholderText">
+                 <string>(i.e. 0)</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="2" colspan="3">
+               <widget class="QComboBox" name="spatialPadMethod">
+                <item>
+                 <property name="text">
+                  <string>symmetric</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>end</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="3" column="2" colspan="3">
                <widget class="QComboBox" name="spatialPadMode">
                 <item>
                  <property name="text">
@@ -2340,78 +2434,6 @@ color: rgb(0, 85, 255);</string>
                 </item>
                </widget>
               </item>
-              <item row="0" column="1">
-               <widget class="QLabel" name="label_15">
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(0,0,0);</string>
-                </property>
-                <property name="text">
-                 <string>Spatial size</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="2">
-               <widget class="QComboBox" name="spatialPadMethod">
-                <item>
-                 <property name="text">
-                  <string>symmetric</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>end</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item row="2" column="1">
-               <widget class="QLabel" name="label_29">
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(0,0,0);</string>
-                </property>
-                <property name="text">
-                 <string>Mode</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="QLabel" name="label_16">
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(0,0,0);</string>
-                </property>
-                <property name="text">
-                 <string>Method</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="4">
-               <widget class="QLineEdit" name="spatialPadH">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(0, 170, 255);
-color: rgb(0, 85, 255);</string>
-                </property>
-                <property name="placeholderText">
-                 <string>H</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="2">
-               <widget class="QLineEdit" name="spatialPadW">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(0, 170, 255);
-color: rgb(0, 85, 255);</string>
-                </property>
-                <property name="placeholderText">
-                 <string>W</string>
-                </property>
-               </widget>
-              </item>
              </layout>
             </widget>
            </item>
@@ -2440,18 +2462,7 @@ color: rgb(0, 85, 255);</string>
                 </property>
                </widget>
               </item>
-              <item row="0" column="2">
-               <widget class="QLineEdit" name="borderPadSpatialBorder">
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(0, 170, 255);
-color: rgb(0, 85, 255);</string>
-                </property>
-                <property name="placeholderText">
-                 <string>(i.e. 10)</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
+              <item row="2" column="1">
                <widget class="QLabel" name="label_30">
                 <property name="styleSheet">
                  <string notr="true">color: rgb(0,0,0);</string>
@@ -2471,7 +2482,18 @@ color: rgb(0, 85, 255);</string>
                 </property>
                </widget>
               </item>
-              <item row="1" column="2">
+              <item row="0" column="2">
+               <widget class="QLineEdit" name="borderPadSpatialBorder">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 170, 255);
+color: rgb(0, 85, 255);</string>
+                </property>
+                <property name="placeholderText">
+                 <string>(i.e. 10)</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="2">
                <widget class="QComboBox" name="borderPadMode">
                 <item>
                  <property name="text">
@@ -2538,6 +2560,23 @@ color: rgb(0, 85, 255);</string>
                   <string>replicate</string>
                  </property>
                 </item>
+               </widget>
+              </item>
+              <item row="1" column="2">
+               <widget class="QLineEdit" name="borderPadFillValue">
+                <property name="placeholderText">
+                 <string>(i.e 0)</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QLabel" name="label23123">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0, 0);</string>
+                </property>
+                <property name="text">
+                 <string>Fill value</string>
+                </property>
                </widget>
               </item>
              </layout>
@@ -2649,38 +2688,48 @@ color: rgb(0, 85, 255);</string>
              </property>
              <layout class="QGridLayout" name="gridLayout_28">
               <item row="0" column="0">
-               <widget class="QCheckBox" name="centerSpatialCropEnabled">
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(0, 0,0);</string>
-                </property>
-                <property name="text">
-                 <string>Enabled</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="2">
-               <widget class="QLineEdit" name="centerSpatialCropSizeW">
-                <property name="placeholderText">
-                 <string>W</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QLabel" name="label_33">
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(0,0,0);</string>
-                </property>
-                <property name="text">
-                 <string>ROI size</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="3">
-               <widget class="QLineEdit" name="centerSpatialCropSizeH">
-                <property name="placeholderText">
-                 <string>H</string>
-                </property>
-               </widget>
+               <layout class="QHBoxLayout" name="horizontalLayout_10">
+                <item>
+                 <widget class="QCheckBox" name="centerSpatialCropEnabled">
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(0, 0,0);</string>
+                  </property>
+                  <property name="text">
+                   <string>Enabled</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_33">
+                  <property name="minimumSize">
+                   <size>
+                    <width>50</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(0,0,0);</string>
+                  </property>
+                  <property name="text">
+                   <string>ROI size</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="centerSpatialCropSizeW">
+                  <property name="placeholderText">
+                   <string>W</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="centerSpatialCropSizeH">
+                  <property name="placeholderText">
+                   <string>H</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </item>
              </layout>
             </widget>
@@ -2723,7 +2772,7 @@ color: rgb(0, 85, 255);</string>
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>20</height>
+       <height>50</height>
       </size>
      </property>
      <property name="text">
