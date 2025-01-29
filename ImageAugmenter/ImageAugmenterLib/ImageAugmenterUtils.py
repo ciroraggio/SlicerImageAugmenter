@@ -10,20 +10,28 @@ FLAT = "flat"  # .../path/ImgID.extension, .../path/ImgID_label.extension
 HIERARCHICAL = "hierarchical" # .../path/CaseID/img.extension, # .../path/CaseID/mask.extension
 CHANNEL_FIRST_REQUIRED = ["Resize", "SpatialPad", "CenterSpatialCrop"]
 
-def collectImagesAndMasksList(imagesInputPath, imgPrefix, maskPrefix):
+
+def collectImagesAndMasksList(imagesInputPath, imgPrefix, maskPrefix, isImgPrefixRegex, isMaskPrefixRegex):
     imgs, masks = [], []
+
+    # Regex compiled only if the flags are active, otherwise use the prefix
+    imgPattern = re.compile(imgPrefix) if isImgPrefixRegex else None
+    maskPattern = re.compile(maskPrefix) if isMaskPrefixRegex else None
 
     for root, _, files in os.walk(imagesInputPath):
         for file in files:
             if file.startswith("."):
                 continue
             filePath = os.path.join(root, file)
-            if imgPrefix in file:
+
+            if (imgPattern and imgPattern.search(file)) or (not imgPattern and imgPrefix in file):
                 imgs.append(filePath)
-            elif maskPrefix and maskPrefix in file:
+            
+            elif maskPrefix and ((maskPattern and maskPattern.search(file)) or (not maskPattern and maskPrefix in file)):
                 masks.append(filePath)
 
     return imgs, masks
+
 
 
 def getFilesStructure(ui):
@@ -63,9 +71,19 @@ def getTransformName(transform) -> str:
 
 
 def getCaseName(fullImgPath, filesStructure):
+    print(fullImgPath, fullImgPath.split("/")[-1])
     return fullImgPath.split("/")[-2] if (filesStructure == HIERARCHICAL) else fullImgPath.split("/")[-1]
 
-
+def splitFilenameAndExtension(filePath, prefix, isRegex):
+    baseName = os.path.basename(filePath) 
+    
+    if baseName.endswith(".nii.gz"):
+        name, ext = baseName[:-7], ".nii.gz"
+    else:
+        name, ext = os.path.splitext(baseName)
+        
+    return name, ext
+    
 def getOriginalCase(fullImgPath, filesStructure):
     """This function returns the original image and extracts the specific patient/case name/ID.
     The extracted name/ID will be used as the title of the folder that will contain the augmented images.
@@ -96,7 +114,7 @@ def save(img, path, filename, originalCase, extension):
     if (originalCase.GetDepth() > 0):
         copyInfo(originalCase, img)
 
-    saveThread = threading.Thread(target=sitk.WriteImage, args=(img, f"{path}/{filename}.{extension}"))
+    saveThread = threading.Thread(target=sitk.WriteImage, args=(img, f"{path}/{filename}{extension}"))
     saveThread.start()
 
 def showPreview(img, originalCaseImg, originalCaseMask=None, mask=None, imgNodeName="imgNode", maskNodeName="maskNode"):

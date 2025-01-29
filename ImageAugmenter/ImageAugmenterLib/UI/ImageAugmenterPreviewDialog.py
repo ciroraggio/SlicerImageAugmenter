@@ -1,9 +1,8 @@
 import qt
 
-
-class CheckboxDialog(qt.QDialog):
+class PreviewCheckboxDialog(qt.QDialog):
     def __init__(self, parent=None):
-        super(CheckboxDialog, self).__init__(parent)
+        super(PreviewCheckboxDialog, self).__init__(parent)
         self.setWindowTitle("ImageAugmenter")
 
         mainDialogLayout = qt.QVBoxLayout(self)

@@ -56,10 +56,96 @@
            <x>0</x>
            <y>0</y>
            <width>866</width>
-           <height>272</height>
+           <height>278</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_24">
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_5">
+            <property name="text">
+             <string>Choose input file structure</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QGroupBox" name="groupBox_25">
+            <property name="title">
+             <string/>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_31">
+             <item row="0" column="0">
+              <widget class="QLineEdit" name="imgPrefix">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>23</height>
+                </size>
+               </property>
+               <property name="placeholderText">
+                <string>CT.nrrd or CT or .tif/.nrrd/.dcm or ^ct\.(nii\.gz|nrrd)$ (required)</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QPushButton" name="imageRegexButton">
+               <property name="maximumSize">
+                <size>
+                 <width>30</width>
+                 <height>23</height>
+                </size>
+               </property>
+               <property name="toolTip">
+                <string>Enable RegEx mode</string>
+               </property>
+               <property name="toolTipDuration">
+                <number>5000</number>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="checkable">
+                <bool>true</bool>
+               </property>
+               <property name="checked">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label">
+            <property name="maximumSize">
+             <size>
+              <width>129</width>
+              <height>23</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Input images path</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_3">
+            <property name="maximumSize">
+             <size>
+              <width>217</width>
+              <height>23</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Image filename</string>
+            </property>
+           </widget>
+          </item>
           <item row="4" column="1">
            <layout class="QHBoxLayout" name="horizontalLayout">
             <item>
@@ -207,45 +293,6 @@
             </item>
            </layout>
           </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_5">
-            <property name="text">
-             <string>Choose input file structure</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_3">
-            <property name="maximumSize">
-             <size>
-              <width>217</width>
-              <height>23</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Image filename</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QLineEdit" name="maskPrefix">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>23</height>
-             </size>
-            </property>
-            <property name="placeholderText">
-             <string>mask.nrrd or mask or .tif/.nrrd/.dcm</string>
-            </property>
-           </widget>
-          </item>
           <item row="2" column="0">
            <widget class="QLabel" name="label_4">
             <property name="maximumSize">
@@ -269,36 +316,54 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="label">
-            <property name="maximumSize">
-             <size>
-              <width>129</width>
-              <height>23</height>
-             </size>
+          <item row="2" column="1">
+           <widget class="QGroupBox" name="groupBox_26">
+            <property name="title">
+             <string/>
             </property>
-            <property name="text">
-             <string>Input images path</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QLineEdit" name="imgPrefix">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>23</height>
-             </size>
-            </property>
-            <property name="placeholderText">
-             <string>CT.nrrd or CT or .tif/.nrrd/.dcm (required)</string>
-            </property>
+            <layout class="QGridLayout" name="gridLayout_32">
+             <item row="0" column="0">
+              <widget class="QLineEdit" name="maskPrefix">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>23</height>
+                </size>
+               </property>
+               <property name="placeholderText">
+                <string>mask.nrrd or mask or .tif/.nrrd/.dcm or ^ct\.(nii\.gz|nrrd)$ (optional)</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QPushButton" name="maskRegexButton">
+               <property name="maximumSize">
+                <size>
+                 <width>30</width>
+                 <height>23</height>
+                </size>
+               </property>
+               <property name="toolTip">
+                <string>Enable RegEx mode</string>
+               </property>
+               <property name="toolTipDuration">
+                <number>5000</number>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="checkable">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </item>
          </layout>
@@ -2256,7 +2321,7 @@ color: rgb(0, 85, 255);</string>
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>-236</y>
+            <y>0</y>
             <width>848</width>
             <height>500</height>
            </rect>
@@ -2893,6 +2958,12 @@ color: rgb(0, 85, 255);</string>
           <width>30</width>
           <height>16777215</height>
          </size>
+        </property>
+        <property name="toolTip">
+         <string>Select preview cases</string>
+        </property>
+        <property name="toolTipDuration">
+         <number>5000</number>
         </property>
         <property name="styleSheet">
          <string notr="true">background-color: rgb(153,203,252);

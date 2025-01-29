@@ -7,6 +7,7 @@ from slicer.ScriptedLoadableModule import *
 from slicer.util import VTKObservationMixin, setDataProbeVisible
 import qt
 from typing import Callable
+import SimpleITK as sitk
 
 class ImageAugmenter(ScriptedLoadableModule):
     """Uses ScriptedLoadableModule base class, available at:
@@ -41,7 +42,7 @@ class ImageAugmenterWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
         self.ui.previewSettingsButton.setVisible(all_present)
             
     def setup(self) -> None:
-        from ImageAugmenterLib.ImageAugmenterUIUtils import CheckboxDialog
+        from ImageAugmenterLib.UI.ImageAugmenterPreviewDialog import PreviewCheckboxDialog
         import os
         """Called when the user opens the module the first time and the widget is initialized."""
         ScriptedLoadableModuleWidget.setup(self)
@@ -74,8 +75,16 @@ class ImageAugmenterWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
         self.ui.previewSettingsButton.setIcon(qt.QIcon(previewSettingsIconPath))
         self.ui.previewSettingsButton.connect("clicked(bool)", self.onPreviewSettingsButton)
         
+        regexIconPath = os.path.join(os.path.dirname(slicer.util.modulePath(self.__module__)), 'Resources/Icons', 'regex.png')
+        self.ui.imageRegexButton.setIcon(qt.QIcon(regexIconPath))
+        self.ui.maskRegexButton.setIcon(qt.QIcon(regexIconPath))
+
+        self.ui.imageRegexButton.connect("clicked(bool)", self.onImageRexegButton)
+        self.ui.maskRegexButton.connect("clicked(bool)", self.onMaskRexegButton)
+        
+        
         self.ui.installRequirementsButton.connect("clicked(bool)", self.onInstallRequirements)
-        self.previewSettingsDialog = CheckboxDialog()
+        self.previewSettingsDialog = PreviewCheckboxDialog()
         self.selectedPreviewOptions = []
 
 
@@ -105,7 +114,8 @@ class ImageAugmenterWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
         self.ui.applyButton.setEnabled(state)
         self.ui.previewButton.setEnabled(state)
         self.ui.previewSettingsButton.setEnabled(state)
-        
+        self.ui.imageRegexButton.setEnabled(state)
+        self.ui.maskRegexButton.setEnabled(state)
 
     def resetAndDisable(self):
         self.ui.progressBar.reset()
@@ -146,6 +156,8 @@ class ImageAugmenterWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
             self.logic.process(imagesInputPath=self.ui.imagesInputPath.directory,
                                imgPrefix=self.ui.imgPrefix.text.strip(),
                                maskPrefix=self.ui.maskPrefix.text.strip(),
+                               isImgPrefixRegex=self.ui.imageRegexButton.isChecked(),
+                               isMaskPrefixRegex=self.ui.maskRegexButton.isChecked(),
                                outputPath=self.ui.outputPath.directory,
                                transformations=transformationList,
                                filesStructure=filesStructure,
@@ -178,6 +190,8 @@ class ImageAugmenterWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
             self.logic.preview(imagesInputPath=self.ui.imagesInputPath.directory,
                                imgPrefix=self.ui.imgPrefix.text.strip(),
                                maskPrefix=self.ui.maskPrefix.text.strip(),
+                               isImgPrefixRegex=self.ui.imageRegexButton.isChecked(),
+                               isMaskPrefixRegex=self.ui.maskRegexButton.isChecked(),
                                transformations=transformationList,
                                filesStructure=filesStructure,
                                progressBar=self.ui.progressBar,
@@ -202,6 +216,8 @@ class ImageAugmenterWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
             mappedOptions = self.logic.loadPreviewOptions(imagesInputPath=self.ui.imagesInputPath.directory,
                                imgPrefix=self.ui.imgPrefix.text.strip(),
                                maskPrefix=self.ui.maskPrefix.text.strip(),
+                               isImgPrefixRegex=self.ui.imageRegexButton.isChecked(),
+                               isMaskPrefixRegex=self.ui.maskRegexButton.isChecked(),
                                filesStructure=filesStructure
                                )
             if(len(mappedOptions.keys()) == 0):
@@ -211,7 +227,14 @@ class ImageAugmenterWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
 
             if self.previewSettingsDialog.exec_() == qt.QDialog.Accepted:
                 self.selectedPreviewOptions = self.previewSettingsDialog.getSelectedOptions()
+    
+    def onImageRexegButton(self):
+        from ImageAugmenterLib.UI.ImageAugmenterUIUtils import updateButtonStyle
+        updateButtonStyle(self.ui.imageRegexButton, "background-color: rgb(52, 206, 165);" if self.ui.imageRegexButton.isChecked() else "")
 
+    def onMaskRexegButton(self):
+        from ImageAugmenterLib.UI.ImageAugmenterUIUtils import updateButtonStyle
+        updateButtonStyle(self.ui.maskRegexButton, "background-color: rgb(52, 206, 165);" if self.ui.maskRegexButton.isChecked() else "")
 
 class ImageAugmenterLogic(ScriptedLoadableModuleLogic):
     def __init__(self) -> None:
@@ -226,6 +249,8 @@ class ImageAugmenterLogic(ScriptedLoadableModuleLogic):
                 imagesInputPath: str,
                 imgPrefix: str,
                 maskPrefix: str,
+                isImgPrefixRegex: bool,
+                isMaskPrefixRegex: bool,
                 outputPath: float,
                 filesStructure: str,
                 progressBar,
@@ -239,6 +264,7 @@ class ImageAugmenterLogic(ScriptedLoadableModuleLogic):
             collectImagesAndMasksList,
             getOriginalCase,
             makeDir,
+            splitFilenameAndExtension,
             save,
         )
         from ImageAugmenterLib.ImageAugmenterValidator import (
@@ -250,7 +276,10 @@ class ImageAugmenterLogic(ScriptedLoadableModuleLogic):
         infoLabel.setText("Processing started, please wait...")
         imgs, masks = collectImagesAndMasksList(imagesInputPath=imagesInputPath,
                                                 imgPrefix=imgPrefix,
-                                                maskPrefix=maskPrefix)
+                                                maskPrefix=maskPrefix,
+                                                isImgPrefixRegex=isImgPrefixRegex,
+                                                isMaskPrefixRegex=isMaskPrefixRegex
+                                                )
 
         validationResult = validateCollectedImagesAndMasks(imgs, masks)
         
@@ -259,7 +288,7 @@ class ImageAugmenterLogic(ScriptedLoadableModuleLogic):
             progressBar.reset()
             infoLabel.setText(validationResult)
             raise validationResult
-        
+
         dataset = ImageAugmenterDataset(imgPaths=imgs, maskPaths=masks, transformations=transformations, device=device)
 
         progressBar.setMaximum(len(dataset))
@@ -278,20 +307,19 @@ class ImageAugmenterLogic(ScriptedLoadableModuleLogic):
                     _, msk = mskPack if mskPack else (None, None)
 
                     currentDir = makeDir(outputPath, caseName, transformName)
-
-                    imgPrefixParts = imgPrefix.split(".")
-                    maskPrefixParts = maskPrefix.split(".")
-
+                    
+                    imgName, imgExtension = splitFilenameAndExtension(imgs[dirIdx], imgPrefix, isImgPrefixRegex)
                     save(img=img.detach().cpu(), path=currentDir,
-                         filename=imgPrefixParts[0],
+                         filename=imgName,
                          originalCase=originalCaseImg,
-                         extension=imgPrefixParts[1] if len(imgPrefixParts) > 1 else "nrrd")
+                         extension=imgExtension if imgExtension else "nrrd")
 
                     if originalCaseMask and msk != None and msk.any():
+                        maskName, maskExtension = splitFilenameAndExtension(masks[dirIdx], maskPrefix, isMaskPrefixRegex)
                         save(img=msk.detach().cpu(), path=currentDir,
-                             filename=maskPrefixParts[0],
+                             filename=maskName,
                              originalCase=originalCaseMask,
-                             extension=maskPrefixParts[1] if len(maskPrefixParts) > 1 else "nrrd")
+                             extension=maskExtension if maskExtension else "nrrd")
 
 
                 progressBar.setValue(dirIdx + 1)
@@ -310,6 +338,8 @@ class ImageAugmenterLogic(ScriptedLoadableModuleLogic):
                 imagesInputPath: str,
                 imgPrefix: str,
                 maskPrefix: str,
+                isImgPrefixRegex: bool,
+                isMaskPrefixRegex: bool,
                 progressBar,
                 infoLabel,
                 setButtonsEnabled: Callable[[bool], None],
@@ -339,7 +369,10 @@ class ImageAugmenterLogic(ScriptedLoadableModuleLogic):
 
         imgs, masks = collectImagesAndMasksList(imagesInputPath=imagesInputPath,
                                                 imgPrefix=imgPrefix,
-                                                maskPrefix=maskPrefix)
+                                                maskPrefix=maskPrefix,
+                                                isImgPrefixRegex=isImgPrefixRegex,
+                                                isMaskPrefixRegex=isMaskPrefixRegex
+                                                )
 
         validationResult = validateCollectedImagesAndMasks(imgs, masks)
         
@@ -411,12 +444,17 @@ class ImageAugmenterLogic(ScriptedLoadableModuleLogic):
                            imagesInputPath,
                            imgPrefix,
                            maskPrefix,
+                           isImgPrefixRegex: bool,
+                           isMaskPrefixRegex: bool,
                            filesStructure) -> dict[str, str]:        
         from ImageAugmenterLib.ImageAugmenterUtils import collectImagesAndMasksList, getCaseName
         
         imgs, masks = collectImagesAndMasksList(imagesInputPath=imagesInputPath,
                                                 imgPrefix=imgPrefix,
-                                                maskPrefix=maskPrefix)
+                                                maskPrefix=maskPrefix,
+                                                isImgPrefixRegex=isImgPrefixRegex,
+                                                isMaskPrefixRegex=isMaskPrefixRegex
+                                                )
         options = {}
         
         for case in imgs:
