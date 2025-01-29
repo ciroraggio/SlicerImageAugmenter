@@ -217,6 +217,7 @@ class ImageAugmenterLogic(ScriptedLoadableModuleLogic):
     def __init__(self) -> None:
         """Called when the logic class is instantiated. Can be used for initializing member variables."""
         ScriptedLoadableModuleLogic.__init__(self)
+        self.previewNodesList = []
 
     def getParameterNode(self):
         return ImageAugmenterParameterNode(super().getParameterNode())
@@ -348,7 +349,8 @@ class ImageAugmenterLogic(ScriptedLoadableModuleLogic):
             infoLabel.setText(validationResult)
             raise validationResult
             
-        clearScene()
+        clearScene(self.previewNodesList)
+        self.previewNodesList = []
         
         previewIndices = [i for i, path in enumerate(imgs) if path in selectedPreviewOptions] if len(selectedPreviewOptions) > 0 else [0]
         previewImgs = []
@@ -380,13 +382,16 @@ class ImageAugmenterLogic(ScriptedLoadableModuleLogic):
 
                         imgNodeName = f"{caseName}_{transformName}_img"
                         maskNodeName = f"{caseName}_{transformName}_mask"
-                        showPreview(img=img, originalCaseImg=originalCaseImg, originalCaseMask=originalCaseMask, mask=msk,
+                        imgNode, maskNode = showPreview(img=img, originalCaseImg=originalCaseImg, originalCaseMask=originalCaseMask, mask=msk,
                                     imgNodeName=imgNodeName, maskNodeName=maskNodeName)
+                        self.previewNodesList.append(imgNode)
+                        self.previewNodesList.append(maskNode)
                 else:
                     for imgPack in transformedImages:
                         transformName, img = imgPack
                         imgNodeName = f"{caseName}_{transformName}_img"
-                        showPreview(img, originalCaseImg, imgNodeName=imgNodeName)
+                        imgNode = showPreview(img, originalCaseImg, imgNodeName=imgNodeName)
+                        self.previewNodesList.append(imgNode)
 
                 resetViews()
                 progressBar.setValue(dirIdx + 1)

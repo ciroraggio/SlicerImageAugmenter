@@ -115,14 +115,17 @@ def showPreview(img, originalCaseImg, originalCaseMask=None, mask=None, imgNodeN
         outputMaskNode = sitkUtils.PushVolumeToSlicer(sitkAugmentedMask, name=maskNodeName, className="vtkMRMLScalarVolumeNode")
 
         slicer.util.setSliceViewerLayers(background=outputImgNode, label=outputMaskNode, labelOpacity=0.4)
+        return outputImgNode, maskNodeName
     else:
         slicer.util.setSliceViewerLayers(background=outputImgNode)
+        return outputImgNode
 
 
-def clearScene():
+def clearScene(previewNodesToClear: list):
     scene = slicer.mrmlScene
-    scene.Clear()
-
+    for oldPreviewNode in previewNodesToClear:
+        scene.RemoveNode(oldPreviewNode)
+    
 
 def resetViews():
     slicer.app.layoutManager().resetThreeDViews()
