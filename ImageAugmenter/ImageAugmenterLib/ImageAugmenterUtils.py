@@ -71,7 +71,6 @@ def getTransformName(transform) -> str:
 
 
 def getCaseName(fullImgPath, filesStructure):
-    print(fullImgPath, fullImgPath.split("/")[-1])
     return fullImgPath.split("/")[-2] if (filesStructure == HIERARCHICAL) else fullImgPath.split("/")[-1]
 
 def splitFilenameAndExtension(filePath, prefix, isRegex):
@@ -130,7 +129,7 @@ def showPreview(img, originalCaseImg, originalCaseMask=None, mask=None, imgNodeN
         if (originalCaseMask.GetDepth() > 0):
             copyInfo(originalCaseMask, sitkAugmentedMask)
 
-        outputMaskNode = sitkUtils.PushVolumeToSlicer(sitkAugmentedMask, name=maskNodeName, className="vtkMRMLScalarVolumeNode")
+        outputMaskNode = sitkUtils.PushVolumeToSlicer(sitkAugmentedMask, name=maskNodeName, className="vtkMRMLLabelMapVolumeNode")
 
         slicer.util.setSliceViewerLayers(background=outputImgNode, label=outputMaskNode, labelOpacity=0.4)
         return outputImgNode, outputMaskNode
