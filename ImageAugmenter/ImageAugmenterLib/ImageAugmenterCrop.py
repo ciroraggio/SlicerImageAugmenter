@@ -31,7 +31,7 @@ class ImageAugmenterCropController(ImageAugmenterTransformControllerInterface):
             },
             "centerSpatialCrop": {
                 "enabled": self.ui.centerSpatialCropEnabled.isChecked(),
-                "roiSize": (self.ui.centerSpatialCropSizeW.text, self.ui.centerSpatialCropSizeH.text),
+                "roiSize": (self.ui.centerSpatialCropSizeC.text, self.ui.centerSpatialCropSizeW.text, self.ui.centerSpatialCropSizeH.text),
             },
         }
 
@@ -74,8 +74,6 @@ class ImageAugmenterCropController(ImageAugmenterTransformControllerInterface):
             if (not all(params.roiSize)):
                     raise ValueError("The 'Center Spatial Crop' transformation is enabled but ROI size is not valid")
             
-            self.mappedTransformations.append(CenterSpatialCrop(roi_size=
-                                                                (int(params.roiSize[0]),int(params.roiSize[1]))
-                                                                ))
+            self.mappedTransformations.append(CenterSpatialCrop(roi_size=(int(params.roiSize[0]), int(params.roiSize[1]), int(params.roiSize[2]))))
 
         return self.mappedTransformations

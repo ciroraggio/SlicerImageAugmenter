@@ -438,7 +438,7 @@
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>-248</y>
+            <y>0</y>
             <width>848</width>
             <height>657</height>
            </rect>
@@ -956,7 +956,7 @@
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>51</width>
+                    <width>16777215</width>
                     <height>23</height>
                    </size>
                   </property>
@@ -981,7 +981,7 @@
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>51</width>
+                    <width>16777215</width>
                     <height>23</height>
                    </size>
                   </property>
@@ -993,6 +993,25 @@
                   </property>
                   <property name="placeholderText">
                    <string>H</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="resizeC">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>23</height>
+                   </size>
+                  </property>
+                  <property name="placeholderText">
+                   <string>C</string>
                   </property>
                  </widget>
                 </item>
@@ -1020,7 +1039,7 @@
                 </property>
                </widget>
               </item>
-              <item row="0" column="1">
+              <item row="0" column="3">
                <layout class="QHBoxLayout" name="horizontalLayout_8">
                 <item>
                  <widget class="QLabel" name="label_6">
@@ -1048,7 +1067,7 @@
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>79</width>
+                    <width>16777215</width>
                     <height>23</height>
                    </size>
                   </property>
@@ -1511,7 +1530,7 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>848</width>
+            <width>330</width>
             <height>1005</height>
            </rect>
           </property>
@@ -2237,7 +2256,7 @@ color: rgb(0, 85, 255);</string>
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>-64</y>
+            <y>0</y>
             <width>848</width>
             <height>500</height>
            </rect>
@@ -2726,6 +2745,13 @@ color: rgb(0, 85, 255);</string>
                  <widget class="QLineEdit" name="centerSpatialCropSizeH">
                   <property name="placeholderText">
                    <string>H</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="centerSpatialCropSizeC">
+                  <property name="placeholderText">
+                   <string>C</string>
                   </property>
                  </widget>
                 </item>
