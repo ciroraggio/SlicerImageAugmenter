@@ -31,20 +31,14 @@ class ImageAugmenterWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
         self._parameterNodeGuiTag = None
 
     def checkDependencies(self):
-        try:
-            from monai import __version__ # noqa: F401
-            from SimpleITK import __version__  # noqa: F401, F811
-            from torch import __version__  # noqa: F401, F811
-            from munch import VERSION # noqa: F401
-            self.ui.installRequirementsButton.setVisible(False)
-            self.ui.applyButton.setVisible(True)
-            self.ui.previewButton.setVisible(True)
-            self.ui.previewSettingsButton.setVisible(True)
-        except ModuleNotFoundError:
-            self.ui.installRequirementsButton.setVisible(True)
-            self.ui.applyButton.setVisible(False)
-            self.ui.previewButton.setVisible(False)
-            self.ui.previewSettingsButton.setVisible(False)
+        from importlib.util import find_spec
+        required_modules = ["monai", "SimpleITK", "torch", "munch"]
+        all_present = all(find_spec(mod) is not None for mod in required_modules)
+
+        self.ui.installRequirementsButton.setVisible(not all_present)
+        self.ui.applyButton.setVisible(all_present)
+        self.ui.previewButton.setVisible(all_present)
+        self.ui.previewSettingsButton.setVisible(all_present)
             
     def setup(self) -> None:
         from ImageAugmenterLib.ImageAugmenterUIUtils import CheckboxDialog
@@ -123,12 +117,14 @@ class ImageAugmenterWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
             raise ValueError("Missing dependencies.")
         try:
             self.ui.installRequirementsButton.setEnabled(False)
-            self.ui.infoLabel.setText("Installing dependencies, please wait...")
+            slicer.util.setPythonConsoleVisible(True)
+            print("ImageAugmenter - Installing missing dependencies, please wait...")
+            self.ui.infoLabel.setText("Installing missing dependencies, please wait...")
             slicer.util.pip_install("munch")
             slicer.util.pip_install("monai[itk]")
             slicer.util.restart()
         except Exception as e:
-            raise ValueError(f"Error installing dependencies: {e!r}")
+            raise ValueError(f"Error installing missing dependencies: {e!r}")
 
     def onApplyButton(self) -> None:
         """Run processing when user clicks "Apply" button."""
