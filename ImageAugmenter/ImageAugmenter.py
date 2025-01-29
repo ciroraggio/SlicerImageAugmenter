@@ -348,10 +348,11 @@ class ImageAugmenterLogic(ScriptedLoadableModuleLogic):
             progressBar.reset()
             infoLabel.setText(validationResult)
             raise validationResult
-            
-        clearScene(self.previewNodesList)
-        self.previewNodesList = []
         
+        if(len(slicer.util.getNodes()) > 0):
+            clearScene(self.previewNodesList)
+            self.previewNodesList = []
+            
         previewIndices = [i for i, path in enumerate(imgs) if path in selectedPreviewOptions] if len(selectedPreviewOptions) > 0 else [0]
         previewImgs = []
         previewMasks = []

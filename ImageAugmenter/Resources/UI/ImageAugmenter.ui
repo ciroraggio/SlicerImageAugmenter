@@ -1530,7 +1530,7 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>330</width>
+            <width>848</width>
             <height>1005</height>
            </rect>
           </property>
@@ -2256,7 +2256,7 @@ color: rgb(0, 85, 255);</string>
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>0</y>
+            <y>-236</y>
             <width>848</width>
             <height>500</height>
            </rect>
@@ -2613,51 +2613,17 @@ color: rgb(0, 85, 255);</string>
               <string>Spatial Crop</string>
              </property>
              <layout class="QGridLayout" name="gridLayout_29">
-              <item row="1" column="3">
-               <widget class="QLineEdit" name="spatialCropSizeW">
-                <property name="placeholderText">
-                 <string>W</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="4">
-               <widget class="QLineEdit" name="spatialCropCenterH">
+              <item row="1" column="4">
+               <widget class="QLineEdit" name="spatialCropSizeH">
                 <property name="placeholderText">
                  <string>H</string>
                 </property>
                </widget>
               </item>
-              <item row="0" column="3">
-               <widget class="QLineEdit" name="spatialCropCenterW">
+              <item row="1" column="3">
+               <widget class="QLineEdit" name="spatialCropSizeW">
                 <property name="placeholderText">
                  <string>W</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="QLabel" name="label_32">
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(0,0,0);</string>
-                </property>
-                <property name="text">
-                 <string>ROI size</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="QCheckBox" name="spatialCropEnabled">
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(0, 0, 0);</string>
-                </property>
-                <property name="text">
-                 <string>Enabled</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="2">
-               <widget class="QLineEdit" name="spatialCropSizeC">
-                <property name="placeholderText">
-                 <string>C</string>
                 </property>
                </widget>
               </item>
@@ -2671,18 +2637,52 @@ color: rgb(0, 85, 255);</string>
                 </property>
                </widget>
               </item>
-              <item row="1" column="4">
-               <widget class="QLineEdit" name="spatialCropSizeH">
+              <item row="0" column="3">
+               <widget class="QLineEdit" name="spatialCropCenterW">
+                <property name="placeholderText">
+                 <string>W</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="spatialCropEnabled">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0, 0);</string>
+                </property>
+                <property name="text">
+                 <string>Enabled</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="4">
+               <widget class="QLineEdit" name="spatialCropCenterH">
                 <property name="placeholderText">
                  <string>H</string>
                 </property>
                </widget>
               </item>
-              <item row="0" column="2">
+              <item row="1" column="1">
+               <widget class="QLabel" name="label_32">
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0,0,0);</string>
+                </property>
+                <property name="text">
+                 <string>ROI size</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="5">
                <widget class="QLineEdit" name="spatialCropCenterC">
                 <property name="styleSheet">
                  <string notr="true"/>
                 </property>
+                <property name="placeholderText">
+                 <string>C</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="5">
+               <widget class="QLineEdit" name="spatialCropSizeC">
                 <property name="placeholderText">
                  <string>C</string>
                 </property>

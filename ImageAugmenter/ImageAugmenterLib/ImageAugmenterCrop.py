@@ -27,7 +27,7 @@ class ImageAugmenterCropController(ImageAugmenterTransformControllerInterface):
             "spatialCrop": {
                 "enabled": self.ui.spatialCropEnabled.isChecked(),
                 "roiCenter": (self.ui.spatialCropCenterH.text, self.ui.spatialCropCenterW.text, self.ui.spatialCropCenterC.text),
-                "roiSize": (self.ui.spatialCropSizeH.text, self.ui.spatialCropSizeW.text, self.ui.spatialCropSizeC.text),
+                "roiSize": ( self.ui.spatialCropSizeC.text, self.ui.spatialCropSizeW.text, self.ui.spatialCropSizeH.text),
             },
             "centerSpatialCrop": {
                 "enabled": self.ui.centerSpatialCropEnabled.isChecked(),
