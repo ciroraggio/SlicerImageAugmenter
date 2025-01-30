@@ -8,21 +8,30 @@ import slicer
 
 FLAT = "flat"  # .../path/ImgID.extension, .../path/ImgID_label.extension
 HIERARCHICAL = "hierarchical" # .../path/CaseID/img.extension, # .../path/CaseID/mask.extension
+CHANNEL_FIRST_REQUIRED = ["Resize", "SpatialPad", "CenterSpatialCrop"]
 
-def collectImagesAndMasksList(imagesInputPath, imgPrefix, maskPrefix):
+
+def collectImagesAndMasksList(imagesInputPath, imgPrefix, maskPrefix, isImgPrefixRegex, isMaskPrefixRegex):
     imgs, masks = [], []
+
+    # Regex compiled only if the flags are active, otherwise use the prefix
+    imgPattern = re.compile(imgPrefix) if isImgPrefixRegex else None
+    maskPattern = re.compile(maskPrefix) if isMaskPrefixRegex else None
 
     for root, _, files in os.walk(imagesInputPath):
         for file in files:
             if file.startswith("."):
                 continue
             filePath = os.path.join(root, file)
-            if imgPrefix in file:
+
+            if (imgPattern and imgPattern.search(file)) or (not imgPattern and imgPrefix in file):
                 imgs.append(filePath)
-            elif maskPrefix and maskPrefix in file:
+            
+            elif maskPrefix and ((maskPattern and maskPattern.search(file)) or (not maskPattern and maskPrefix in file)):
                 masks.append(filePath)
 
     return imgs, masks
+
 
 
 def getFilesStructure(ui):
@@ -52,58 +61,89 @@ def sanitizeTransformName(transform) -> str:
         re.escape("".join([">", "<", "_", ".", "'", "-", ","])) + "]"
     return re.sub(pattern, "", str(transform.__class__).split(".")[-1])
 
+
 def getTransformName(transform) -> str:
     try:
-            return transform.get_transform_info()["class"]
+        return transform.get_transform_info()["class"]
     except AttributeError:
-            # in this case get_transform_info is missing, so recover the name starting from __class__:
-            return sanitizeTransformName(transform)
+        # in this case get_transform_info is missing, so recover the name starting from __class__:
+        return sanitizeTransformName(transform)
 
+
+def getCaseName(fullImgPath, filesStructure):
+    return fullImgPath.split("/")[-2] if (filesStructure == HIERARCHICAL) else fullImgPath.split("/")[-1]
+
+def splitFilenameAndExtension(filePath, prefix, isRegex):
+    baseName = os.path.basename(filePath) 
+    
+    if baseName.endswith(".nii.gz"):
+        name, ext = baseName[:-7], ".nii.gz"
+    else:
+        name, ext = os.path.splitext(baseName)
+        
+    return name, ext
+    
 def getOriginalCase(fullImgPath, filesStructure):
     """This function returns the original image and extracts the specific patient/case name/ID.
     The extracted name/ID will be used as the title of the folder that will contain the augmented images.
     """
-    caseName = fullImgPath.split("/")[-2] if (filesStructure == HIERARCHICAL) else fullImgPath.split("/")[-1]
+    caseName = getCaseName(fullImgPath, filesStructure)
 
     originalCaseImg = sitk.ReadImage(fullImgPath)
 
     return caseName, originalCaseImg
 
-def save(img, path, filename, originalCase, extension, copyInfo=True):
+
+def copyInfo(origin, target):
+    """Same behaviour as sitk.CopyInformation but sizes don't need to match
+
+    Returns
+    -------
+        Target volume with new information (sitk.Image)
+
+    """
+    target.SetOrigin(origin.GetOrigin())
+    target.SetSpacing(origin.GetSpacing())
+    target.SetDirection(origin.GetDirection())
+    return target
+
+def save(img, path, filename, originalCase, extension):
     img = sitk.GetImageFromArray(img)
 
-    if (copyInfo and originalCase.GetDepth() > 0):
-        img.CopyInformation(originalCase)
+    if (originalCase.GetDepth() > 0):
+        copyInfo(originalCase, img)
 
-    saveThread = threading.Thread(target=sitk.WriteImage, args=(img, f"{path}/{filename}.{extension}"))
+    saveThread = threading.Thread(target=sitk.WriteImage, args=(img, f"{path}/{filename}{extension}"))
     saveThread.start()
 
-
-def showPreview(img, originalCaseImg, originalCaseMask=None, mask=None, imgNodeName="imgNode", maskNodeName="maskNode", copyInfo=True):
+def showPreview(img, originalCaseImg, originalCaseMask=None, mask=None, imgNodeName="imgNode", maskNodeName="maskNode"):
     sitkAugmentedImg = sitk.GetImageFromArray(img.cpu())
 
-    if (copyInfo and originalCaseImg.GetDepth() > 0):
-        sitkAugmentedImg.CopyInformation(originalCaseImg)
+    if (originalCaseImg.GetDepth() > 0):
+        copyInfo(originalCaseImg, sitkAugmentedImg)
 
     outputImgNode = sitkUtils.PushVolumeToSlicer(sitkAugmentedImg, name=imgNodeName, className="vtkMRMLScalarVolumeNode")
 
     if (mask != None):
         sitkAugmentedMask = sitk.GetImageFromArray(mask.cpu())
-        if (copyInfo and originalCaseMask.GetDepth() > 0):
-            sitkAugmentedMask.CopyInformation(originalCaseMask)
+        if (originalCaseMask.GetDepth() > 0):
+            copyInfo(originalCaseMask, sitkAugmentedMask)
 
-        outputMaskNode = sitkUtils.PushVolumeToSlicer(sitkAugmentedMask, name=maskNodeName, className="vtkMRMLScalarVolumeNode")
+        outputMaskNode = sitkUtils.PushVolumeToSlicer(sitkAugmentedMask, name=maskNodeName, className="vtkMRMLLabelMapVolumeNode")
 
         slicer.util.setSliceViewerLayers(background=outputImgNode, label=outputMaskNode, labelOpacity=0.4)
-
+        return outputImgNode, outputMaskNode
     else:
         slicer.util.setSliceViewerLayers(background=outputImgNode)
+        return outputImgNode
 
 
-def clearScene():
+def clearScene(previewNodesToClear: list):
     scene = slicer.mrmlScene
-    scene.Clear()
 
+    for oldPreviewNode in previewNodesToClear:
+        scene.RemoveNode(oldPreviewNode)
+    
 
 def resetViews():
     slicer.app.layoutManager().resetThreeDViews()
@@ -117,5 +157,3 @@ def extractDeviceNumber(gpu_info) -> str:
         raise ValueError("GPU text format is invalid. Please report this to the developer!")
 
     return f"cuda:{str(match.group(1))}"
-
-        

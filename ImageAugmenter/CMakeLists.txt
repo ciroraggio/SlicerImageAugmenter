@@ -12,11 +12,15 @@ set(MODULE_PYTHON_SCRIPTS
   ${MODULE_NAME}Lib/ImageAugmenterSpatial.py
   ${MODULE_NAME}Lib/ImageAugmenterTransformControllerInterface.py
   ${MODULE_NAME}Lib/ImageAugmenterCrop.py
+  ${MODULE_NAME}Lib/UI/ImageAugmenterPreviewDialog.py
+  ${MODULE_NAME}Lib/UI/ImageAugmenterUIUtils.py
   )
 
 set(MODULE_PYTHON_RESOURCES
   Resources/Icons/${MODULE_NAME}.png
   Resources/UI/${MODULE_NAME}.ui
+  Resources/Icons/cog.png
+  Resources/Icons/regex.png
   )
 
 #-----------------------------------------------------------------------------

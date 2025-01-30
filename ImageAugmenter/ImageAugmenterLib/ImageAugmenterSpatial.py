@@ -33,7 +33,7 @@ class ImageAugmenterSpatialController(ImageAugmenterTransformControllerInterface
             },
             "resize": {
                 "enabled": self.ui.resizeEnabled.isChecked(),
-                "spatialSize": (self.ui.resizeW.text, self.ui.resizeH.text),
+                "spatialSize": (self.ui.resizeC.text, self.ui.resizeW.text, self.ui.resizeH.text),
                 "interpolationMode": self.ui.resizeInterpolationMode.currentText
             },
             "flip": {
@@ -97,10 +97,12 @@ class ImageAugmenterSpatialController(ImageAugmenterTransformControllerInterface
 
         if (self.transformations.resize.enabled):
             params = self.transformations.resize
-            if(not all(params.spatialSize)): raise ValueError("The 'Resize' transformation is enabled but spatial size is not specified")
+            if(not all(params.spatialSize)): 
+                raise ValueError("The 'Resize' transformation is enabled but spatial size is not specified")
 
             self.mappedTransformations.append(Resize(spatial_size=(int(self.transformations.resize.spatialSize[0]),
-                                                                   int(self.transformations.resize.spatialSize[1])),
+                                                                   int(self.transformations.resize.spatialSize[1]),
+                                                                   int(self.transformations.resize.spatialSize[2])),
                                                      mode=self.transformations.resize.interpolationMode
                                                      ))
         if (self.transformations.flip.enabled):

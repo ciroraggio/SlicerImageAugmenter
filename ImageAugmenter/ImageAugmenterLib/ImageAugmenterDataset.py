@@ -7,6 +7,7 @@ from torch.utils.data import Dataset
 from ImageAugmenterLib.ImageAugmenterUtils import (
     extractDeviceNumber,
     getTransformName,
+    CHANNEL_FIRST_REQUIRED
 )
 
 
@@ -39,8 +40,16 @@ class ImageAugmenterDataset(Dataset):
 
     def apply_transform(self, transform: object, img: torch.Tensor, transformedList: List[List[Any]]) -> List[List[Any]]:
         transform_name = getTransformName(transform)
+        channel_first_required = transform_name in CHANNEL_FIRST_REQUIRED
+    
+        if(channel_first_required):
+            img = img.unsqueeze(dim=0)
 
         transformedImg = transform(img.float())
+        
+        if(channel_first_required):
+            transformedImg = transformedImg.squeeze(dim=0)
+            
         # adding ["rotate", torch.Tensor[[...]] ]
         transformedList.append([transform_name, transformedImg])
 
@@ -55,9 +64,19 @@ class ImageAugmenterDataset(Dataset):
     ) -> List[List[Any]]:  # Generic return for flexibility
         
         transform_name = getTransformName(transform)
-        
+        channel_first_required = transform_name in CHANNEL_FIRST_REQUIRED
+
         if(transformedMasks != None):
+            if(channel_first_required):
+                data_dict["img"] = data_dict["img"].unsqueeze(dim=0)
+                data_dict["mask"] = data_dict["mask"].unsqueeze(dim=0)
+                
             transformedImg, transformedMask = transform(data_dict).values()
+            
+            if(channel_first_required):
+                transformedImg =transformedImg.squeeze(dim=0)
+                transformedMask = transformedMask.squeeze(dim=0)
+                
             # adding ["rotate", torch.Tensor[[...]] ]
             transformedImages.append([transform_name, transformedImg])
             transformedMasks.append([transform_name, transformedMask])
