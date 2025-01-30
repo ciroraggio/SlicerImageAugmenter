@@ -32,17 +32,23 @@ li a:hover {
 </ul>
 
 ## Tutorial
-You can download the sample data from here: https://github.com/ciroraggio/SlicerImageAugmenter/releases/download/v1.0.1/PDDCA_sample_data.zip
+You can **download sample data** <a href="https://github.com/ciroraggio/SlicerImageAugmenter/releases/download/v1.0.1/PDDCA_sample_data.zip">here</a>!
 
 Apply augmentation to your medical image dataset in a few simple steps:
 
 **1.** Choose the path of your images
 
-**2.** Specifies by what name or substring of the name ImageAugmenter can recognize images (CT, CT.nrrd, .nrrd)
+**2.** Specifies by what name, substring or with a regular expression how ImageAugmenter can recognize images (CT, CT.nrrd, .nrrd, ^ct\.(nii\.gz)$)
 
-**3.** If you also want to include masks/segmentations associated with the images, simply indicate the name or a substring of the name with which ImageAugmenter can recognize them (mask, mask.nrrd, _label)
+**3.** If you also want to include masks/segmentations associated with the images, simply indicate the name, a substring or a regular expression with which ImageAugmenter can recognize them (mask, mask.nrrd, _label, ^mask\.(nii\.gz)$)
 
-**4.** Indicates what type of hierarchy the images respect. This will allow ImageAugmenter to maintain the original dataset hierarchy when saving. There are two options: **hierarchical** (use this setting if your images are grouped by case and each case is a folder) or **flat** (use this setting if your images/masks are in a single folder and the case name matches the file name)
+Releases after v1.0.4 support regex mode for both text fields to match more precise patterns.
+
+<center>            
+<img src="https://raw.githubusercontent.com/ciroraggio/SlicerImageAugmenter/main/assets/SlicerImageAugmenterInputRegexExample.png">
+</center>
+
+**4.** Indicates what type of hierarchy the images respect. This will allow ImageAugmenter to maintain the original dataset hierarchy when saving. There are two options: **hierarchical** (use this setting if your images are grouped by sample and each sample is a folder) or **flat** (use this setting if your images/masks are in a single folder and the sample name matches the file name)
 
 <center>            
 <img src="https://raw.githubusercontent.com/ciroraggio/SlicerImageAugmenter/main/assets/SlicerImageAugmenterInputExample.png">
@@ -63,10 +69,14 @@ Apply augmentation to your medical image dataset in a few simple steps:
     </tr>
 </table>
 
-**7.1** Use the **Preview** button if you want to preview the final result on the first sample of the dataset directly into the Slicer scene, if you are not satisfied, change the parameters and request a new preview
+**7.1** Use the **Preview** button if you want to preview the final result on the first sample of the dataset directly into the Slicer scene, if you are not satisfied, change the parameters and request a new preview.
 
 ![filled](https://raw.githubusercontent.com/ciroraggio/SlicerImageAugmenter/main/assets/SlicerImageAugmenterScreen.png)
 
-**7.2** If you are satisfied with the result, use the **Run** button to save the augmented samples in the folder chosen in step 5. The files will be saved respecting the input hierarchy, as in this case:
+Pressing the **Preview Settings** button, will display all cases found by ImageAugmenter with the specified settings in a new window. You can then select all cases on which the preview should be generated. If no cases are selected, the transformation preview will only be generated on the first case.
+
+![filled](https://raw.githubusercontent.com/ciroraggio/SlicerImageAugmenter/main/assets/SlicerImageAugmenterSelectPreviewSamples.png)
+
+**7.2** If you are satisfied with the result, use the **Run** button to save the augmented samples in the folder chosen in step 5. The files will be saved respecting the input hierarchy, as in this sample:
 
 ![output_folder](https://raw.githubusercontent.com/ciroraggio/SlicerImageAugmenter/main/assets/SlicerImageAugmenterOutputExample.png)

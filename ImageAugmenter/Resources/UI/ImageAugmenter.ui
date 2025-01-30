@@ -337,7 +337,7 @@
                 </size>
                </property>
                <property name="placeholderText">
-                <string>mask.nrrd or mask or .tif/.nrrd/.dcm or ^ct\.(nii\.gz|nrrd)$ (optional)</string>
+                <string>mask.nrrd or mask or .tif/.nrrd/.dcm or ^mask\.(nii\.gz|nrrd)$ (optional)</string>
                </property>
               </widget>
              </item>
@@ -2960,7 +2960,7 @@ color: rgb(0, 85, 255);</string>
          </size>
         </property>
         <property name="toolTip">
-         <string>Select preview cases</string>
+         <string>Select preview samples</string>
         </property>
         <property name="toolTipDuration">
          <number>5000</number>

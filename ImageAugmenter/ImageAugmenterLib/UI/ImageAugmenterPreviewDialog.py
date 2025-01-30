@@ -20,11 +20,15 @@ class PreviewCheckboxDialog(qt.QDialog):
         self.scrollWidget = qt.QWidget()
         self.scrollLayout = qt.QVBoxLayout(self.scrollWidget)
         self.scrollArea.setStyleSheet("QScrollArea { border: none; }") 
+        self.scrollArea.setSizePolicy(qt.QSizePolicy.Expanding, qt.QSizePolicy.Preferred)
         self.scrollArea.setWidget(self.scrollWidget)
         self.previewDialogLayout.addWidget(self.scrollArea)
 
-        self.scrollLayout.addWidget(qt.QLabel("Select preview's cases"))
-
+        label = qt.QLabel("Samples on which the preview will be generated, if nothing is selected, the first sample will be used by default.")
+        label.setWordWrap(True)  
+        label.setSizePolicy(qt.QSizePolicy.Preferred, qt.QSizePolicy.Maximum)
+        
+        self.scrollLayout.addWidget(label)
         self.checkboxStates = {}
         self.checkboxes = {}
 
@@ -54,7 +58,7 @@ class PreviewCheckboxDialog(qt.QDialog):
         applyButton.clicked.connect(lambda: self.accept())
         applyButton.setStyleSheet("background-color: rgb(52, 206, 165);")
         self.rightButtonLayout.addWidget(applyButton)
-
+        
     def updateOptions(self, options: dict[str, str], selectedOptions: list[str] = None):
         """
         Dynamically updates dialog options.

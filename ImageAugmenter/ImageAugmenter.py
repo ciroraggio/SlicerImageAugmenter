@@ -13,15 +13,15 @@ class ImageAugmenter(ScriptedLoadableModule):
     """Uses ScriptedLoadableModule base class, available at:
     https://github.com/Slicer/Slicer/blob/main/Base/Python/slicer/ScriptedLoadableModule.py
     """
-
     def __init__(self, parent):
+        from ImageAugmenterLib.UI.ImageAugmenterUIUtils import HELP_TEXT, CONTRIBUTORS
         ScriptedLoadableModule.__init__(self, parent)
         self.parent.title = _("ImageAugmenter")
         self.parent.categories = [translate("qSlicerAbstractCoreModule", "Utilities")]
         self.parent.dependencies = []
-        self.parent.contributors = ["Ciro Benito Raggio (Karlsruhe Institute of Technology, Germany), Paolo Zaffino (Magna Graecia University of Catanzaro, Italy), Maria Francesca Spadea (Karlsruhe Institute of Technology, Germany)"]
-        self.parent.helpText = _("""MONAI and PyTorch based medical image augmentation tool. It's designed to operate on a dataset of medical images and apply a series of specific transformations to each image. This process augments the original dataset, providing a greater variety of samples for training deep learning models.""")
-
+        self.parent.contributors = CONTRIBUTORS
+        self.parent.helpText = _(HELP_TEXT)
+        self.parent.acknowledgementText = _("")
 
 class ImageAugmenterWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
     def __init__(self, parent=None) -> None:
@@ -221,7 +221,7 @@ class ImageAugmenterWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
                                filesStructure=filesStructure
                                )
             if(len(mappedOptions.keys()) == 0):
-                raise ValueError("No cases found with the specified parameters!")
+                raise ValueError("No samples found with the specified parameters!")
             
             self.previewSettingsDialog.updateOptions(mappedOptions, self.selectedPreviewOptions)
 
