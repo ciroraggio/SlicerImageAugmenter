@@ -1,7 +1,7 @@
 # SlicerImageAugmenter
 
 ## Description
-MONAI and PyTorch based medical image augmentation tool integrated in 3D Slicer.
+MONAI and PyTorch based medical image augmentation tool integrated in [3D Slicer](https://www.slicer.org/).
 The project aims to be a low-code version of the tool: <https://github.com/ciroraggio/AugmentedDataLoader>.
 
 It's designed to operate on a dataset of medical images and apply a series of specific transformations to each image. This process augments the original dataset, providing a greater variety of samples for training deep learning models.
